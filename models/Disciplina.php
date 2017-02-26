@@ -28,8 +28,7 @@ class Disciplina extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id'], 'integer'],
+            [['nome'], 'required'],
             [['nome'], 'string', 'max' => 45],
         ];
     }

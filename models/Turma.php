@@ -34,8 +34,8 @@ class Turma extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'Disciplina_id'], 'required'],
-            [['id', 'Disciplina_id'], 'integer'],
+            [['Disciplina_id'], 'required'],
+            [['Disciplina_id'], 'integer'],
             [['descricao', 'ano', 'semestre'], 'string', 'max' => 45],
             [['Disciplina_id'], 'exist', 'skipOnError' => true, 'targetClass' => Disciplina::className(), 'targetAttribute' => ['Disciplina_id' => 'id']],
         ];

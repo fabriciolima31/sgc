@@ -14,7 +14,7 @@ use app\models\Disciplina;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id')->textInput() ?>
+    <?php //echo $form->field($model, 'id')->textInput() ?>
 
     <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
 
@@ -30,7 +30,7 @@ use app\models\Disciplina;
     ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
