@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Consultorio;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Paciente */
@@ -14,13 +16,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
+    <?php // echo $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'Consultorio_id')->textInput() ?>
+    <?php // echo $form->field($model, 'Consultorio_id')->textInput() ?>
+
+    <?php 
+        $items = ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
+        echo $form->field($model, 'Consultorio_id')->dropDownList($items)
+    ?>
 
     <?= $form->field($model, 'horario')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'sexo')->textInput(['maxlength' => true]) ?>
+    <?php //echo $form->field($model, 'sexo')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'sexo')->dropDownList(['M' => 'Masculino', 'F' => 'Feminino'],['prompt'=>'Selecione uma Opção']); ?>
 
     <?= $form->field($model, 'data_nascimento')->textInput() ?>
 
@@ -30,7 +39,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'moradia')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'turno_atendimento')->textInput(['maxlength' => true]) ?>
+    <?php //echo $form->field($model, 'turno_atendimento')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'turno_atendimento')->dropDownList(['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite'],['prompt'=>'Selecione uma Opção']); ?>
 
     <?= $form->field($model, 'local_encaminhamento')->textarea(['rows' => 6]) ?>
 
