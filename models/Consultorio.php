@@ -30,7 +30,7 @@ class Consultorio extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
+            [['nome'], 'required'],
             [['id'], 'integer'],
             [['nome'], 'string', 'max' => 45],
         ];
@@ -68,6 +68,6 @@ class Consultorio extends \yii\db\ActiveRecord
      */
     public function getSessaos()
     {
-        return $this->hasMany(Sessao::className(), ['Consultório_id' => 'id']);
+        return $this->hasMany(Sessao::className(), ['Consultorio_id' => 'id']);
     }
 }

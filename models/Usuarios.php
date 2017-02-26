@@ -70,7 +70,7 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function getAgendas()
     {
-        return $this->hasMany(Agenda::className(), ['Usuários_id' => 'id']);
+        return $this->hasMany(Agenda::className(), ['Usuarios_id' => 'id']);
     }
 
     /**
@@ -78,7 +78,7 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function getProfessorTurmas()
     {
-        return $this->hasMany(ProfessorTurma::className(), ['Usuários_id' => 'id']);
+        return $this->hasMany(ProfessorTurma::className(), ['Usuarios_id' => 'id']);
     }
 
     /**
@@ -86,7 +86,7 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function getTurmas()
     {
-        return $this->hasMany(Turma::className(), ['id' => 'Turma_id'])->viaTable('Professor_Turma', ['Usuários_id' => 'id']);
+        return $this->hasMany(Turma::className(), ['id' => 'Turma_id'])->viaTable('Professor_Turma', ['Usuarios_id' => 'id']);
     }
 
     /**
@@ -94,7 +94,7 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function getSessaos()
     {
-        return $this->hasMany(Sessao::className(), ['Usuários_id' => 'id']);
+        return $this->hasMany(Sessao::className(), ['Usuarios_id' => 'id']);
     }
 
     /**
