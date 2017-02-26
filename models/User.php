@@ -4,6 +4,8 @@ namespace app\models;
 
 use yii\helpers\Security;
 use yii\web\IdentityInterface;
+use yiibr\brvalidator\CpfValidator;
+
 /**
  * This is the model class for table "tbl_user".
  *
@@ -13,6 +15,7 @@ use yii\web\IdentityInterface;
  */
 class User extends \yii\db\ActiveRecord  implements IdentityInterface
 {
+    public $password_repeat;
     /**
      * @inheritdoc
      */
@@ -27,8 +30,13 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
     public function rules()
     {
         return [
-            [['cpf', 'password', 'nome', 'tipo'], 'required'],
+            [['cpf', 'password', 'nome', 'tipo', 'email'], 'required'],
             [['cpf'], 'string'],
+            //[['cpf'],  CpfValidator::className(), 'message' => 'CPF Inválido'],
+            [['email'], 'email'],
+            [['status'], 'string'],
+            ['password_repeat', 'required'],
+            ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Esta senha não é igual à anterior" ],
             [['auth_key'], 'string', 'max' => 255],
             [['password'], 'string', 'min' => 6, 'max' => 15],
             [['Turma_id'], 'integer']
@@ -45,7 +53,10 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
             'cpf' => 'CPF',
             'password' => 'Senha',
             'nome' => 'Nome',
-            'tipo' => 'tipo'
+            'tipo' => 'Perfil',
+            'status' => 'Status',
+            'password_repeat' => 'Repetir Senha',
+            'email' => 'Email',
         ];
     }
     
@@ -171,5 +182,47 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
-
+    
+    public function getPerfil()
+    {
+        if ($this->tipo == 1) {
+            return "Professor";
+        } else if ($this->tipo == 2) {
+            return "Psicólogo";
+        } else if ($this->tipo == 3) {
+            return "Terapeuta";
+        } else {
+            return "Administrador";
+        }
+    }
+    
+    public function getTurma()
+    {
+        return $this->hasOne(Turma::className(), ['id' => 'Turma_id']);
+    }
+    
+    /*
+     * Verifica a existência de um usário ativo
+     * retorna null ou User object
+     **/
+    public function getExistenteUsuario()
+    {
+        $user = User::find()->where(['cpf' => $this->cpf])->one();
+        
+        if ($user != null) {
+            if ($user->status == "1") {
+                $this->addError('cpf', "CPF já cadastrado.");
+                return 1;
+            } else {
+                $user->status = "1";
+                $user->nome = $this->nome;
+                $user->tipo = $this->tipo;
+                $user->email = $this->email;
+                $user->password = $this->password;
+                $user->password_repeat = $this->password_repeat;
+                return $user;
+            }
+        }
+        return 0;
+    }
 }

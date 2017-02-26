@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\MaskedInput;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Turma;
@@ -14,19 +15,23 @@ use app\models\Turma;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'cpf')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'cpf')->widget(MaskedInput::className(), [
+    'mask' => '999.999.999-99',]) ?>
 
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'email')->textInput() ?>
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'tipo')->textInput(['maxlength' => true]) ?>
-
-    <?php //echo $form->field($model, 'Turma_id')->textInput() ?>
-
+    
+    <?= $form->field($model, 'tipo')->dropDownList(['1' => 'Professor', '2' => 'Psicólogo', 
+        '3' => 'Terapeuta', '4' => 'Adminstrador'], ['prompt'=>'Selecione um Perfil ']); ?>
+    
     <?php 
-        $items = ArrayHelper::map(Turma::find()->all(), 'id', 'descricao');
-        echo $form->field($model, 'Turma_id')->dropDownList($items)
+        $turmas = ArrayHelper::map(Turma::find()->all(), 'id', 'descricao');
+        echo $form->field($model, 'Turma_id')->dropDownList($turmas, ['prompt' => 'Selecione uma Turma '])
     ?>
 
     <div class="form-group">
