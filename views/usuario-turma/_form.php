@@ -16,7 +16,7 @@ use app\models\User;
     <?php $form = ActiveForm::begin(); ?>
 
     <?php 
-        $items = ArrayHelper::map(Turma::find()->all(), 'id', 'descricao');
+        $items = ArrayHelper::map(Turma::find()->all(), 'id', 'codigo');
         echo $form->field($model, 'Turma_id')->dropDownList($items)
     ?>
 

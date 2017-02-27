@@ -2,11 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\ArrayHelper;
+use app\models\Disciplina;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Turma */
 
-$this->title = $model->id;
+$this->title = $model->codigo;
 $this->params['breadcrumbs'][] = ['label' => 'Turmas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +17,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Remover', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Você tem certeza que deseja REMOVER este item ?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,13 +30,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
+            //'id',
             'codigo',
-            'ano',
+            ['label'=>'Disciplina',
+                'attribute' => 'Disciplina_id',
+                'value' => function ($model){
+
+                $disciplina = ArrayHelper::map(Disciplina::find()->all(), 'id', 'nome');
+                return $disciplina[$model->Disciplina_id];
+                },
+            ],
             'semestre',
+            'ano',
             'data_inicio',
             'data_fim',
-            'Disciplina_id',
+           
         ],
     ]) ?>
 

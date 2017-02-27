@@ -29,6 +29,27 @@ class TurmaController extends Controller
         ];
     }
 
+
+
+    public function converterDatas_para_AAAA_MM_DD($data) {
+
+        $ano = substr($data,6,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($data,3,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($data,0,2); //pega os 2 caracteres, a contar do índice 0
+        $data_formatada = $ano."-".$mes."-".$dia;
+        return $data_formatada; //retorna data formatada: AAAA-MM-DD
+}
+
+    public function converterDatas_para_DD_MM_AAAA($data) {
+
+        $ano = substr($data,0,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($data,5,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($data,8,2); //pega os 2 caracteres, a contar do índice 0
+        $data_formatada = $dia."-".$mes."-".$ano;
+        return $data_formatada; //retorna data formatada: AAAA-MM-DD
+}
+
+
     /**
      * Lists all Turma models.
      * @return mixed
@@ -44,6 +65,8 @@ class TurmaController extends Controller
         ]);
     }
 
+
+
     /**
      * Displays a single Turma model.
      * @param integer $id
@@ -51,8 +74,13 @@ class TurmaController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        $model->data_inicio = $this->converterDatas_para_DD_MM_AAAA($model->data_inicio); 
+        $model->data_fim = $this->converterDatas_para_DD_MM_AAAA($model->data_fim);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -65,8 +93,16 @@ class TurmaController extends Controller
     {
         $model = new Turma();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            //as duas linhas abaixo convertem as data de  DD-MM-AAAA para AAAA-MM-DD
+            $model->data_inicio = $this->converterDatas_para_AAAA_MM_DD($model->data_inicio); 
+            $model->data_fim = $this->converterDatas_para_AAAA_MM_DD($model->data_fim);
+            
+            if ($model->save()){
+               return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -84,8 +120,16 @@ class TurmaController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->data_inicio = $this->converterDatas_para_AAAA_MM_DD($model->data_inicio);
+            $model->data_fim = $this->converterDatas_para_AAAA_MM_DD($model->data_fim);
+
+            if($model->save()){
+               return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+
         } else {
             return $this->render('update', [
                 'model' => $model,

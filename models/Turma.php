@@ -51,12 +51,12 @@ class Turma extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'codigo' => 'Codigo',
+            'codigo' => 'Código',
             'ano' => 'Ano',
-            'semestre' => 'Semestre',
+            'semestre' => 'Período',
             'data_inicio' => 'Data Inicio',
             'data_fim' => 'Data Fim',
-            'Disciplina_id' => 'Disciplina ID',
+            'Disciplina_id' => 'Disciplina',
         ];
     }
 

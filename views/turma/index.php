@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use app\models\Disciplina;
+use app\models\Turma;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TurmaSearch */
@@ -16,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Turma', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Nova Turma', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -24,13 +27,44 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'codigo',
-            'ano',
-            'semestre',
-            'data_inicio',
+            //'id',
+            ['label'=>'Código',
+            'attribute' => 'codigo',
+            ],
+            [
+                'label'=>'Semestre Letivo',
+                'attribute' => 'semestre',
+                'filter'=> array('1' => '1º Semestre', '2' => '2º Semestre'),
+                'value' => function ($model) {
+                        if($model->semestre == 1){
+                            return "1º Semestre";
+                        }
+                        else{
+                            return "2º Semestre";
+                        }
+
+                },
+
+            ],
+            ['label'=>'Ano',
+            'attribute' => 'ano',
+            'filter' => array(date('Y') => date('Y'), date('Y')-1 => date('Y')-1,date('Y')-2 => date('Y')-2, date('Y')-3 => date('Y')-3, date('Y')-4 => date('Y')-4),
+
+            ],
+            //'data_inicio',
             // 'data_fim',
-            // 'Disciplina_id',
+             //'Disciplina_id',
+
+             [  'label' => 'Disciplina',
+                'attribute' => 'Disciplina_id',
+                'filter'=> ArrayHelper::map(Disciplina::find()->all(), 'id', 'nome'),
+                'value' => function ($model) {
+                        $disciplina = ArrayHelper::map(Disciplina::find()->all(), 'id', 'nome');
+                        return $disciplina[$model->Disciplina_id];
+
+                },
+            ],
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
