@@ -43,13 +43,13 @@ AppAsset::register($this);
             [
             'label' => 'Usuários',
             'items' => [
-                ['label' => 'Professores', 'url' => ['/user/index/perfil=1']], 
+                ['label' => 'Professores', 'url' => ["/user/index", "perfil" =>1]], 
                 '<li class="divider"></li>', 
-                ['label' => 'Psicólogos', 'url' => '/user/indexperfil=2'],
+                ['label' => 'Psicólogos', 'url' => ["/user/index", "perfil" =>2]], 
                 '<li class="divider"></li>',
-                ['label' => 'Terapeutas', 'url' => '/user/index?&perfil=3'],
+                ['label' => 'Terapeutas', 'url' => ["/user/index", "perfil" =>3]], 
                 '<li class="divider"></li>',
-                ['label' => 'Administradores', 'url' => '/user/index&perfil=4'],
+                ['label' => 'Administradores', 'url' => ["/user/index", "perfil" =>4]], 
                 ],
             ],
             ['label' => 'Usuario_Turmas', 'url' => ['/usuario-turma/index']],
