@@ -157,7 +157,7 @@ class UserController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = User::find()->where(['status' => 1])->one()) !== null) {
+        if (($model = User::find()->where(['id'=> $id,'status' => 1])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('A página solicitada não existe.');
