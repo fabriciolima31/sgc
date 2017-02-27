@@ -108,12 +108,19 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $senha = $model->password;
         $model->password = "";
 
         if ($model->load(Yii::$app->request->post())){
-            if($model->save()) {
+
+            $atributos = $model->attributes();
+            $atributos = array_diff($atributos, ["password","cpf"]);
+
+            if($model->save(true,$atributos)) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
+
+
         } else {
             return $this->render('update', [
                 'model' => $model,

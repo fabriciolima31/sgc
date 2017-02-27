@@ -13,25 +13,36 @@ use app\models\Turma;
 
 <div class="user-form">
 
+
+
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'cpf')->widget(MaskedInput::className(), [
-    'mask' => '999.999.999-99',]) ?>
+    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
-    
-    <?= $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]) ?>
-    
     <?= $form->field($model, 'email')->textInput() ?>
 
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
-    
+    <?php 
+        // quando a ACTION for create, vai aparecer os dois formulários abaixo. No caso do update, estes dois campos ficam ocultos.
+        if($this->context->action->id == 'create'){
+            echo $form->field($model, 'cpf')->widget(MaskedInput::className(), [
+            'mask' => '999.999.999-99',]);
+            echo $form->field($model, 'password')->passwordInput(['maxlength' => true]);
+            echo $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]);
+        }
+    ?>
+
+    <?php 
+        if($this->context->action->id == 'update'){
+            echo $form->field($model, 'cpf')->textInput(['readonly'=>true]);
+        }
+    ?>
+  
     <?= $form->field($model, 'tipo')->dropDownList(['1' => 'Professor', '2' => 'Psicólogo', 
-        '3' => 'Terapeuta', '4' => 'Adminstrador'], ['prompt'=>'Selecione um Perfil ']); ?>
+        '3' => 'Aluno Terapeuta', '4' => 'Estagiário Administrativo'], ['prompt'=>'Selecione um Perfil ']); ?>
   
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -30,12 +30,12 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
     public function rules()
     {
         return [
-            [['cpf', 'password', 'nome', 'tipo', 'email'], 'required'],
+            [['cpf', 'nome', 'tipo', 'email'], 'required'],
+            [['password','password_repeat'], 'required','on'=>'create'],
             [['cpf'], 'string'],
             [['cpf'],  CpfValidator::className(), 'message' => 'CPF Inválido'],
             [['email'], 'email'],
             [['status'], 'string'],
-            ['password_repeat', 'required'],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Esta senha não é igual à anterior" ],
             [['auth_key'], 'string', 'max' => 255],
             [['password'], 'string', 'min' => 6, 'max' => 15]
