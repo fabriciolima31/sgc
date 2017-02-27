@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Disciplina;
 
+
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Turma */
 /* @var $form yii\widgets\ActiveForm */
@@ -26,11 +28,24 @@ use app\models\Disciplina;
         echo $form->field($model, 'semestre')->dropDownList(['1' => '1º Semestre', '2' => '2º Semestre'],['prompt'=>'Selecione uma opção']);
     ?>
 
-    <?= $form->field($model, 'data_inicio')->textInput() ?>
+<?php echo $form->field($model, 'data_inicio')->widget(
+        'trntv\yii\datetime\DateTimeWidget',
+        ['phpDatetimeFormat' => 'dd/MM/yyyy']
+    ); 
+?>
 
-    <?= $form->field($model, 'data_fim')->textInput() ?>
 
-    <?= $form->field($model, 'Disciplina_id')->textInput() ?>
+
+<?php echo $form->field($model, 'data_fim')->widget(
+        'trntv\yii\datetime\DateTimeWidget',
+        ['phpDatetimeFormat' => 'dd/MM/yyyy']
+    ); 
+?>
+
+<?php 
+    $items = ArrayHelper::map(Disciplina::find()->all(), 'id', 'nome');
+    echo $form->field($model, 'Disciplina_id')->dropDownList($items)
+?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
