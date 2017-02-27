@@ -19,7 +19,7 @@ class PacienteSearch extends Paciente
     {
         return [
             [['id', 'Consultorio_id'], 'integer'],
-            [['nome', 'status', 'horario', 'sexo', 'data_nascimento', 'telefone', 'endereco', 'moradia', 'turno_atendimento', 'local_encaminhamento', 'local_terapia', 'motivo_psicoterapia', 'servico', 'observacao'], 'safe'],
+            [['nome', 'status', 'horario', 'sexo', 'data_nascimento', 'telefone', 'endereco', 'moradia', 'turno_atendimento', 'local_encaminhamento', 'local_terapia', 'motivo_psicoterapia', 'servico', 'observacao', 'data_inscricao'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class PacienteSearch extends Paciente
      */
     public function search($params)
     {
-        $query = Paciente::find();
+        $query = Paciente::find()->where(['status' => 'LE']);
 
         // add conditions that should always apply here
 

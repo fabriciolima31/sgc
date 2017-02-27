@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="paciente-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create Paciente', ['create'], ['class' => 'btn btn-success']) ?>
@@ -24,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'nome',
             'status',
             'Consultorio_id',
@@ -40,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'motivo_psicoterapia',
             // 'servico:ntext',
             // 'observacao:ntext',
+             'statusDesc',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

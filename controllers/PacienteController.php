@@ -87,6 +87,7 @@ class PacienteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            return print_r($model->getErrors());
             return $this->render('update', [
                 'model' => $model,
             ]);

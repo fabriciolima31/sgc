@@ -30,6 +30,8 @@ use Yii;
  */
 class Paciente extends \yii\db\ActiveRecord
 {
+    public $statusDescs = ["EN"=> "Encaminhado", "LE" => "Lista de Espera", 'EC' => "Entrar em Contato", 
+        "AT" => "Atendida", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"];
     /**
      * @inheritdoc
      */
@@ -44,12 +46,14 @@ class Paciente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Consultorio_id'], 'required'],
+            [['data_nascimento', 'moradia', 'local_encaminhamento', 'local_terapia', 
+                'servico', 'horario', 'nome', 'endereco', 'sexo', 'turno_atendimento',
+                'motivo_psicoterapia', 'telefone'], 'required'],
             [['Consultorio_id'], 'integer'],
-            [['data_nascimento'], 'safe'],
+            [['data_nascimento', 'data_inscricao'], 'safe'],
             [['moradia', 'local_encaminhamento', 'local_terapia', 'servico', 'observacao'], 'string'],
             [['nome', 'endereco'], 'string', 'max' => 200],
-            [['status', 'sexo', 'turno_atendimento'], 'string', 'max' => 1],
+            [['status', 'sexo', 'turno_atendimento'], 'string', 'max' => 21],
             [['horario', 'telefone'], 'string', 'max' => 10],
             [['motivo_psicoterapia'], 'string', 'max' => 45],
             [['Consultorio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consultorio::className(), 'targetAttribute' => ['Consultorio_id' => 'id']],
@@ -78,6 +82,7 @@ class Paciente extends \yii\db\ActiveRecord
             'motivo_psicoterapia' => 'Motivo Psicoterapia',
             'servico' => 'Servico',
             'observacao' => 'Observacao',
+            'data_inscrição' => 'Data de Inscrição',
         ];
     }
 
@@ -92,8 +97,47 @@ class Paciente extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSessaos()
+    public function getSessoes()
     {
         return $this->hasMany(Sessao::className(), ['Paciente_id' => 'id']);
+    }
+    
+    /*
+     * Descricão dos status
+     */
+    public function getStatusDesc(){
+        return $this->statusDescs[$this->status];
+    }
+
+    public function beforeSave($insert) {
+        if ($insert) {
+            $this->status = "LE";
+            $this->data_inscricao = date('d-m-y H:i:s', time());
+        }
+        
+        $this->converterDatas_para_AAAA_MM_DD();
+        
+        return true;
+    }
+    
+    public function afterFind() {
+        $this->converterDatas_para_DD_MM_AAAA();
+        return true;
+    }
+    
+    public function converterDatas_para_AAAA_MM_DD() {
+
+        $ano = substr($this->data_nascimento,6,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($this->data_nascimento,3,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($this->data_nascimento,0,2); //pega os 2 caracteres, a contar do índice 0
+        $this->data_nascimento = $ano."-".$mes."-".$dia;
+    }
+
+    public function converterDatas_para_DD_MM_AAAA() {
+
+        $ano = substr($this->data_nascimento,0,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($this->data_nascimento,5,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($this->data_nascimento,8,2); //pega os 2 caracteres, a contar do índice 0
+        $this->data_nascimento = $dia."-".$mes."-".$ano;
     }
 }
