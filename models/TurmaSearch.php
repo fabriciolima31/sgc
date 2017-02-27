@@ -19,7 +19,7 @@ class TurmaSearch extends Turma
     {
         return [
             [['id', 'Disciplina_id'], 'integer'],
-            [['codigo', 'ano', 'semestre'], 'safe'],
+            [['codigo', 'ano', 'semestre', 'data_inicio', 'data_fim'], 'safe'],
         ];
     }
 
@@ -60,6 +60,8 @@ class TurmaSearch extends Turma
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'data_inicio' => $this->data_inicio,
+            'data_fim' => $this->data_fim,
             'Disciplina_id' => $this->Disciplina_id,
         ]);
 

@@ -5,7 +5,6 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Disciplina;
 
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Turma */
 /* @var $form yii\widgets\ActiveForm */
@@ -15,12 +14,7 @@ use app\models\Disciplina;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php 
-        $items = ArrayHelper::map(Disciplina::find()->all(), 'id', 'nome');
-        echo $form->field($model, 'Disciplina_id')->dropDownList($items)
-    ?>
-
-    <?php //echo $form->field($model, 'id')->textInput() ?>
+    <?= $form->field($model, 'codigo')->textInput(['maxlength' => true]) ?>
 
     <?php echo $form->field($model, 'ano')->widget(etsoft\widgets\YearSelectbox::classname(), [
         'yearStart' => 0,
@@ -28,20 +22,18 @@ use app\models\Disciplina;
      ]);
     ?>
 
-    <?php //echo $form->field($model, 'ano')->textInput(['maxlength' => true]) ?>
-
-    <?php //echo $form->field($model, 'semestre')->textInput(['maxlength' => true]) ?>
-
     <?php
-        echo $form->field($model, 'semestre')->dropDownList(['1' => '1º Semestre', '2' => '2º Semestre' , '3' => 'Outro'],['prompt'=>'Selecione uma opção']);
+        echo $form->field($model, 'semestre')->dropDownList(['1' => '1º Semestre', '2' => '2º Semestre'],['prompt'=>'Selecione uma opção']);
     ?>
 
-    <?= $form->field($model, 'codigo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'data_inicio')->textInput() ?>
 
-    <?php //echo $form->field($model, 'Disciplina_id')->textInput() ?>
+    <?= $form->field($model, 'data_fim')->textInput() ?>
+
+    <?= $form->field($model, 'Disciplina_id')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
