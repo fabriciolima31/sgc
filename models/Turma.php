@@ -51,7 +51,7 @@ class Turma extends \yii\db\ActiveRecord
             'descricao' => 'Descricao',
             'ano' => 'Ano',
             'semestre' => 'Semestre',
-            'Disciplina_id' => 'Disciplina ID',
+            'Disciplina_id' => 'Disciplina',
         ];
     }
 

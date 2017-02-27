@@ -18,7 +18,8 @@
         "yiisoft/yii2": "~2.0.5",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
-        "yiibr/yii2-br-validator": "*"
+        "yiibr/yii2-br-validator": "*",
+        "et-soft/yii2-widget-select-year": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
