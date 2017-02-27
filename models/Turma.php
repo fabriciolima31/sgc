@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "Turma".
  *
  * @property integer $id
- * @property string $descricao
+ * @property string $codigo
  * @property string $ano
  * @property string $semestre
  * @property integer $Disciplina_id
@@ -36,7 +36,7 @@ class Turma extends \yii\db\ActiveRecord
         return [
             [['Disciplina_id'], 'required'],
             [['Disciplina_id'], 'integer'],
-            [['descricao', 'ano', 'semestre'], 'string', 'max' => 45],
+            [['codigo', 'ano', 'semestre'], 'string', 'max' => 45],
             [['Disciplina_id'], 'exist', 'skipOnError' => true, 'targetClass' => Disciplina::className(), 'targetAttribute' => ['Disciplina_id' => 'id']],
         ];
     }
@@ -48,7 +48,7 @@ class Turma extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'descricao' => 'Descricao',
+            'codigo' => 'Código',
             'ano' => 'Ano',
             'semestre' => 'Semestre',
             'Disciplina_id' => 'Disciplina',

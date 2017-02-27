@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ProfessorTurmaSearch */
+/* @var $searchModel app\models\UsuarioTurmaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Professor Turmas';
+$this->title = 'Usuario Turmas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="professor-turma-index">
+<div class="usuario-turma-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Professor Turma', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Usuario Turma', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -18,7 +18,7 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id', 'Turma_id'], 'integer'],
+            [['id'], 'integer'],
             [['cpf', 'password', 'nome', 'tipo'], 'safe'],
         ];
     }
@@ -60,7 +60,6 @@ class UserSearch extends User
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'Turma_id' => $this->Turma_id,
         ]);
 
         $query->andFilterWhere(['like', 'cpf', $this->cpf])

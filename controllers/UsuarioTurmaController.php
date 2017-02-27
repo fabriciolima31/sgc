@@ -1,18 +1,18 @@
 <?php
 
-namespace app\models;
+namespace app\controllers;
 
 use Yii;
-use app\models\ProfessorTurma;
-use app\models\ProfessorTurmaSearch;
+use app\models\UsuarioTurma;
+use app\models\UsuarioTurmaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProfessorTurmaController implements the CRUD actions for ProfessorTurma model.
+ * UsuarioTurmaController implements the CRUD actions for UsuarioTurma model.
  */
-class ProfessorTurmaController extends Controller
+class UsuarioTurmaController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class ProfessorTurmaController extends Controller
     }
 
     /**
-     * Lists all ProfessorTurma models.
+     * Lists all UsuarioTurma models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProfessorTurmaSearch();
+        $searchModel = new UsuarioTurmaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class ProfessorTurmaController extends Controller
     }
 
     /**
-     * Displays a single ProfessorTurma model.
+     * Displays a single UsuarioTurma model.
      * @param integer $Turma_id
      * @param integer $Usuarios_id
      * @return mixed
@@ -58,13 +58,13 @@ class ProfessorTurmaController extends Controller
     }
 
     /**
-     * Creates a new ProfessorTurma model.
+     * Creates a new UsuarioTurma model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new ProfessorTurma();
+        $model = new UsuarioTurma();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'Turma_id' => $model->Turma_id, 'Usuarios_id' => $model->Usuarios_id]);
@@ -76,7 +76,7 @@ class ProfessorTurmaController extends Controller
     }
 
     /**
-     * Updates an existing ProfessorTurma model.
+     * Updates an existing UsuarioTurma model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $Turma_id
      * @param integer $Usuarios_id
@@ -96,7 +96,7 @@ class ProfessorTurmaController extends Controller
     }
 
     /**
-     * Deletes an existing ProfessorTurma model.
+     * Deletes an existing UsuarioTurma model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $Turma_id
      * @param integer $Usuarios_id
@@ -110,16 +110,16 @@ class ProfessorTurmaController extends Controller
     }
 
     /**
-     * Finds the ProfessorTurma model based on its primary key value.
+     * Finds the UsuarioTurma model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $Turma_id
      * @param integer $Usuarios_id
-     * @return ProfessorTurma the loaded model
+     * @return UsuarioTurma the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($Turma_id, $Usuarios_id)
     {
-        if (($model = ProfessorTurma::findOne(['Turma_id' => $Turma_id, 'Usuarios_id' => $Usuarios_id])) !== null) {
+        if (($model = UsuarioTurma::findOne(['Turma_id' => $Turma_id, 'Usuarios_id' => $Usuarios_id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

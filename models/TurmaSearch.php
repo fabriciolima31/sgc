@@ -19,7 +19,7 @@ class TurmaSearch extends Turma
     {
         return [
             [['id', 'Disciplina_id'], 'integer'],
-            [['descricao', 'ano', 'semestre'], 'safe'],
+            [['codigo', 'ano', 'semestre'], 'safe'],
         ];
     }
 
@@ -63,7 +63,7 @@ class TurmaSearch extends Turma
             'Disciplina_id' => $this->Disciplina_id,
         ]);
 
-        $query->andFilterWhere(['like', 'descricao', $this->descricao])
+        $query->andFilterWhere(['like', 'codigo', $this->codigo])
             ->andFilterWhere(['like', 'ano', $this->ano])
             ->andFilterWhere(['like', 'semestre', $this->semestre]);
 

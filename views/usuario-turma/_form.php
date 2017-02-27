@@ -7,16 +7,13 @@ use app\models\Turma;
 use app\models\User;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ProfessorTurma */
+/* @var $model app\models\UsuarioTurma */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="professor-turma-form">
+<div class="usuario-turma-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?php //echo $form->field($model, 'Turma_id')->textInput() ?>
-
 
     <?php 
         $items = ArrayHelper::map(Turma::find()->all(), 'id', 'descricao');
@@ -28,11 +25,8 @@ use app\models\User;
         echo $form->field($model, 'Usuarios_id')->dropDownList($items)
     ?>
 
-
-    <?php //echo $form->field($model, 'Usuarios_id')->textInput() ?>
-
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

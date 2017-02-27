@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ProfessorTurma */
+/* @var $model app\models\UsuarioTurma */
 
 $this->title = $model->Turma_id;
-$this->params['breadcrumbs'][] = ['label' => 'Professor Turmas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Usuario Turmas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="professor-turma-view">
+<div class="usuario-turma-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -38,8 +38,7 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
             ['password_repeat', 'required'],
             ['password_repeat', 'compare', 'compareAttribute'=>'password', 'message'=>"Esta senha não é igual à anterior" ],
             [['auth_key'], 'string', 'max' => 255],
-            [['password'], 'string', 'min' => 6, 'max' => 15],
-            [['Turma_id'], 'integer']
+            [['password'], 'string', 'min' => 6, 'max' => 15]
         ];
     }
 
@@ -196,10 +195,6 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
         }
     }
     
-    public function getTurma()
-    {
-        return $this->hasOne(Turma::className(), ['id' => 'Turma_id']);
-    }
     
     /*
      * Verifica a existência de um usário ativo

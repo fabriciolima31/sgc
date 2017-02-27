@@ -28,11 +28,7 @@ use app\models\Turma;
     
     <?= $form->field($model, 'tipo')->dropDownList(['1' => 'Professor', '2' => 'Psicólogo', 
         '3' => 'Terapeuta', '4' => 'Adminstrador'], ['prompt'=>'Selecione um Perfil ']); ?>
-    
-    <?php 
-        $turmas = ArrayHelper::map(Turma::find()->all(), 'id', 'descricao');
-        echo $form->field($model, 'Turma_id')->dropDownList($turmas, ['prompt' => 'Selecione uma Turma '])
-    ?>
+  
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

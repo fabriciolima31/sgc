@@ -36,7 +36,7 @@ use app\models\Disciplina;
         echo $form->field($model, 'semestre')->dropDownList(['1' => '1º Semestre', '2' => '2º Semestre' , '3' => 'Outro'],['prompt'=>'Selecione uma opção']);
     ?>
 
-    <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'codigo')->textInput(['maxlength' => true]) ?>
 
     <?php //echo $form->field($model, 'Disciplina_id')->textInput() ?>
 
