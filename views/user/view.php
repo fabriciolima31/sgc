@@ -34,11 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label'=>'Perfil',
                 'value'=>$model->perfil,
             ],
-            [
-                'label' => 'Turma',
-                'value' => $model->turma != null ? $model->turma->descricao : "",
-                'visible' => $model->tipo == 3,
-            ],
+
         ],
     ]) ?>
 
