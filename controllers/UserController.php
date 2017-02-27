@@ -44,12 +44,20 @@ class UserController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        if(isset(Yii::$app->request->queryParams['perfil']))
+            $params['perfil'] = Yii::$app->request->queryParams['perfil'];
+        else
+            $params['perfil'] = "";
 
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->search($params);
+        
+        $perfil = User::getPerfil($params['perfil']);
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'perfil' => $perfil,
         ]);
     }
 

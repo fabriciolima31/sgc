@@ -36,10 +36,22 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Início', 'url' => ['/site/index']],
+
             ['label' => 'Disciplinas', 'url' => ['/disciplina/index']],
             ['label' => 'Turmas', 'url' => ['/turma/index']],
             ['label' => 'Usuários', 'url' => ['/user/index']],
+            [
+            'label' => 'Usuários',
+            'items' => [
+                ['label' => 'Professores', 'url' => ['/user/index/perfil=1']], 
+                '<li class="divider"></li>', 
+                ['label' => 'Psicólogos', 'url' => '/user/indexperfil=2'],
+                '<li class="divider"></li>',
+                ['label' => 'Terapeutas', 'url' => '/user/index?&perfil=3'],
+                '<li class="divider"></li>',
+                ['label' => 'Administradores', 'url' => '/user/index&perfil=4'],
+                ],
+            ],
             ['label' => 'Usuario_Turmas', 'url' => ['/usuario-turma/index']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (

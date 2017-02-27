@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Usuários';
+$this->title = 'Usuários - '.$perfil;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -24,21 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             
             'cpf',
             'nome',
-             [  'label' => 'Perfil',
-                'attribute' => 'tipo',
-                'filter'=>array("1"=>"Professor","2"=>"Psicólogo", "3" => "Terapeuta", "4" => "Adminstrador"),
-                'value' => function ($model) {
-                     if($model->tipo == 1){
-                         return 'Professor';
-                     }else if($model->tipo == 2){
-                         return "Psicólogo";
-                     }else if($model->tipo == 3){
-                         return "Terapeuta";
-                     }else{
-                         return "Administrador";
-                     }
-                },
-            ],
+            'email',
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

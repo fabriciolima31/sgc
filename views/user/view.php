@@ -30,11 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'cpf',
             'nome',
-            [
-                'label'=>'Perfil',
-                'value'=>$model->perfil,
-            ],
-
         ],
     ]) ?>
 

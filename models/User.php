@@ -32,7 +32,7 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
         return [
             [['cpf', 'password', 'nome', 'tipo', 'email'], 'required'],
             [['cpf'], 'string'],
-            //[['cpf'],  CpfValidator::className(), 'message' => 'CPF Inválido'],
+            [['cpf'],  CpfValidator::className(), 'message' => 'CPF Inválido'],
             [['email'], 'email'],
             [['status'], 'string'],
             ['password_repeat', 'required'],
@@ -182,16 +182,18 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
         $this->password_reset_token = null;
     }
     
-    public function getPerfil()
+    public function getPerfil($perfil)
     {
-        if ($this->tipo == 1) {
-            return "Professor";
-        } else if ($this->tipo == 2) {
-            return "Psicólogo";
-        } else if ($this->tipo == 3) {
-            return "Terapeuta";
+        if ($perfil == 1) {
+            return "Professores";
+        } else if ($perfil == 2) {
+            return "Psicólogos";
+        } else if ($perfil == 3) {
+            return "Terapeutas";
+        } else if ($perfil == 4) {
+            return "Administradores";
         } else {
-            return "Administrador";
+            return "Todos";
         }
     }
     

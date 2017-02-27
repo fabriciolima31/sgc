@@ -19,7 +19,7 @@ class UserSearch extends User
     {
         return [
             [['id'], 'integer'],
-            [['cpf', 'password', 'nome', 'tipo'], 'safe'],
+            [['cpf', 'password', 'nome', 'tipo', 'email'], 'safe'],
         ];
     }
 
@@ -41,9 +41,17 @@ class UserSearch extends User
      */
     public function search($params)
     {
-        $query = User::find()->where(['status' => 1]);
-
-        // add conditions that should always apply here
+        if ($params['perfil'] == 1) {
+            $query = User::find()->where(['status' => 1, 'tipo' => 1]);
+        } else if ($params['perfil'] == 2) {
+            $query = User::find()->where(['status' => 1, 'tipo' => 2]);
+        } else if ($params['perfil'] == 3) {
+            $query = User::find()->where(['status' => 1, 'tipo' => 3]);
+        } else if ($params['perfil'] == 4) {
+            $query = User::find()->where(['status' => 1, 'tipo' => 4]);
+        } else {
+            $query = User::find()->where(['status' => 1]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -64,6 +72,7 @@ class UserSearch extends User
 
         $query->andFilterWhere(['like', 'cpf', $this->cpf])
             ->andFilterWhere(['like', 'nome', $this->nome])
+            ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'tipo', $this->tipo]);
 
         return $dataProvider;
