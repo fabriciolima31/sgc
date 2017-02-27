@@ -82,6 +82,8 @@ class UserController extends Controller
     {
         $model = new User();
 
+        $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a senha e repetir senha.
+
         if ($model->load(Yii::$app->request->post())) {
             if($model->existenteUsuario != '1'){
                 if ($model->existenteUsuario != '0') {
@@ -123,6 +125,30 @@ class UserController extends Controller
 
         } else {
             return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionUpdatesenha($id)
+    {
+        $model = $this->findModel($id);
+        $senha = $model->password;
+        $model->password = "";
+
+        $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a senha e repetir senha.
+
+        if ($model->load(Yii::$app->request->post())){
+
+            $atributos = array("password");
+            
+            if($model->save(true,$atributos)) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+
+        } else {
+            return $this->render('updatesenha', [
                 'model' => $model,
             ]);
         }

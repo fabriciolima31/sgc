@@ -31,7 +31,8 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
     {
         return [
             [['cpf', 'nome', 'tipo', 'email'], 'required'],
-            [['password','password_repeat'], 'required','on'=>'create'],
+            [['password','password_repeat'], 'required','on'=> 'create'],
+            [['password','password_repeat'], 'required','on'=> 'updatesenha'],
             [['cpf'], 'string'],
             [['cpf'],  CpfValidator::className(), 'message' => 'CPF Inválido'],
             [['email'], 'email'],

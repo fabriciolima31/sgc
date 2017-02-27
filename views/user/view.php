@@ -28,8 +28,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'cpf',
             'nome',
+            'cpf',
+            'email',
+            ['label' =>'Perfil',
+            'attribute' => 'tipo',
+                'value' => function ($model){
+                    $array_perfil = array(1 => "Professor" , 2 => "Psicólogo", 3 => "Aluno Terapeuta" , 4 => "Estagiário Administrativo");
+                    return $array_perfil[$model->tipo];
+                }
+            ],
+
         ],
     ]) ?>
 
