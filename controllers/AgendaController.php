@@ -65,8 +65,25 @@ class AgendaController extends Controller
     {
         $model = new Agenda();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $array_dia_semana = array ('1' => 'Segunda-Feira', '2' => 'Terça-Feira', '3' => 'Quarta-Feira', '4' => 'Quinta-Feira', '5' => 'Sexta-Feira', '6' => 'Sábado' );
+
+            $model->diaSemana = 1;
+            $model->status = '1';
+
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            else{
+
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+
+            }
+
+
         } else {
             return $this->render('create', [
                 'model' => $model,

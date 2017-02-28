@@ -38,9 +38,10 @@ class Agenda extends \yii\db\ActiveRecord
     {
         return [
             [['Consultorio_id', 'Usuarios_id', 'diaSemana', 'horaInicio', 'horaFim', 'status', 'data_inicio', 'data_fim'], 'required'],
-            [['Consultorio_id', 'Usuarios_id'], 'integer'],
+            [['diaSemana','Consultorio_id', 'Usuarios_id'], 'integer'],
             [['horaInicio', 'horaFim', 'data_inicio', 'data_fim'], 'safe'],
-            [['diaSemana'], 'string', 'max' => 20],
+            [['data_inicio'], 'validateDateIni'],
+            [['data_fim'], 'validateDateFim'],
             [['status'], 'string', 'max' => 1],
             [['Consultorio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consultorio::className(), 'targetAttribute' => ['Consultorio_id' => 'id']],
             [['Usuarios_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['Usuarios_id' => 'id']],
@@ -64,6 +65,33 @@ class Agenda extends \yii\db\ActiveRecord
             'data_fim' => 'Data Fim',
         ];
     }
+
+
+    /*Funções para validação de atributos*/
+    public function validateDateIni($attribute, $params){
+        if (!$this->hasErrors()) {
+
+            $date1= $this->data_inicio;
+            $date2= date('d-m-Y');
+
+        if (strtotime($date1) < strtotime($date2)) {
+                $this->addError($attribute, 'Informe uma data igual ou posterior a '.date('d-m-Y'));
+            }
+        }
+
+    }
+    public function validateDateFim($attribute, $params){
+        if (!$this->hasErrors()) {
+
+            $date1= $this->data_inicio;
+            $date2= $this->data_fim;
+
+            if (strtotime($date2) < strtotime($date1)) {
+                $this->addError($attribute, 'Informe uma data igual ou posterior a '.date("d-m-Y", strtotime($this->data_inicio)));
+            }
+        }
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery

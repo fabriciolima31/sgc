@@ -64,7 +64,7 @@ use dosamigos\datepicker\DatePicker;
                 'template' => '{addon}{input}',
                     'clientOptions' => [
                         'autoclose' => true,
-                        'format' => 'dd-M-yyyy'
+                        'format' => 'dd-mm-yyyy'
                     ]
             ]);
         ?>
@@ -79,7 +79,7 @@ use dosamigos\datepicker\DatePicker;
                 'template' => '{addon}{input}',
                     'clientOptions' => [
                         'autoclose' => true,
-                        'format' => 'dd-M-yyyy'
+                        'format' => 'dd-mm-yyyy'
                     ]
             ]);
 
@@ -99,8 +99,11 @@ use dosamigos\datepicker\DatePicker;
 <script type="text/javascript">
 
     //gambiarra
-    document.getElementById("agenda-horainicio-disp").value = 0;
-    document.getElementById("agenda-horafim-disp").value = 0;
+    if(document.getElementById("agenda-horainicio-disp").value == ''){
+        document.getElementById("agenda-horainicio-disp").value = 0;
+        document.getElementById("agenda-horafim-disp").value = 0;
+    }
+
 </script>
 
 
