@@ -15,8 +15,6 @@ use yii\widgets\MaskedInput;
 
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'horario')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'sexo')->dropDownList(['M' => 'Masculino', 'F' => 'Feminino'],['prompt'=>'Selecione uma Opção']); ?>
     
     <?= $form->field($model, 'data_nascimento')->widget(MaskedInput::className(), [
@@ -42,7 +40,7 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'observacao')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Salvar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

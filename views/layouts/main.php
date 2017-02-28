@@ -39,7 +39,7 @@ AppAsset::register($this);
 
             ['label' => 'Disciplinas', 'url' => ['/disciplina/index']],
             ['label' => 'Turmas', 'url' => ['/turma/index']],
-            ['label' => 'Usuários', 'url' => ['/user/index']],
+            ['label' => 'Paciente', 'url' => ['/paciente/index']],
             [
             'label' => 'Usuários',
             'items' => [

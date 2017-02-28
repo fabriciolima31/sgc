@@ -18,8 +18,8 @@ class PacienteSearch extends Paciente
     public function rules()
     {
         return [
-            [['id', 'Consultorio_id'], 'integer'],
-            [['nome', 'status', 'horario', 'sexo', 'data_nascimento', 'telefone', 'endereco', 'moradia', 'turno_atendimento', 'local_encaminhamento', 'local_terapia', 'motivo_psicoterapia', 'servico', 'observacao', 'data_inscricao'], 'safe'],
+            [['id'], 'integer'],
+            [['nome', 'status', 'sexo', 'data_nascimento', 'telefone', 'endereco', 'moradia', 'turno_atendimento', 'local_encaminhamento', 'local_terapia', 'motivo_psicoterapia', 'servico', 'observacao', 'data_inscricao'], 'safe'],
         ];
     }
 
@@ -41,7 +41,11 @@ class PacienteSearch extends Paciente
      */
     public function search($params)
     {
-        $query = Paciente::find()->where(['status' => 'LE']);
+        if ($params['status'] != "") {
+            $query = Paciente::find()->where(['status' => $params['status']]);
+        }else{
+            $query = Paciente::find();
+        }
 
         // add conditions that should always apply here
 
@@ -60,13 +64,11 @@ class PacienteSearch extends Paciente
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'Consultorio_id' => $this->Consultorio_id,
             'data_nascimento' => $this->data_nascimento,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'horario', $this->horario])
             ->andFilterWhere(['like', 'sexo', $this->sexo])
             ->andFilterWhere(['like', 'telefone', $this->telefone])
             ->andFilterWhere(['like', 'endereco', $this->endereco])
