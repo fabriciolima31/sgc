@@ -20,21 +20,29 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@', '?'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
+
+
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index','update','view', 'delete'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@' , '?'],
+                    ],
+                    // everything else is denied
+                ],
+            ],
+
+
+
         ];
     }
 

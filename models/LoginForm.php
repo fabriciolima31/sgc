@@ -40,6 +40,7 @@ class LoginForm extends Model
         return [
             'cpf' => 'CPF',
             'password' => 'Senha',
+            'rememberMe' => 'Lembrar-me'
         ];
     }
 

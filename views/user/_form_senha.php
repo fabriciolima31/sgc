@@ -18,6 +18,7 @@ use app\models\Turma;
     <?php $form = ActiveForm::begin(); ?>
 
     <?php 
+            echo $form->field($model, 'nome')->textInput(['maxlength' => true, 'readonly' => true]);
             echo $form->field($model, 'cpf')->textInput(['readonly'=>true]);
             echo $form->field($model, 'password')->passwordInput(['maxlength' => true]);
             echo $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]);
