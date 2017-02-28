@@ -54,37 +54,20 @@ use dosamigos\datepicker\DatePicker;
 
         ?>
 
-        <div style="margin: 0 0 1% 0 ">
-        <?php
-            echo "<b>Data Início</b><br>";
-            echo DatePicker::widget([
-                'model' => $model,
-                'attribute' => 'data_inicio',
-                'language' => 'pt',
-                'template' => '{addon}{input}',
-                    'clientOptions' => [
-                        'autoclose' => true,
-                        'format' => 'dd-mm-yyyy'
-                    ]
-            ]);
-        ?>
-        </div>
-        <div style="margin: 0 0 1% 0 ">
-        <?php
-            echo "<b>Data Fim</b><br>";
-            echo DatePicker::widget([
-                'model' => $model,
-                'attribute' => 'data_fim',
-                'language' => 'pt',
-                'template' => '{addon}{input}',
-                    'clientOptions' => [
-                        'autoclose' => true,
-                        'format' => 'dd-mm-yyyy'
-                    ]
-            ]);
 
-         ?>
-         </div>
+    <?= $form->field($model,'data_inicio')->widget(DatePicker::className(),
+    [    'language' => 'pt',
+
+        'clientOptions' => ['format' => 'dd-mm-yyyy']
+    ]) ?>
+
+
+    <?= $form->field($model,'data_fim')->widget(DatePicker::className(),
+    [    'language' => 'pt',
+
+        'clientOptions' => ['format' => 'dd-mm-yyyy']
+    ]) ?>
+
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
