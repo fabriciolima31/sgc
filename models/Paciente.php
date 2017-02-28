@@ -11,8 +11,6 @@ use Yii;
  * @property integer $id
  * @property string $nome
  * @property string $status
- * @property integer $Consultorio_id
- * @property string $horario
  * @property string $sexo
  * @property string $data_nascimento
  * @property string $telefone
@@ -47,16 +45,14 @@ class Paciente extends \yii\db\ActiveRecord
     {
         return [
             [['data_nascimento', 'moradia', 'local_encaminhamento', 'local_terapia', 
-                'servico', 'horario', 'nome', 'endereco', 'sexo', 'turno_atendimento',
+                'servico', 'nome', 'endereco', 'sexo', 'turno_atendimento',
                 'motivo_psicoterapia', 'telefone'], 'required'],
-            [['Consultorio_id'], 'integer'],
             [['data_nascimento', 'data_inscricao'], 'safe'],
             [['moradia', 'local_encaminhamento', 'local_terapia', 'servico', 'observacao'], 'string'],
             [['nome', 'endereco'], 'string', 'max' => 200],
             [['status', 'sexo', 'turno_atendimento'], 'string', 'max' => 21],
-            [['horario', 'telefone'], 'string', 'max' => 10],
+            [['telefone'], 'string', 'max' => 10],
             [['motivo_psicoterapia'], 'string', 'max' => 45],
-            [['Consultorio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consultorio::className(), 'targetAttribute' => ['Consultorio_id' => 'id']],
         ];
     }
 
@@ -69,8 +65,7 @@ class Paciente extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nome' => 'Nome',
             'status' => 'Status',
-            'Consultorio_id' => 'Consultorio ID',
-            'horario' => 'Horario',
+            'statusDesc' => 'Status',
             'sexo' => 'Sexo',
             'data_nascimento' => 'Data Nascimento',
             'telefone' => 'Telefone',
@@ -84,14 +79,6 @@ class Paciente extends \yii\db\ActiveRecord
             'observacao' => 'Observacao',
             'data_inscrição' => 'Data de Inscrição',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getConsultorio()
-    {
-        return $this->hasOne(Consultorio::className(), ['id' => 'Consultorio_id']);
     }
 
     /**

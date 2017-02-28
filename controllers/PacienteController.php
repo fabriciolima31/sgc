@@ -35,8 +35,14 @@ class PacienteController extends Controller
      */
     public function actionIndex()
     {
+        if (isset(Yii::$app->request->queryParams['status'])) {
+            $params['status'] = Yii::$app->request->queryParams['status'];
+        } else {
+            $params['status'] = "";
+        }
+        
         $searchModel = new PacienteSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

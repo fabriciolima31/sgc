@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Paciente */
 
-$this->title = $model->id;
+$this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Pacientes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Remover', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -28,17 +28,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'nome',
-            'status',
-            'Consultorio_id',
-            'horario',
-            'sexo',
+            'statusDesc',
+            ['label' =>'Sexo',
+            'attribute' => 'sexo',
+                'value' => function ($model){
+                    return $model->sexo ? "Masculino" : "Feminino";
+                }
+            ],
             'data_nascimento',
             'telefone',
             'endereco',
             'moradia:ntext',
-            'turno_atendimento',
+            ['label' =>'Turno de Atendimento',
+            'attribute' => 'turno_atendimento',
+                'value' => function ($model){
+                    $array = ['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite'];
+                    return $array[$model->turno_atendimento];
+                }
+            ],
             'local_encaminhamento:ntext',
             'local_terapia:ntext',
             'motivo_psicoterapia',

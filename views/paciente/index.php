@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Paciente', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Paciente', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -25,8 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'nome',
             'status',
-            'Consultorio_id',
-            'horario',
             // 'sexo',
             // 'data_nascimento',
             // 'telefone',
