@@ -46,17 +46,13 @@ class AgendaController extends Controller
 
     /**
      * Displays a single Agenda model.
-     * @param integer $Consultorio_id
-     * @param integer $Usuarios_id
-     * @param string $diaSemana
-     * @param string $horaInicio
-     * @param string $status
+     * @param integer $id
      * @return mixed
      */
-    public function actionView($Consultorio_id, $Usuarios_id, $diaSemana, $horaInicio, $status)
+    public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($Consultorio_id, $Usuarios_id, $diaSemana, $horaInicio, $status),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -70,7 +66,7 @@ class AgendaController extends Controller
         $model = new Agenda();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'Consultorio_id' => $model->Consultorio_id, 'Usuarios_id' => $model->Usuarios_id, 'diaSemana' => $model->diaSemana, 'horaInicio' => $model->horaInicio, 'status' => $model->status]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,19 +77,15 @@ class AgendaController extends Controller
     /**
      * Updates an existing Agenda model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $Consultorio_id
-     * @param integer $Usuarios_id
-     * @param string $diaSemana
-     * @param string $horaInicio
-     * @param string $status
+     * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($Consultorio_id, $Usuarios_id, $diaSemana, $horaInicio, $status)
+    public function actionUpdate($id)
     {
-        $model = $this->findModel($Consultorio_id, $Usuarios_id, $diaSemana, $horaInicio, $status);
+        $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'Consultorio_id' => $model->Consultorio_id, 'Usuarios_id' => $model->Usuarios_id, 'diaSemana' => $model->diaSemana, 'horaInicio' => $model->horaInicio, 'status' => $model->status]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -104,16 +96,12 @@ class AgendaController extends Controller
     /**
      * Deletes an existing Agenda model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $Consultorio_id
-     * @param integer $Usuarios_id
-     * @param string $diaSemana
-     * @param string $horaInicio
-     * @param string $status
+     * @param integer $id
      * @return mixed
      */
-    public function actionDelete($Consultorio_id, $Usuarios_id, $diaSemana, $horaInicio, $status)
+    public function actionDelete($id)
     {
-        $this->findModel($Consultorio_id, $Usuarios_id, $diaSemana, $horaInicio, $status)->delete();
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
@@ -121,17 +109,13 @@ class AgendaController extends Controller
     /**
      * Finds the Agenda model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $Consultorio_id
-     * @param integer $Usuarios_id
-     * @param string $diaSemana
-     * @param string $horaInicio
-     * @param string $status
+     * @param integer $id
      * @return Agenda the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($Consultorio_id, $Usuarios_id, $diaSemana, $horaInicio, $status)
+    protected function findModel($id)
     {
-        if (($model = Agenda::findOne(['Consultorio_id' => $Consultorio_id, 'Usuarios_id' => $Usuarios_id, 'diaSemana' => $diaSemana, 'horaInicio' => $horaInicio, 'status' => $status])) !== null) {
+        if (($model = Agenda::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

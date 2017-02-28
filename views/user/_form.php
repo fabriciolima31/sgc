@@ -17,6 +17,12 @@ use app\models\Turma;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?php 
+        if($this->context->action->id == 'update'){
+            echo $form->field($model, 'cpf')->textInput(['readonly'=>true]);
+        }
+    ?>
+
     <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput() ?>
@@ -28,12 +34,6 @@ use app\models\Turma;
             'mask' => '999.999.999-99',]);
             echo $form->field($model, 'password')->passwordInput(['maxlength' => true]);
             echo $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]);
-        }
-    ?>
-
-    <?php 
-        if($this->context->action->id == 'update'){
-            echo $form->field($model, 'cpf')->textInput(['readonly'=>true]);
         }
     ?>
   

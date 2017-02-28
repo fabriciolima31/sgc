@@ -18,8 +18,8 @@ class AgendaSearch extends Agenda
     public function rules()
     {
         return [
-            [['Consultorio_id', 'Usuarios_id'], 'integer'],
-            [['diaSemana', 'horaInicio', 'horaFim', 'status'], 'safe'],
+            [['id', 'Consultorio_id', 'Usuarios_id'], 'integer'],
+            [['diaSemana', 'horaInicio', 'horaFim', 'status', 'data_inicio', 'data_fim'], 'safe'],
         ];
     }
 
@@ -59,10 +59,13 @@ class AgendaSearch extends Agenda
 
         // grid filtering conditions
         $query->andFilterWhere([
+            'id' => $this->id,
             'Consultorio_id' => $this->Consultorio_id,
             'Usuarios_id' => $this->Usuarios_id,
             'horaInicio' => $this->horaInicio,
             'horaFim' => $this->horaFim,
+            'data_inicio' => $this->data_inicio,
+            'data_fim' => $this->data_fim,
         ]);
 
         $query->andFilterWhere(['like', 'diaSemana', $this->diaSemana])

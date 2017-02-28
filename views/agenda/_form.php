@@ -2,6 +2,16 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Consultorio;
+use app\models\User;
+
+use kartik\datecontrol\Module;
+use kartik\datecontrol\DateControl;
+use dosamigos\datepicker\DatePicker;
+
+
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Agenda */
@@ -12,17 +22,69 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'Consultorio_id')->textInput() ?>
+<?php 
+    $items = ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
+    echo $form->field($model, 'Consultorio_id')->dropDownList($items,['prompt' => 'Selecione um Consultório']);
+?>
 
-    <?= $form->field($model, 'Usuarios_id')->textInput() ?>
+<?php 
+    $items = ArrayHelper::map(User::find()->where(['tipo' => 3])->all(), 'id', 'nome');
+    echo $form->field($model, 'Usuarios_id')->dropDownList($items,['prompt' => 'Selecione um Usuário']);
+?>
 
-    <?= $form->field($model, 'diaSemana')->textInput(['maxlength' => true]) ?>
+    <div style="border: solid 1px lightgray; padding: 2px 1px 0px 4px; margin-bottom: 1%">
+<?php echo $form->field($model, 'diaSemana[]')->checkboxList(['1' => 'Segunda-Feira', '2' => 'Terça-Feira', '3' => 'Quarta-Feira', '4' => 'Quinta-Feira', '5' => 'Sexta-Feira', '6' => 'Sábado' ]); ?>
+    </div>
 
-    <?= $form->field($model, 'horaInicio')->textInput() ?>
+        <?php
 
-    <?= $form->field($model, 'horaFim')->textInput() ?>
+            echo $form->field($model, 'horaInicio', ['options' => []])->widget(DateControl::classname(), [
+            'language' => 'pt-BR',
+            'name'=>'kartik-date',
+            'type'=>DateControl::FORMAT_TIME,
+            'displayFormat' => 'php: H:i',
+        ])->label("<font color='#FF0000'>*</font> <b>Hora de Início:</b>");
 
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
+            echo $form->field($model, 'horaFim', ['options' => []])->widget(DateControl::classname(), [
+            'language' => 'pt-BR',
+            'name'=>'kartik-date',
+            'type'=>DateControl::FORMAT_TIME,
+            'displayFormat' => 'php: H:i',
+        ])->label("<font color='#FF0000'>*</font> <b>Hora de Início:</b>");
+
+        ?>
+
+        <div style="margin: 0 0 1% 0 ">
+        <?php
+            echo "<b>Data Início</b><br>";
+            echo DatePicker::widget([
+                'model' => $model,
+                'attribute' => 'data_inicio',
+                'language' => 'pt',
+                'template' => '{addon}{input}',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-M-yyyy'
+                    ]
+            ]);
+        ?>
+        </div>
+        <div style="margin: 0 0 1% 0 ">
+        <?php
+            echo "<b>Data Fim</b><br>";
+            echo DatePicker::widget([
+                'model' => $model,
+                'attribute' => 'data_fim',
+                'language' => 'pt',
+                'template' => '{addon}{input}',
+                    'clientOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-M-yyyy'
+                    ]
+            ]);
+
+         ?>
+         </div>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
@@ -31,3 +93,15 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<head>  
+
+<script type="text/javascript">
+
+    //gambiarra
+    document.getElementById("agenda-horainicio-disp").value = 0;
+    document.getElementById("agenda-horafim-disp").value = 0;
+</script>
+
+
+</head>

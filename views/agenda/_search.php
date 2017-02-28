@@ -15,6 +15,8 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
+    <?= $form->field($model, 'id') ?>
+
     <?= $form->field($model, 'Consultorio_id') ?>
 
     <?= $form->field($model, 'Usuarios_id') ?>
@@ -23,9 +25,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'horaInicio') ?>
 
-    <?= $form->field($model, 'horaFim') ?>
+    <?php // echo $form->field($model, 'horaFim') ?>
 
     <?php // echo $form->field($model, 'status') ?>
+
+    <?php // echo $form->field($model, 'data_inicio') ?>
+
+    <?php // echo $form->field($model, 'data_fim') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
