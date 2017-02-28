@@ -50,7 +50,7 @@ use dosamigos\datepicker\DatePicker;
             'name'=>'kartik-date',
             'type'=>DateControl::FORMAT_TIME,
             'displayFormat' => 'php: H:i',
-        ])->label("<font color='#FF0000'>*</font> <b>Hora de Início:</b>");
+        ])->label("<font color='#FF0000'>*</font> <b>Hora de Fim:</b>");
 
         ?>
 

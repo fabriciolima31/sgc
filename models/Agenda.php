@@ -40,6 +40,8 @@ class Agenda extends \yii\db\ActiveRecord
             [['Consultorio_id', 'Usuarios_id', 'diaSemana', 'horaInicio', 'horaFim', 'status', 'data_inicio', 'data_fim'], 'required'],
             [['diaSemana','Consultorio_id', 'Usuarios_id'], 'integer'],
             [['horaInicio', 'horaFim', 'data_inicio', 'data_fim'], 'safe'],
+            [['horaInicio'], 'validateHoraIni'],
+            [['horaFim'], 'validateHoraFim'],
             [['data_inicio'], 'validateDateIni'],
             [['data_fim'], 'validateDateFim'],
             [['status'], 'string', 'max' => 1],
@@ -88,6 +90,39 @@ class Agenda extends \yii\db\ActiveRecord
 
             if (strtotime($date2) < strtotime($date1)) {
                 $this->addError($attribute, 'Informe uma data igual ou posterior a '.date("d-m-Y", strtotime($this->data_inicio)));
+            }
+        }
+    }
+
+
+    public function validateHoraIni($attribute, $params){
+        if (!$this->hasErrors()) {
+
+            $hora1= date('H:i',strtotime($this->horaInicio));
+            $hora2= date('H:i',strtotime($this->horaFim));
+
+            if ($hora1 < date('H:i', strtotime("08:00")) || $hora1 > date('H:i', strtotime("21:00")) ) {
+
+                $this->addError($attribute, 'A hora inicial deve ter horário MAIOR ou IGUAL a 08:00 e MENOR OU IGUAL AS 21:00');
+
+            }
+
+        }
+
+    }
+    public function validateHoraFim($attribute, $params){
+        if (!$this->hasErrors()) {
+
+            $hora1= date('H:i',strtotime($this->horaInicio));
+            $hora2= date('H:i',strtotime($this->horaFim));
+
+            if (strtotime($hora2) < strtotime($hora1)) {
+                $this->addError($attribute, 'A hora final deve ser MAIOR que a hora inicial.');
+            }
+            if ($hora2 < date('H:i', strtotime("08:00")) || $hora2 > date('H:i', strtotime("21:00")) ) {
+
+                $this->addError($attribute, 'A hora fim deve ter horário MAIOR ou IGUAL a 08:00 e MENOR OU IGUAL AS 21:00');
+
             }
         }
     }
