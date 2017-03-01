@@ -92,7 +92,6 @@ class AgendaController extends Controller
                     $model->Usuarios_id = 2;
                     $model->data_inicio = $dataDoLoop;
                     $model->data_fim = $dataDoLoop;
-                    $model->diaSemana = 1;
                     $model->status = '1';
                     $model->save();
                 }
