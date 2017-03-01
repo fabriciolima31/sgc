@@ -19,7 +19,7 @@ class SessaoSearch extends Sessao
     {
         return [
             [['id', 'Paciente_id', 'Usuarios_id', 'Consultorio_id'], 'integer'],
-            [['data'], 'safe'],
+            [['data', 'horario'], 'safe'],
         ];
     }
 
@@ -65,6 +65,8 @@ class SessaoSearch extends Sessao
             'Consultorio_id' => $this->Consultorio_id,
             'data' => $this->data,
         ]);
+
+        $query->andFilterWhere(['like', 'horario', $this->horario]);
 
         return $dataProvider;
     }

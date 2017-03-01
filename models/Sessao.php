@@ -12,6 +12,7 @@ use Yii;
  * @property integer $Usuarios_id
  * @property integer $Consultorio_id
  * @property string $data
+ * @property string $horario
  *
  * @property Consultorio $consultorio
  * @property Paciente $paciente
@@ -33,12 +34,13 @@ class Sessao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Paciente_id', 'Usuarios_id', 'Consultorio_id', 'data'], 'required'],
+            [['Paciente_id', 'Usuarios_id', 'Consultorio_id', 'data', 'horario'], 'required'],
             [['Paciente_id', 'Usuarios_id', 'Consultorio_id'], 'integer'],
             [['data'], 'safe'],
+            [['horario'], 'string', 'max' => 45],
             [['Consultorio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consultorio::className(), 'targetAttribute' => ['Consultorio_id' => 'id']],
             [['Paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['Paciente_id' => 'id']],
-            [['Usuarios_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['Usuarios_id' => 'id']],
+            [['Usuarios_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['Usuarios_id' => 'id']],
         ];
     }
 
@@ -53,6 +55,7 @@ class Sessao extends \yii\db\ActiveRecord
             'Usuarios_id' => 'Usuarios ID',
             'Consultorio_id' => 'Consultorio ID',
             'data' => 'Data',
+            'horario' => 'Horario',
         ];
     }
 
@@ -77,6 +80,6 @@ class Sessao extends \yii\db\ActiveRecord
      */
     public function getUsuarios()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'Usuarios_id']);
+        return $this->hasOne(User::className(), ['id' => 'Usuarios_id']);
     }
 }

@@ -81,6 +81,6 @@ class Turma extends \yii\db\ActiveRecord
      */
     public function getUsuarios()
     {
-        return $this->hasMany(Usuarios::className(), ['id' => 'Usuarios_id'])->viaTable('Usuario_Turma', ['Turma_id' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'Usuarios_id'])->viaTable('Usuario_Turma', ['Turma_id' => 'id']);
     }
 }

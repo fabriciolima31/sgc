@@ -60,6 +60,6 @@ class UsuarioTurma extends \yii\db\ActiveRecord
      */
     public function getUsuarios()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'Usuarios_id']);
+        return $this->hasOne(User::className(), ['id' => 'Usuarios_id']);
     }
 }

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Sessao', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Nova Sessão', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'Usuarios_id',
             'Consultorio_id',
             'data',
+            // 'horario',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
