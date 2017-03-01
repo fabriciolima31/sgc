@@ -36,7 +36,22 @@ class SessaoController extends Controller
     public function actionIndex()
     {
         $searchModel = new SessaoSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchPaciente(Yii::$app->request->queryParams);
+
+        return $this->render('indexpaciente', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    /**
+     * Lists all Sessao models.
+     * @return mixed
+     */
+    public function actionAll($id)
+    {
+        $searchModel = new SessaoSearch();
+        $dataProvider = $searchModel->search(['Paciente_id' => $id]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -61,13 +76,17 @@ class SessaoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $model = new Sessao();
+        $model->data = date('d-m-Y');
+        $model->Paciente_id = $id;
+        $model->Usuarios_id = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
+            //return print_r($model->getErrors());
             return $this->render('create', [
                 'model' => $model,
             ]);

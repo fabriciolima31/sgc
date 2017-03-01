@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Sessao */
 
-$this->title = 'Create Sessao';
-$this->params['breadcrumbs'][] = ['label' => 'Sessaos', 'url' => ['index']];
+$this->title = 'Adicionar Sessão';
+$this->params['breadcrumbs'][] = ['label' => 'Sessões', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sessao-create">

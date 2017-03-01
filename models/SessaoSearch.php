@@ -41,7 +41,7 @@ class SessaoSearch extends Sessao
      */
     public function search($params)
     {
-        $query = Sessao::find();
+        $query = Sessao::find()->where(['Usuarios_id' => Yii::$app->user->id, 'Paciente_id' => $params['Paciente_id']]);
 
         // add conditions that should always apply here
 
@@ -67,6 +67,34 @@ class SessaoSearch extends Sessao
         ]);
 
         $query->andFilterWhere(['like', 'horario', $this->horario]);
+
+        return $dataProvider;
+    }
+    
+    public function searchPaciente($params)
+    {
+        $query = Sessao::find()->select('Paciente_id')->where(['Usuarios_id' => Yii::$app->user->id])->groupBy(['Paciente_id']);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'Paciente_id' => $this->Paciente_id,
+            //'Usuarios_id' => $this->Usuarios_id,
+            //'Consultorio_id' => $this->Consultorio_id,
+        ]);
 
         return $dataProvider;
     }

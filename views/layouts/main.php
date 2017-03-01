@@ -52,7 +52,7 @@ AppAsset::register($this);
                 ['label' => 'Administradores', 'url' => ["/user/index", "perfil" =>4]], 
                 ],
             ],
-            ['label' => 'Usuario_Turmas', 'url' => ['/usuario-turma/index']],
+            ['label' => 'Sessão', 'url' => ['/sessao/index']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]

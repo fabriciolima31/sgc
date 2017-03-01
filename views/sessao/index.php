@@ -7,31 +7,30 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\SessaoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Sessaos';
+$this->title = 'Sessões Realizadas';
+$this->params['breadcrumbs'][] = ['label' => 'Sessões Realizadas - Pacientes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sessao-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Criar Nova Sessão', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Nova Sessão', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'Paciente_id',
-            'Usuarios_id',
-            'Consultorio_id',
+            
+            'paciente.nome',
+            [
+                'label' => 'Consultório',
+                'value' => 'consultorio.nome'
+            ],
             'data',
-            // 'horario',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            'horario',
         ],
     ]); ?>
 </div>

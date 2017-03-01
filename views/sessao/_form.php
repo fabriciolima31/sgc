@@ -18,20 +18,15 @@ use app\models\Consultorio;
 
     <?php 
         $items = ArrayHelper::map(Paciente::find()->all(), 'id', 'nome');
-        echo $form->field($model, 'Paciente_id')->dropDownList($items)
+        echo $form->field($model, 'Paciente_id')->dropDownList($items, ['prompt' => 'Selecione um Paciente'])
     ?>
-
-    <?php 
-        $items = ArrayHelper::map(User::find()->where(["tipo" => 3])->orWhere(["tipo" => 2])->all(), 'id', 'nome');
-        echo $form->field($model, 'Usuarios_id')->dropDownList($items)
-    ?>
-
+    
     <?php 
         $items = ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
-        echo $form->field($model, 'Consultorio_id')->dropDownList($items)
-    ?>
+        echo $form->field($model, 'Consultorio_id')->dropDownList($items, ['prompt' => 'Selecione um Consultório'])
+    ?> 
 
-    <?= $form->field($model, 'data')->textInput() ?>
+    <?= $form->field($model, 'data')->textInput(['readonly' => true]) ?>
 
     <?= $form->field($model, 'horario')->textInput(['maxlength' => true]) ?>
 
