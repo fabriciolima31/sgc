@@ -25,6 +25,9 @@ class Agenda extends \yii\db\ActiveRecord
 {
 
     public $diaSemanaArray;
+    private $horarioInicialAtendimento = "08:00";
+    private $horarioFinalAtendimento = "20:00";
+
 
     /**
      * @inheritdoc
@@ -103,9 +106,9 @@ class Agenda extends \yii\db\ActiveRecord
             $hora1= date('H:i',strtotime($this->horaInicio));
             $hora2= date('H:i',strtotime($this->horaFim));
 
-            if ($hora1 < date('H:i', strtotime("08:00")) || $hora1 > date('H:i', strtotime("21:00")) ) {
+            if ($hora1 < date('H:i', strtotime($this->horarioInicialAtendimento)) || $hora1 > date('H:i', strtotime($this->horarioFinalAtendimento)) ) {
 
-                $this->addError($attribute, 'A hora inicial deve ter horário MAIOR ou IGUAL a 08:00 e MENOR OU IGUAL AS 21:00');
+                $this->addError($attribute, 'A hora inicial deve ter horário MAIOR ou IGUAL a 08:00 e MENOR OU IGUAL AS 20:00');
 
             }
 
@@ -118,13 +121,19 @@ class Agenda extends \yii\db\ActiveRecord
             $hora1= date('H:i',strtotime($this->horaInicio));
             $hora2= date('H:i',strtotime($this->horaFim));
 
+            $horaLimiteMinimo =  date('H:i',strtotime($this->horaInicio) + 60*60);
+
             if (strtotime($hora2) < strtotime($hora1)) {
                 $this->addError($attribute, 'A hora final deve ser MAIOR que a hora inicial.');
             }
-            if ($hora2 < date('H:i', strtotime("08:00")) || $hora2 > date('H:i', strtotime("21:00")) ) {
+            if ($hora2 < date('H:i', strtotime($this->horarioInicialAtendimento)) || $hora2 > date('H:i', strtotime("21:00")) ) {
 
                 $this->addError($attribute, 'A hora fim deve ter horário MAIOR ou IGUAL a 08:00 e MENOR OU IGUAL AS 21:00');
 
+            }
+
+            if($hora2 < $horaLimiteMinimo){
+                $this->addError($attribute, 'A diferença entre a hora inicial e final deve ser de no mínimo 1 hora');                
             }
         }
     }
