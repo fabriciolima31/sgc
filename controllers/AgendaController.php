@@ -76,7 +76,7 @@ class AgendaController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
             }
             else{
-
+                return print_r($model->getErrors());
                 return $this->render('create', [
                     'model' => $model,
                 ]);

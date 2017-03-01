@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AgendaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Agendas';
+$this->title = 'Consultórios Agendados';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="agenda-index">
@@ -16,23 +16,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Agenda', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Criar Agendamento', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'Consultorio_id',
-            'Usuarios_id',
+            
+            'consultorio.nome',
             'diaSemana',
             'horaInicio',
-            // 'horaFim',
-            // 'status',
-            // 'data_inicio',
-            // 'data_fim',
+            'horaFim',
+            'data_inicio',
+            'data_fim',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
