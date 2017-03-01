@@ -23,6 +23,8 @@ use Yii;
  */
 class Agenda extends \yii\db\ActiveRecord
 {
+
+    public $diaSemana;
     /**
      * @inheritdoc
      */
@@ -37,9 +39,9 @@ class Agenda extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Consultorio_id', 'Usuarios_id', 'diaSemana', 'horaInicio', 'horaFim', 'status', 'data_inicio', 'data_fim'], 'required'],
-            [['diaSemana','Consultorio_id', 'Usuarios_id'], 'integer'],
-            [['horaInicio', 'horaFim', 'data_inicio', 'data_fim'], 'safe'],
+            [['Consultorio_id', 'Usuarios_id', 'horaInicio', 'horaFim', 'status', 'data_inicio', 'data_fim'], 'required'],
+            [['Consultorio_id', 'Usuarios_id'], 'integer'],
+            [['diaSemana','horaInicio', 'horaFim', 'data_inicio', 'data_fim'], 'safe'],
             [['horaInicio'], 'validateHoraIni'],
             [['horaFim'], 'validateHoraFim'],
             [['data_inicio'], 'validateDateIni'],
@@ -59,7 +61,6 @@ class Agenda extends \yii\db\ActiveRecord
             'id' => 'ID',
             'Consultorio_id' => 'Consultorio ID',
             'Usuarios_id' => 'Usuarios ID',
-            'diaSemana' => 'Dia Semana',
             'horaInicio' => 'Hora Inicio',
             'horaFim' => 'Hora Fim',
             'status' => 'Status',

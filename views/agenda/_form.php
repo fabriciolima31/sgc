@@ -33,7 +33,7 @@ use dosamigos\datepicker\DatePicker;
 ?>
 
     <div style="border: solid 1px lightgray; padding: 2px 1px 0px 4px; margin-bottom: 1%">
-<?php echo $form->field($model, 'diaSemana[]')->checkboxList(['1' => 'Segunda-Feira', '2' => 'Terça-Feira', '3' => 'Quarta-Feira', '4' => 'Quinta-Feira', '5' => 'Sexta-Feira', '6' => 'Sábado' ]); ?>
+<?php echo $form->field($model, 'diaSemana[]')->checkboxList(['0' => "Domingo" , '1' => 'Segunda-Feira', '2' => 'Terça-Feira', '3' => 'Quarta-Feira', '4' => 'Quinta-Feira', '5' => 'Sexta-Feira', '6' => 'Sábado' ]); ?>
     </div>
 
         <?php

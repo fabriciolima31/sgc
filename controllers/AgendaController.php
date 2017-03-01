@@ -67,20 +67,42 @@ class AgendaController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $array_dia_semana = array ('1' => 'Segunda-Feira', '2' => 'Terça-Feira', '3' => 'Quarta-Feira', '4' => 'Quinta-Feira', '5' => 'Sexta-Feira', '6' => 'Sábado' );
+            $datetime1 = new \DateTime($model->data_inicio);
+            $datetime2 = new \DateTime($model->data_fim);
+            $interval = $datetime1->diff($datetime2);
+            $diferencaDias =  abs($interval->format('%a'));
+            $diferencaDias++;
 
-            $model->diaSemana = 1;
-            $model->status = '1';
+            $auxDataInicio = $model->data_inicio;
 
-            if ($model->save()){
-                return $this->redirect(['view', 'id' => $model->id]);
+
+            for($i=0; $i<$diferencaDias; $i++){
+                $dataDoLoop = date('d-m-Y',date(strtotime("+".$i." days", strtotime($auxDataInicio))));
+                
+                // 0 é domingo, 1 é segunda, 2 é terça, 3 é quarta, 4 é quinta, 5 é sexta, 6 é sábado
+                $diaDaSemana = date('w', strtotime($dataDoLoop));
+
+
+
+
+                if(in_array($diaDaSemana, $model->diaSemana)) { 
+                    $model->id = null;
+                    $model->isNewRecord = true;
+                    //$model->Usuarios_id = Yii::$app->user->id;
+                    $model->Usuarios_id = 2;
+                    $model->data_inicio = $dataDoLoop;
+                    $model->data_fim = $dataDoLoop;
+                    $model->diaSemana = 1;
+                    $model->status = '1';
+                    $model->save();
+                }
+
             }
-            else{
+
                 return $this->render('create', [
                     'model' => $model,
                 ]);
 
-            }
         } else {
             return $this->render('create', [
                 'model' => $model,
