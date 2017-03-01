@@ -83,13 +83,14 @@ class AgendaController extends Controller
                 $diaDaSemana = date('w', strtotime($dataDoLoop));
 
 
+                $arras_semanas = array([0 => "Domingo" , 1 => 'Segunda-Feira', 2 => 'Terça-Feira', 3 => 'Quarta-Feira', 4 => 'Quinta-Feira', 5 => 'Sexta-Feira', 6 => 'Sábado' ]);
 
 
-                if(in_array($diaDaSemana, $model->diaSemana)) { 
+                if(in_array($diaDaSemana, $model->diaSemanaArray)) { 
                     $model->id = null;
                     $model->isNewRecord = true;
                     //$model->Usuarios_id = Yii::$app->user->id;
-                    $model->Usuarios_id = 2;
+                    $model->diaSemana = $diaDaSemana;
                     $model->data_inicio = $dataDoLoop;
                     $model->data_fim = $dataDoLoop;
                     $model->status = '1';
