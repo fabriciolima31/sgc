@@ -106,10 +106,13 @@ class Agenda extends \yii\db\ActiveRecord
             $hora1= date('H:i',strtotime($this->horaInicio));
             $hora2= date('H:i',strtotime($this->horaFim));
 
+            if ($hora1 == $hora2){
+                $this->addError($attribute, 'A hora inicial deve ser diferente da hora final');   
+            }
+
+
             if ($hora1 < date('H:i', strtotime($this->horarioInicialAtendimento)) || $hora1 > date('H:i', strtotime($this->horarioFinalAtendimento)) ) {
-
                 $this->addError($attribute, 'A hora inicial deve ter horário MAIOR ou IGUAL a 08:00 e MENOR OU IGUAL AS 20:00');
-
             }
 
         }
@@ -121,7 +124,7 @@ class Agenda extends \yii\db\ActiveRecord
             $hora1= date('H:i',strtotime($this->horaInicio));
             $hora2= date('H:i',strtotime($this->horaFim));
 
-            $horaLimiteMinimo =  date('H:i',strtotime($this->horaInicio) + 60*59);
+            $horaLimiteMinimo =  date('H:i',strtotime($this->horaInicio) + 60*60);
 
             if (strtotime($hora2) < strtotime($hora1)) {
                 $this->addError($attribute, 'A hora final deve ser MAIOR que a hora inicial.');

@@ -67,6 +67,9 @@ class AgendaController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
+            echo $model->horaInicio;
+            echo $model->horaFim;
+
             $datetime1 = new \DateTime($model->data_inicio);
             $datetime2 = new \DateTime($model->data_fim);
             $interval = $datetime1->diff($datetime2);
@@ -74,6 +77,12 @@ class AgendaController extends Controller
             $diferencaDias++;
 
             $auxDataInicio = $model->data_inicio;
+
+                    if(!$model->validate()){
+                        return $this->render('create', [
+                            'model' => $model,
+                        ]);
+                    }
 
 
             for($i=0; $i<$diferencaDias; $i++){
@@ -91,6 +100,7 @@ class AgendaController extends Controller
 
 
                 if(in_array($diaDaSemana, $model->diaSemanaArray)) { 
+
 
                     while($hora_incrementada < $hora_limite){
 
@@ -112,15 +122,11 @@ class AgendaController extends Controller
                         $model->horaFim = $auxHoraFim;
                         $model->horaInicio = $auxHoraInicio;
                     }
-
-
                 }
 
             }
 
-                return $this->render('create', [
-                    'model' => $model,
-                ]);
+            return $this->redirect(['index']);
 
         } else {
             return $this->render('create', [
