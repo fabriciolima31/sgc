@@ -52,6 +52,7 @@ class Paciente extends \yii\db\ActiveRecord
             [['nome', 'endereco'], 'string', 'max' => 200],
             [['status', 'sexo', 'turno_atendimento'], 'string', 'max' => 21],
             [['telefone'], 'string', 'max' => 10],
+            [['Agenda_id'], 'integer'],
             [['motivo_psicoterapia'], 'string', 'max' => 45],
         ];
     }
@@ -87,6 +88,14 @@ class Paciente extends \yii\db\ActiveRecord
     public function getSessoes()
     {
         return $this->hasMany(Sessao::className(), ['Paciente_id' => 'id']);
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAgenda()
+    {
+        return $this->hasOne(Agenda::className(), ['id' => 'Agenda_id']);
     }
     
     /*

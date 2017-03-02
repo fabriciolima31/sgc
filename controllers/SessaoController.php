@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Sessao;
+use app\models\Paciente;
 use app\models\SessaoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -56,6 +57,7 @@ class SessaoController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'Paciente_id'
         ]);
     }
 
@@ -82,6 +84,11 @@ class SessaoController extends Controller
         $model->data = date('d-m-Y');
         $model->Paciente_id = $id;
         $model->Usuarios_id = Yii::$app->user->id;
+        
+        $paciente = Paciente::find()->where(['id' => $id])->One();
+        
+        $model->horario = $paciente->agenda->horaInicio;
+        $model->Consultorio_id = $paciente->agenda->Consultorio_id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

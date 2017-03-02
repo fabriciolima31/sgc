@@ -66,60 +66,67 @@ class AgendaController extends Controller
         $model = new Agenda();
 
         if ($model->load(Yii::$app->request->post())) {
+            
+            $model->status = '1';
+            $model->diaSemana = 1;
+            
+            if($model->validate()){
+                echo $model->horaInicio;
+                echo $model->horaFim;
 
-            echo $model->horaInicio;
-            echo $model->horaFim;
+                $datetime1 = new \DateTime($model->data_inicio);
+                $datetime2 = new \DateTime($model->data_fim);
+                $interval = $datetime1->diff($datetime2);
+                $diferencaDias =  abs($interval->format('%a'));
+                $diferencaDias++;
 
-            $datetime1 = new \DateTime($model->data_inicio);
-            $datetime2 = new \DateTime($model->data_fim);
-            $interval = $datetime1->diff($datetime2);
-            $diferencaDias =  abs($interval->format('%a'));
-            $diferencaDias++;
+                $auxDataInicio = $model->data_inicio;
 
-            $auxDataInicio = $model->data_inicio;
+                for($i=0; $i<$diferencaDias; $i++){
 
-            for($i=0; $i<$diferencaDias; $i++){
+                    $hora_incrementada= date('H:i',strtotime($model->horaInicio));
+                    $hora_limite = date('H:i',strtotime($model->horaFim));
 
-                $hora_incrementada= date('H:i',strtotime($model->horaInicio));
-                $hora_limite = date('H:i',strtotime($model->horaFim));
+                    $dataDoLoop = date('d-m-Y',date(strtotime("+".$i." days", strtotime($auxDataInicio))));
 
-                $dataDoLoop = date('d-m-Y',date(strtotime("+".$i." days", strtotime($auxDataInicio))));
-                
-                // 0 é domingo, 1 é segunda, 2 é terça, 3 é quarta, 4 é quinta, 5 é sexta, 6 é sábado
-                $diaDaSemana = date('w', strtotime($dataDoLoop));
-
-
-                $arras_semanas = array([0 => "Domingo" , 1 => 'Segunda-Feira', 2 => 'Terça-Feira', 3 => 'Quarta-Feira', 4 => 'Quinta-Feira', 5 => 'Sexta-Feira', 6 => 'Sábado' ]);
-
-
-                if(in_array($diaDaSemana, $model->diaSemanaArray)) { 
+                    // 0 é domingo, 1 é segunda, 2 é terça, 3 é quarta, 4 é quinta, 5 é sexta, 6 é sábado
+                    $diaDaSemana = date('w', strtotime($dataDoLoop));
 
 
-                    while($hora_incrementada < $hora_limite){
+                    $arras_semanas = array([0 => "Domingo" , 1 => 'Segunda-Feira', 2 => 'Terça-Feira', 3 => 'Quarta-Feira', 4 => 'Quinta-Feira', 5 => 'Sexta-Feira', 6 => 'Sábado' ]);
 
-                        $aux = $hora_incrementada;
-                        $hora_incrementada =  date('H:i',strtotime($hora_incrementada) + 60*60);
 
-                        $model->id = null;
-                        $model->isNewRecord = true;
-                        //$model->Usuarios_id = Yii::$app->user->id;
-                        $model->diaSemana = $diaDaSemana;
-                        $model->data_inicio = $dataDoLoop;
-                        $model->data_fim = $dataDoLoop;
-                        $auxHoraInicio = $model->horaInicio;
-                        $model->horaInicio = $aux;
-                        $auxHoraFim = $model->horaFim;
-                        $model->horaFim = $hora_incrementada;
-                        $model->status = '1';
-                        $model->save();
-                        $model->horaFim = $auxHoraFim;
-                        $model->horaInicio = $auxHoraInicio;
+                    if(in_array($diaDaSemana, $model->diaSemanaArray)) { 
+
+
+                        while($hora_incrementada < $hora_limite){
+
+                            $aux = $hora_incrementada;
+                            $hora_incrementada =  date('H:i',strtotime($hora_incrementada) + 60*60);
+
+                            $model->id = null;
+                            $model->isNewRecord = true;
+                            //$model->Usuarios_id = Yii::$app->user->id;
+                            $model->diaSemana = $diaDaSemana;
+                            $model->data_inicio = $dataDoLoop;
+                            $model->data_fim = $dataDoLoop;
+                            $auxHoraInicio = $model->horaInicio;
+                            $model->horaInicio = $aux;
+                            $auxHoraFim = $model->horaFim;
+                            $model->horaFim = $hora_incrementada;
+                            $model->save();
+                            $model->horaFim = $auxHoraFim;
+                            $model->horaInicio = $auxHoraInicio;
+                        }
                     }
+
                 }
-
+                return $this->redirect(['index']);
             }
-
-            return $this->redirect(['index']);
+            return print_r($model->getErrors());
+            return $this->render('create', [
+                'model' => $model,
+            ]);
 
         } else {
             return $this->render('create', [

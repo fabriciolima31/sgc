@@ -73,7 +73,8 @@ class SessaoSearch extends Sessao
     
     public function searchPaciente($params)
     {
-        $query = Sessao::find()->select('Paciente_id')->where(['Usuarios_id' => Yii::$app->user->id])->groupBy(['Paciente_id']);
+        $query = Paciente::find();
+        $query->joinWith("agenda")->where(['Usuarios_id' => Yii::$app->user->id, 'Paciente.status' => 'AT']);
 
         // add conditions that should always apply here
 

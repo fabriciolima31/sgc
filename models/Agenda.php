@@ -72,22 +72,22 @@ class Agenda extends \yii\db\ActiveRecord
             'data_fim' => 'Data Fim',
         ];
     }
-
-
-    /*Funções para validação de atributos*/
-    public function validateDateIni($attribute, $params){
+    
+        /*Funções para validação de atributos*/
+    public function validateDateIni($attribute, $params, $validator){
         if (!$this->hasErrors()) {
 
             $date1= $this->data_inicio;
             $date2= date('d-m-Y');
 
-        if (strtotime($date1) < strtotime($date2)) {
+        if ($date1 < $date2) {
                 $this->addError($attribute, 'Informe uma data igual ou posterior a '.date('d-m-Y'));
+                //$validator->addError($this, $attribute, 'The value "{value}" is not acceptable for {attribute}.');
             }
         }
 
     }
-    public function validateDateFim($attribute, $params){
+    public function validateDateFim($attribute, $params, $validator){
         if (!$this->hasErrors()) {
 
             $date1= $this->data_inicio;
@@ -100,7 +100,7 @@ class Agenda extends \yii\db\ActiveRecord
     }
 
 
-    public function validateHoraIni($attribute, $params){
+    public function validateHoraIni($attribute, $params, $validator){
         if (!$this->hasErrors()) {
 
             $hora1= date('H:i',strtotime($this->horaInicio));
@@ -118,7 +118,7 @@ class Agenda extends \yii\db\ActiveRecord
         }
 
     }
-    public function validateHoraFim($attribute, $params){
+    public function validateHoraFim($attribute, $params, $validator){
         if (!$this->hasErrors()) {
 
             $hora1= date('H:i',strtotime($this->horaInicio));

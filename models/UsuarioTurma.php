@@ -31,8 +31,8 @@ class UsuarioTurma extends \yii\db\ActiveRecord
         return [
             [['Turma_id', 'Usuarios_id'], 'required'],
             [['Turma_id', 'Usuarios_id'], 'integer'],
-            [['Turma_id'], 'exist', 'skipOnError' => true, 'targetClass' => Turma::className(), 'targetAttribute' => ['Turma_id' => 'id']],
-            [['Usuarios_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['Usuarios_id' => 'id']],
+            [['Turma_id'], 'exist', 'skipOnError' => false, 'targetClass' => Turma::className(), 'targetAttribute' => ['Turma_id' => 'id']],
+            [['Usuarios_id'], 'exist', 'skipOnError' => false, 'targetClass' => User::className(), 'targetAttribute' => ['Usuarios_id' => 'id']],
         ];
     }
 
