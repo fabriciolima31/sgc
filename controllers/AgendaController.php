@@ -77,6 +77,10 @@ class AgendaController extends Controller
 
 
             for($i=0; $i<$diferencaDias; $i++){
+
+                $hora_incrementada= date('H:i',strtotime($model->horaInicio));
+                $hora_limite = date('H:i',strtotime($model->horaFim));
+
                 $dataDoLoop = date('d-m-Y',date(strtotime("+".$i." days", strtotime($auxDataInicio))));
                 
                 // 0 é domingo, 1 é segunda, 2 é terça, 3 é quarta, 4 é quinta, 5 é sexta, 6 é sábado
@@ -87,14 +91,29 @@ class AgendaController extends Controller
 
 
                 if(in_array($diaDaSemana, $model->diaSemanaArray)) { 
-                    $model->id = null;
-                    $model->isNewRecord = true;
-                    //$model->Usuarios_id = Yii::$app->user->id;
-                    $model->diaSemana = $diaDaSemana;
-                    $model->data_inicio = $dataDoLoop;
-                    $model->data_fim = $dataDoLoop;
-                    $model->status = '1';
-                    $model->save();
+
+                    while($hora_incrementada < $hora_limite){
+
+                        $aux = $hora_incrementada;
+                        $hora_incrementada =  date('H:i',strtotime($hora_incrementada) + 60*60);
+
+                        $model->id = null;
+                        $model->isNewRecord = true;
+                        //$model->Usuarios_id = Yii::$app->user->id;
+                        $model->diaSemana = $diaDaSemana;
+                        $model->data_inicio = $dataDoLoop;
+                        $model->data_fim = $dataDoLoop;
+                        $auxHoraInicio = $model->horaInicio;
+                        $model->horaInicio = $aux;
+                        $auxHoraFim = $model->horaFim;
+                        $model->horaFim = $hora_incrementada;
+                        $model->status = '1';
+                        $model->save();
+                        $model->horaFim = $auxHoraFim;
+                        $model->horaInicio = $auxHoraInicio;
+                    }
+
+
                 }
 
             }

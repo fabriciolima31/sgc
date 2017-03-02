@@ -121,7 +121,7 @@ class Agenda extends \yii\db\ActiveRecord
             $hora1= date('H:i',strtotime($this->horaInicio));
             $hora2= date('H:i',strtotime($this->horaFim));
 
-            $horaLimiteMinimo =  date('H:i',strtotime($this->horaInicio) + 60*60);
+            $horaLimiteMinimo =  date('H:i',strtotime($this->horaInicio) + 60*59);
 
             if (strtotime($hora2) < strtotime($hora1)) {
                 $this->addError($attribute, 'A hora final deve ser MAIOR que a hora inicial.');
