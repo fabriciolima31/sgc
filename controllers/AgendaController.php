@@ -78,13 +78,6 @@ class AgendaController extends Controller
 
             $auxDataInicio = $model->data_inicio;
 
-                    if(!$model->validate()){
-                        return $this->render('create', [
-                            'model' => $model,
-                        ]);
-                    }
-
-
             for($i=0; $i<$diferencaDias; $i++){
 
                 $hora_incrementada= date('H:i',strtotime($model->horaInicio));
