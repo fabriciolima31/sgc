@@ -81,16 +81,16 @@ class SessaoController extends Controller
     public function actionCreate($id)
     {
         $model = new Sessao();
+        $paciente = Paciente::find()->where(['id' => $id])->One();
+        
         $model->data = date('d-m-Y');
         $model->Paciente_id = $id;
         $model->Usuarios_id = Yii::$app->user->id;
-        
-        $paciente = Paciente::find()->where(['id' => $id])->One();
-        
-        $model->horario = $paciente->agenda->horaInicio;
-        $model->Consultorio_id = $paciente->agenda->Consultorio_id;
-
+       
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $paciente->status = 'AT';
+            $paciente->save();
+            $model->status = '1';
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             //return print_r($model->getErrors());

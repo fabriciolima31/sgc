@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Paciente;
+use app\models\UsuarioPaciente;
 use app\models\PacienteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

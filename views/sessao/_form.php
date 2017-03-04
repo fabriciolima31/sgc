@@ -29,6 +29,8 @@ use app\models\Consultorio;
     <?= $form->field($model, 'data')->textInput(['readonly' => true]) ?>
 
     <?= $form->field($model, 'horario')->textInput(['maxlength' => true]) ?>
+    
+    <?= $form->field($model, 'status')->dropDownList(['EE' => 'Em Espera', 'NC' => 'Não Ocorrida', 'OS' => 'Ocorrida']) //Leitura para create e escirta para update ?>   
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

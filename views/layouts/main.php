@@ -53,7 +53,7 @@ AppAsset::register($this);
                 ],
             ],
             ['label' => 'Sessão', 'url' => ['/sessao/index']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Alocações', 'url' => ['/usuario-paciente/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

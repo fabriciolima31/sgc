@@ -36,7 +36,7 @@ class Sessao extends \yii\db\ActiveRecord
         return [
             [['Paciente_id', 'Usuarios_id', 'Consultorio_id', 'data', 'horario'], 'required'],
             [['Paciente_id', 'Usuarios_id', 'Consultorio_id'], 'integer'],
-            [['data'], 'safe'],
+            [['data', 'status'], 'safe'],
             [['horario'], 'string', 'max' => 45],
             [['Consultorio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consultorio::className(), 'targetAttribute' => ['Consultorio_id' => 'id']],
             [['Paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['Paciente_id' => 'id']],

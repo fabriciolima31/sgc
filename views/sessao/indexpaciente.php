@@ -20,20 +20,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
-            'nome',
-            'statusDesc',
-            //'consultorio.nome',
+            [
+                'label' => 'Paciente',
+                'value' => 'paciente.nome',
+            ],
+            [
+                'label' => 'Paciente Status',
+                'value' => 'paciente.statusDesc',
+            ],
 
             ['class' => 'yii\grid\ActionColumn',
               'template'=>'{add} {view}',
                 'buttons'=>[
                    'add' => function ($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-plus-sign"></span>', ['sessao/create', 'id' => $model->id], [
+                    return Html::a('<span class="glyphicon glyphicon-plus-sign"></span>', ['sessao/create', 'id' => $model->Paciente_id], [
                             'title' => Yii::t('yii', 'Adicionar Sessão'),
                     ]);   
                   },
                     'view' => function ($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['sessao/all', 'id' => $model->id], [
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['sessao/all', 'id' => $model->Paciente_id], [
                             'title' => Yii::t('yii', 'Vizualizar Todas as Sessões'),
                     ]);   
                   }
