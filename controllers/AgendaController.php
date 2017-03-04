@@ -67,12 +67,24 @@ class AgendaController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             
-            $model->status = '1';
-            $model->diaSemana = 1;
-            
+            $dadosConflituosos = $model->verificarConflitosNoInsert($model->horaInicio, $model->horaFim,$model->data_inicio, $model->data_fim, $model->Consultorio_id, $model->diaSemanaArray);
+
+            $quantidade_dados_conflituosos = count($dadosConflituosos);
+
+            echo $quantidade_dados_conflituosos;
+
+            if($quantidade_dados_conflituosos > 0){
+
+                echo "dados conflituosos";
+
+                return $this->render('create', [
+                    'model' => $model,
+                    'dadosConflituosos' => $dadosConflituosos,
+                    'diaSemanaArray' => $model->diaSemanaArray
+                ]);
+            }
+           
             if($model->validate()){
-                echo $model->horaInicio;
-                echo $model->horaFim;
 
                 $datetime1 = new \DateTime($model->data_inicio);
                 $datetime2 = new \DateTime($model->data_fim);
@@ -93,7 +105,7 @@ class AgendaController extends Controller
                     $diaDaSemana = date('w', strtotime($dataDoLoop));
 
 
-                    $arras_semanas = array([0 => "Domingo" , 1 => 'Segunda-Feira', 2 => 'Terça-Feira', 3 => 'Quarta-Feira', 4 => 'Quinta-Feira', 5 => 'Sexta-Feira', 6 => 'Sábado' ]);
+                    $array_semanas = array([0 => "Domingo" , 1 => 'Segunda-Feira', 2 => 'Terça-Feira', 3 => 'Quarta-Feira', 4 => 'Quinta-Feira', 5 => 'Sexta-Feira', 6 => 'Sábado' ]);
 
 
                     if(in_array($diaDaSemana, $model->diaSemanaArray)) { 
@@ -107,6 +119,7 @@ class AgendaController extends Controller
                             $model->id = null;
                             $model->isNewRecord = true;
                             //$model->Usuarios_id = Yii::$app->user->id;
+                            $model->status = '1';
                             $model->diaSemana = $diaDaSemana;
                             $model->data_inicio = $dataDoLoop;
                             $model->data_fim = $dataDoLoop;
@@ -123,15 +136,27 @@ class AgendaController extends Controller
                 }
                 return $this->redirect(['index']);
             }
-            return print_r($model->getErrors());
+
+
             return $this->render('create', [
                 'model' => $model,
+                'diaSemanaArray' => $model->diaSemanaArray
             ]);
 
+
         } else {
+
+
+
+            echo $model->diaSemanaArray;
+            echo "oi";
+
+
             return $this->render('create', [
                 'model' => $model,
+                'diaSemanaArray' => $model->diaSemanaArray
             ]);
+
         }
     }
 

@@ -27,6 +27,8 @@ class Agenda extends \yii\db\ActiveRecord
     public $diaSemanaArray;
     private $horarioInicialAtendimento = "08:00";
     private $horarioFinalAtendimento = "20:00";
+    public $numerica;
+    public $dadosConflituosos;
 
 
     /**
@@ -43,7 +45,7 @@ class Agenda extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Consultorio_id', 'Usuarios_id', 'horaInicio', 'horaFim','diaSemana', 'status' ], 'required'],
+            [['Consultorio_id', 'Usuarios_id', 'horaInicio', 'horaFim','diaSemanaArray'], 'required'],
             [['diaSemana','Consultorio_id', 'Usuarios_id'], 'integer'],
             [['diaSemanaArray','horaInicio', 'horaFim', 'data_inicio', 'data_fim'], 'safe'],
             [['horaInicio'], 'validateHoraIni'],
@@ -70,6 +72,7 @@ class Agenda extends \yii\db\ActiveRecord
             'status' => 'Status',
             'data_inicio' => 'Data Inicio',
             'data_fim' => 'Data Fim',
+            'diaSemanaArray' => 'Dia da Semana',
         ];
     }
     
@@ -181,6 +184,17 @@ class Agenda extends \yii\db\ActiveRecord
         $this->data_fim = $dia."-".$mes."-".$ano;
     }
 
+        /*Conversão de Data*/
+    public function converterDatas_para_AAAA_MM_DD_com_Retorno($data) {
+
+        $ano = substr($data,6,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($data,3,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($data,0,2); //pega os 2 caracteres, a contar do índice 0
+        return $ano."-".$mes."-".$dia;
+      
+
+    }
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -205,4 +219,38 @@ class Agenda extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Paciente::className(), ['Agenda_id' => 'id']);
     }
+
+
+    public function verificarConflitosNoInsert ($horaInicio, $horaFim, $data_inicio,$data_fim,$consultorio_id, $diaSemanaArray){
+
+
+        $data_inicio = $this->converterDatas_para_AAAA_MM_DD_com_Retorno($data_inicio);
+        $data_fim = $this->converterDatas_para_AAAA_MM_DD_com_Retorno($data_fim);
+
+        $model = new Agenda();
+/*
+        $horaInicio = "08:00";
+        $horaFim = "12:00";
+
+        $data_inicio = "2017-03-05";
+        $data_fim = "2017-03-18";
+
+*/
+
+
+        $this->dadosConflituosos = $model->find()
+        ->select(['diaSemana','horaInicio as Hora','DATE_FORMAT(data_inicio,"%d/%m/%Y") as Data'])
+        ->where(['Consultorio_id' => $consultorio_id])
+        ->andWhere(['between', 'horaInicio', $horaInicio, $horaFim])
+        ->andWhere(['between', 'data_inicio', $data_inicio, $data_fim])
+        ->andWhere('diaSemana IN ('. implode(',',$diaSemanaArray).')')
+        ->asArray()
+        ->all();
+
+        return $this->dadosConflituosos; //retorna toda linha do BD que 
+
+    }
+
+
+
 }
