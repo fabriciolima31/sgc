@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Agenda;
+use app\models\Paciente;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SessaoSearch */
@@ -20,12 +22,37 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
-            'Paciente_id',
-            'Agenda_id',
+            [
+            'attribute' => 'Paciente_id',
+                'label' => "Paciente",
+                'value' => function ($model){
+                    $paciente = Paciente::find()->where(['id' => $model->Paciente_id])->one();
+                    return $paciente->nome;
+                }
+
+            ],
+            [
+                'label' => 'Data ',
+                'value' => function ($model){
+
+                    $agenda = Agenda::find()->where(['id' => $model->Agenda_id])->one();
+
+                   return $agenda->data_inicio;
+                }
+            ],
+            [
+                'label' => 'Hora Inicial',
+                'value' => function ($model){
+
+                    $agenda = Agenda::find()->where(['id' => $model->Agenda_id])->one();
+
+                   return $agenda->horaInicio;
+                }
+            ],
             //'horario',
             'status',
             

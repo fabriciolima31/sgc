@@ -30,9 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'Paciente_id',
-            'Usuarios_id',
+            //'Usuarios_id',
             'Consultorio_id',
-            'data',
+            'Agenda_id',
             //'horario',
         ],
     ]) ?>
