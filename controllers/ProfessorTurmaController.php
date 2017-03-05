@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\UsuarioTurma;
-use app\models\UsuarioTurmaSearch;
+use app\models\ProfessorTurma;
+use app\models\ProfessorTurmaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UsuarioTurmaController implements the CRUD actions for UsuarioTurma model.
+ * ProfessorTurmaController implements the CRUD actions for UsuarioTurma model.
  */
-class UsuarioTurmaController extends Controller
+class ProfessorTurmaController extends Controller
 {
     /**
      * @inheritdoc
@@ -35,7 +35,7 @@ class UsuarioTurmaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new UsuarioTurmaSearch();
+        $searchModel = new ProfessorTurmaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -64,7 +64,7 @@ class UsuarioTurmaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new UsuarioTurma();
+        $model = new ProfessorTurma();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'Turma_id' => $model->Turma_id, 'Usuarios_id' => $model->Usuarios_id]);
@@ -119,7 +119,7 @@ class UsuarioTurmaController extends Controller
      */
     protected function findModel($Turma_id, $Usuarios_id)
     {
-        if (($model = UsuarioTurma::findOne(['Turma_id' => $Turma_id, 'Usuarios_id' => $Usuarios_id])) !== null) {
+        if (($model = ProfessorTurma::findOne(['Turma_id' => $Turma_id, 'Usuarios_id' => $Usuarios_id])) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

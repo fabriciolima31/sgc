@@ -13,14 +13,14 @@ use Yii;
  * @property Turma $turma
  * @property Usuarios $usuarios
  */
-class UsuarioTurma extends \yii\db\ActiveRecord
+class ProfessorTurma extends \yii\db\ActiveRecord
 {
-    /**
+  /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'Usuario_Turma';
+        return 'Professor_Turma';
     }
 
     /**

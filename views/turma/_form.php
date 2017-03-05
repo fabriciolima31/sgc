@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Disciplina;
+use app\models\User;
 
 
 
@@ -15,6 +16,16 @@ use app\models\Disciplina;
 <div class="turma-form">
 
     <?php $form = ActiveForm::begin(); ?>
+
+    <?php 
+        $items = ArrayHelper::map(Disciplina::find()->all(), 'id', 'nome');
+        echo $form->field($model, 'Disciplina_id')->dropDownList($items,['prompt' => "Selecione uma Disciplina"])
+    ?>
+
+    <?php 
+        $items = ArrayHelper::map(User::find()->where(['tipo' => 1])->all(), 'id', 'nome');
+        echo $form->field($model, 'Professor_id')->dropDownList($items,['prompt' => "Selecione um(a) Professor(a)"])
+    ?>
 
     <?= $form->field($model, 'codigo')->textInput(['maxlength' => true]) ?>
 
@@ -40,11 +51,6 @@ use app\models\Disciplina;
         'trntv\yii\datetime\DateTimeWidget',
         ['phpDatetimeFormat' => 'dd/MM/yyyy']
     ); 
-?>
-
-<?php 
-    $items = ArrayHelper::map(Disciplina::find()->all(), 'id', 'nome');
-    echo $form->field($model, 'Disciplina_id')->dropDownList($items)
 ?>
 
     <div class="form-group">

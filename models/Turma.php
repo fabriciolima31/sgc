@@ -21,6 +21,11 @@ use Yii;
  */
 class Turma extends \yii\db\ActiveRecord
 {
+
+    public $Professor_id;
+    public $nome_do_usuario;
+    public $nome_da_disciplina;
+
     /**
      * @inheritdoc
      */
@@ -35,7 +40,7 @@ class Turma extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['codigo', 'ano', 'semestre', 'data_inicio', 'data_fim', 'Disciplina_id'], 'required'],
+            [['codigo', 'ano', 'semestre', 'data_inicio', 'data_fim', 'Disciplina_id', 'Professor_id'], 'required'],
             [['data_inicio', 'data_fim'], 'safe'],
             [['Disciplina_id'], 'integer'],
             [['codigo', 'semestre'], 'string', 'max' => 10],
@@ -53,10 +58,11 @@ class Turma extends \yii\db\ActiveRecord
             'id' => 'ID',
             'codigo' => 'Código',
             'ano' => 'Ano',
-            'semestre' => 'Período',
+            'semestre' => 'Semestre Letivo',
             'data_inicio' => 'Data Inicio',
             'data_fim' => 'Data Fim',
             'Disciplina_id' => 'Disciplina',
+            'Professor_id' => "Professor(a)",
         ];
     }
 
@@ -71,9 +77,9 @@ class Turma extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuarioTurmas()
+    public function getProfessorTurmas()
     {
-        return $this->hasMany(UsuarioTurma::className(), ['Turma_id' => 'id']);
+        return $this->hasMany(ProfessorTurma::className(), ['Turma_id' => 'id']);
     }
 
     /**
@@ -81,6 +87,6 @@ class Turma extends \yii\db\ActiveRecord
      */
     public function getUsuarios()
     {
-        return $this->hasMany(User::className(), ['id' => 'Usuarios_id'])->viaTable('Usuario_Turma', ['Turma_id' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'Usuarios_id'])->viaTable('Professor_Turma', ['Turma_id' => 'id']);
     }
 }

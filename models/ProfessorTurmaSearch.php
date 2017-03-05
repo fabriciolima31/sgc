@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\UsuarioTurma;
+use app\models\ProfessorTurma;
 
 /**
  * UsuarioTurmaSearch represents the model behind the search form about `app\models\UsuarioTurma`.
  */
-class UsuarioTurmaSearch extends UsuarioTurma
+class ProfessorTurmaSearch extends ProfessorTurma
 {
     /**
      * @inheritdoc
@@ -40,7 +40,7 @@ class UsuarioTurmaSearch extends UsuarioTurma
      */
     public function search($params)
     {
-        $query = UsuarioTurma::find();
+        $query = ProfessorTurma::find();
 
         // add conditions that should always apply here
 

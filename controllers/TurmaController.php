@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Turma;
+use app\models\ProfessorTurma;
 use app\models\TurmaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -92,6 +93,7 @@ class TurmaController extends Controller
     public function actionCreate()
     {
         $model = new Turma();
+        $model_ProfessorTurma = new ProfessorTurma();
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -100,7 +102,17 @@ class TurmaController extends Controller
             $model->data_fim = $this->converterDatas_para_AAAA_MM_DD($model->data_fim);
             
             if ($model->save()){
+
+                $model_ProfessorTurma->Turma_id = $model->id;
+                $model_ProfessorTurma->Usuarios_id = $model->Professor_id;
+                $model_ProfessorTurma->save();
+
                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            else{
+                return $this->render('create', [
+                    'model' => $model,
+                ]);                
             }
 
         } else {
