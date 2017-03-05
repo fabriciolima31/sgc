@@ -28,6 +28,21 @@ class SessaoController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'all', 'update','view', 'delete'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo == '3';
+                        }
+                    ],
+                    // everything else is denied
+                ],
+            ],
         ];
     }
 

@@ -16,7 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Alocar', ['usuario-paciente/create', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Yii::$app->user->identity->tipo == '4' ? Html::a('Alocar', ['usuario-paciente/create', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
+        <?= Yii::$app->user->identity->tipo == '3' ? Html::a('Sessões', ['sessao/all', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
         <?= Html::a('Remover', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

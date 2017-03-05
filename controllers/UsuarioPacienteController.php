@@ -28,6 +28,21 @@ class UsuarioPacienteController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index','update','view', 'delete'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo == '4';
+                        }
+                    ],
+                    // everything else is denied
+                ],
+            ],
         ];
     }
 
