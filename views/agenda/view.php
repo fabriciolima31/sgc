@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Agenda */
 
-$this->title = $model->id;
+$this->title = $model->consultorio->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Agendas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -15,11 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?php 
+        //echo Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Remover este Agendamento', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Você tem certeza que deseja apagar este agendamento?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -28,12 +29,37 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'consultorio.nome',
-            'diaSemana',
+            [
+            'attribute' => 'consultorio.nome',
+            'label' => 'Local'
+            ],
+            [
+                'attribute'=>'data_inicio',
+                'label' => 'Data',
+            ],
+            //'data_fim',
+            [
+            'attribute' => 'diaSemana',
+            'label' => 'Dia da Semana',
+            'value' => function ($model){
+
+                        $arraySemana = array([
+                            0 => 'Domingo',
+                            1 => 'Segunda-Feira',
+                            2 => 'Terça-Feira',
+                            3 => 'Quarta-Feira',
+                            4 => 'Quinta-Feira',
+                            5 => 'Sexta-Feira',
+                            6 => 'Sábado',
+                            ]);
+
+                        return $arraySemana[0][$model->diaSemana];
+
+                        }
+            ],
             'horaInicio',
             'horaFim',
-            'data_inicio',
-            'data_fim',
+
         ],
     ]) ?>
 

@@ -129,6 +129,8 @@ class Agenda extends \yii\db\ActiveRecord
 
             $horaLimiteMinimo =  date('H:i',strtotime($this->horaInicio) + 60*60);
 
+            $diferencaDeMinutos = date('i', strtotime($this->horaFim) - strtotime($this->horaInicio) );
+
             if (strtotime($hora2) < strtotime($hora1)) {
                 $this->addError($attribute, 'A hora final deve ser MAIOR que a hora inicial.');
             }
@@ -140,6 +142,10 @@ class Agenda extends \yii\db\ActiveRecord
 
             if($hora2 < $horaLimiteMinimo){
                 $this->addError($attribute, 'A diferença entre a hora inicial e final deve ser de no mínimo 1 hora');                
+            }
+
+            if($diferencaDeMinutos != 0){
+                $this->addError($attribute, "A diferença temporal entre Hora Inicial e Hora Final deve ser um inteiro de hora");
             }
         }
     }
