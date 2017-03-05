@@ -84,15 +84,30 @@ class SessaoController extends Controller
         $model = new Sessao();
         $paciente = Paciente::find()->where(['id' => $id])->One();
         
-        $model->data = date('d-m-Y');
         $model->Paciente_id = $id;
         $model->Usuarios_id = Yii::$app->user->id;
        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $paciente->status = 'AT';
-            $paciente->save();
-            $model->status = '1';
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->Agenda_id = $model->data;
+            $model->data = date('Y-m-d');
+            
+            if($model->save()){
+
+                $paciente->status = 'AT';
+                $paciente->save();
+                $model->status = '1';
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            else{
+                //return print_r($model->getErrors());
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+            }
+
+
+
         } else {
             //return print_r($model->getErrors());
             return $this->render('create', [
@@ -155,7 +170,7 @@ public function actionDatas($consultorio)
             }
         }
         else{
-            echo "<option>-</option>";
+            //echo "<option value= '0'> Não há nenhuma data e horário</option>";
         }
  
     }
