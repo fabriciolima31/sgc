@@ -94,8 +94,7 @@ class SessaoController extends Controller
             
             if($model->save()){
 
-                $paciente->status = 'AT';
-                $paciente->save();
+                $paciente->setStatus("Sessao");
                 $model->status = '1';
                 return $this->redirect(['view', 'id' => $model->id]);
             }

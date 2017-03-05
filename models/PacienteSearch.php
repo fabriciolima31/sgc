@@ -82,4 +82,54 @@ class PacienteSearch extends Paciente
 
         return $dataProvider;
     }
+    
+        /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchMeusPacientes($params)
+    {
+        if ($params['status'] != "") {
+            $query = Paciente::find()->where(['status' => $params['status']]);
+            $query->joinWith("usuarioPaciente")->where(['Usuario_id' => Yii::$app->user->id]);
+        }
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'data_nascimento' => $this->data_nascimento,
+        ]);
+
+        $query->andFilterWhere(['like', 'nome', $this->nome])
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'sexo', $this->sexo])
+            ->andFilterWhere(['like', 'telefone', $this->telefone])
+            ->andFilterWhere(['like', 'endereco', $this->endereco])
+            ->andFilterWhere(['like', 'moradia', $this->moradia])
+            ->andFilterWhere(['like', 'turno_atendimento', $this->turno_atendimento])
+            ->andFilterWhere(['like', 'local_encaminhamento', $this->local_encaminhamento])
+            ->andFilterWhere(['like', 'local_terapia', $this->local_terapia])
+            ->andFilterWhere(['like', 'motivo_psicoterapia', $this->motivo_psicoterapia])
+            ->andFilterWhere(['like', 'servico', $this->servico])
+            ->andFilterWhere(['like', 'observacao', $this->observacao]);
+
+        return $dataProvider;
+    }
 }

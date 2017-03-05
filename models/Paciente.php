@@ -29,7 +29,7 @@ use Yii;
 class Paciente extends \yii\db\ActiveRecord
 {
     public $statusDescs = ["EN"=> "Encaminhado", "LE" => "Lista de Espera", 'EC' => "Entrar em Contato", 
-        "AT" => "Atendido", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"];
+        "EA" => "Em Atendimento", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"];
     /**
      * @inheritdoc
      */
@@ -89,11 +89,30 @@ class Paciente extends \yii\db\ActiveRecord
         return $this->hasMany(Sessao::className(), ['Paciente_id' => 'id']);
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsuario_Paciente()
+    {
+        return $this->hasMany(UsuarioPaciente::className(), ['Paciente_id' => 'id']);
+    }
+    
+    
     /*
      * Descricão dos status
      */
     public function getStatusDesc(){
         return $this->statusDescs[$this->status];
+    }
+    
+    public function setStatus($action){
+        if ($action == 'Alocar') {
+            $this->status = 'EC';
+        }else if($action == 'Sessao'){
+            $this->status = 'AT';
+        }
+
+        $this->save();
     }
 
     public function beforeSave($insert) {

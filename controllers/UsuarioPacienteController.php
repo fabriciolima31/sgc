@@ -75,8 +75,7 @@ class UsuarioPacienteController extends Controller
         $model->status = 1;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $paciente->status = 'EC';
-            $paciente->save();
+            $paciente->setStatus("Alocar");
             return $this->redirect(['view', 'Paciente_id' => $model->Paciente_id, 'Usuario_id' => $model->Usuario_id, 'status' => $model->status]);
         } else {
             return $this->render('create', [

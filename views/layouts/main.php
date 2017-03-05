@@ -39,7 +39,22 @@ AppAsset::register($this);
 
             ['label' => 'Disciplinas', 'url' => ['/disciplina/index']],
             ['label' => 'Turmas', 'url' => ['/turma/index']],
-            ['label' => 'Paciente', 'url' => ['/paciente/index']],
+            [
+            'label' => 'Paciente',
+            'items' => [
+                ['label' => 'Lista de Espera', 'url' => ["/paciente/index", "status" => 'LE']], 
+                '<li class="divider"></li>', 
+                ['label' => 'Entrar em Contato', 'url' => ["/paciente/index", "status" => 'EC']], 
+                '<li class="divider"></li>',
+                ['label' => 'Em Atendimento', 'url' => ["/paciente/index", "status" => 'EA']], 
+                '<li class="divider"></li>',
+                ['label' => 'Desistente', 'url' => ["/paciente/index", "status" => 'DE']], 
+                '<li class="divider"></li>',
+                ['label' => 'Abandono', 'url' => ["/paciente/index", "status" => 'AB']], 
+                '<li class="divider"></li>',
+                ['label' => 'Alta', 'url' => ["/paciente/index", "status" => 'AL']], 
+                ],
+            ],
             [
             'label' => 'Usuários',
             'items' => [
