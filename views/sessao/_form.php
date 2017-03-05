@@ -4,7 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Paciente;
-use app\models\User;
 use app\models\Consultorio;
 
 /* @var $this yii\web\View */

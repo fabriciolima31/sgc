@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   },
                     'view' => function ($url, $model) {
                     return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['sessao/all', 'id' => $model->Paciente_id], [
-                            'title' => Yii::t('yii', 'Vizualizar Todas as Sessões'),
+                            'title' => Yii::t('yii', 'Visualizar Todas as Sessões'),
                     ]);   
                   }
               ]                            

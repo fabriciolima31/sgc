@@ -29,7 +29,7 @@ use Yii;
 class Paciente extends \yii\db\ActiveRecord
 {
     public $statusDescs = ["EN"=> "Encaminhado", "LE" => "Lista de Espera", 'EC' => "Entrar em Contato", 
-        "AT" => "Atendida", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"];
+        "AT" => "Atendido", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"];
     /**
      * @inheritdoc
      */
