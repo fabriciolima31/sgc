@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Sessao;
 use app\models\Paciente;
+use app\models\Agenda;
 use app\models\SessaoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -130,6 +131,33 @@ class SessaoController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+
+public function actionDatas($consultorio)
+    {
+
+        $countPosts = Agenda::find()
+                ->where(['Consultorio_id' => $consultorio ])
+                ->andWhere(['status' => 1])
+                ->count();
+ 
+        $posts = Agenda::find()
+                ->where(['Consultorio_id' => $consultorio])
+                ->andWhere(['status' => 1])
+                ->orderBy('id ASC')
+                ->all();
+
+ 
+        if($countPosts>0){
+            foreach($posts as $post){
+                echo "<option value='".$post->id."'>Dia: ".$post->data_inicio." às ".$post->horaInicio."</option>";
+            }
+        }
+        else{
+            echo "<option>-</option>";
+        }
+ 
     }
 
     /**

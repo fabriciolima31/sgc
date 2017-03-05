@@ -34,7 +34,7 @@ class Sessao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Paciente_id', 'Usuarios_id', 'Consultorio_id', 'data', 'horario'], 'required'],
+            [['Paciente_id', 'Usuarios_id', 'Consultorio_id', 'data'], 'required'],
             [['Paciente_id', 'Usuarios_id', 'Consultorio_id'], 'integer'],
             [['data', 'status'], 'safe'],
             [['horario'], 'string', 'max' => 45],
@@ -53,8 +53,8 @@ class Sessao extends \yii\db\ActiveRecord
             'id' => 'ID',
             'Paciente_id' => 'Paciente ID',
             'Usuarios_id' => 'Usuarios ID',
-            'Consultorio_id' => 'Consultorio ID',
-            'data' => 'Data',
+            'Consultorio_id' => 'Consultorio',
+            'data' => 'Data e Horário',
             'horario' => 'Horario',
         ];
     }

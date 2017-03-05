@@ -4,7 +4,10 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Paciente;
+use app\models\Agenda;
 use app\models\Consultorio;
+use yii\helpers\Url;
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Sessao */
@@ -21,13 +24,30 @@ use app\models\Consultorio;
     ?>
     
     <?php 
-        $items = ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
-        echo $form->field($model, 'Consultorio_id')->dropDownList($items, ['prompt' => 'Selecione um Consultório'])
+
+    $dataCategory=ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
+        echo $form->field($model, 'Consultorio_id')->dropDownList($dataCategory, 
+             ['prompt'=>'Selecione um Consultório',
+              'onchange'=>'
+                $.post( "'.Url::to('index.php?r=sessao/datas&consultorio=').'"+$(this).val(), function( data ) {
+                  $( "select#data_inicio" ).html( data );
+                });
+            ']);
+
+    $dataPost=ArrayHelper::map(Agenda::find()->where('id = -999')->all(), 'id', 'data_inicio');
+        echo $form->field($model, 'data')
+            ->dropDownList(
+                $dataPost,           
+                ['prompt'=>'Selecione um Dia', 'id'=>'data_inicio',]
+        );
+
+        //$items = ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
+        //echo $form->field($model, 'Consultorio_id')->dropDownList($items, ['prompt' => 'Selecione um Consultório'])
     ?> 
 
-    <?= $form->field($model, 'data')->textInput(['readonly' => true]) ?>
+    <?php //echo $form->field($model, 'data')->textInput(['readonly' => true]) ?>
 
-    <?= $form->field($model, 'horario')->textInput(['maxlength' => true]) ?>
+    <?php //echo $form->field($model, 'horario')->textInput(['maxlength' => true]) ?>
     
     <?= $form->field($model, 'status')->dropDownList(['EE' => 'Em Espera', 'NC' => 'Não Ocorrida', 'OS' => 'Ocorrida']) //Leitura para create e escirta para update ?>   
 
