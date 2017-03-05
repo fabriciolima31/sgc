@@ -105,6 +105,17 @@ class Paciente extends \yii\db\ActiveRecord
         return $this->statusDescs[$this->status];
     }
     
+    /*
+     * Descricão dos status
+     */
+    public function getStatus1($status){
+        if(isset($this->statusDescs[$status])){
+            return $this->statusDescs[$status];
+        }
+        
+        return "Todos";
+    }
+    
     public function setStatus($action){
         if ($action == 'Alocar') {
             $this->status = 'EC';

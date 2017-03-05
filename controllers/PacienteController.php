@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Paciente;
-use app\models\UsuarioPaciente;
 use app\models\PacienteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -27,6 +26,16 @@ class PacienteController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@' ],
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -34,20 +43,18 @@ class PacienteController extends Controller
      * Lists all Paciente models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($status)
     {
-        if (isset(Yii::$app->request->queryParams['status'])) {
-            $params['status'] = Yii::$app->request->queryParams['status'];
-        } else {
-            $params['status'] = "";
-        }
+        $params['status'] = Yii::$app->request->queryParams['status'];
         
         $searchModel = new PacienteSearch();
         $dataProvider = $searchModel->search($params);
-
+        $paciente = new Paciente();
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'statusDescricao' => $paciente->getStatus1($status),
         ]);
     }
     
@@ -55,20 +62,19 @@ class PacienteController extends Controller
      * Lists all Paciente models.
      * @return mixed
      */
-    public function actionMeusPacientes()
+    public function actionMeusPacientes($status)
     {
-        if (isset(Yii::$app->request->queryParams['status'])) {
-            $params['status'] = Yii::$app->request->queryParams['status'];
-        } else {
-            $params['status'] = "";
-        }
+        $params['status'] = Yii::$app->request->queryParams['status'];
         
         $searchModel = new PacienteSearch();
         $dataProvider = $searchModel->searchMeusPacientes($params);
 
+        $paciente = new Paciente();
+                
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'statusDescricao' => $paciente->getStatus1($status),
         ]);
     }
 

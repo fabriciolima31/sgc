@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\PacienteSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Pacientes';
+$this->title = 'Pacientes - '.$statusDescricao;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="paciente-index">
@@ -24,19 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'nome',
-            'status',
-            // 'sexo',
-            // 'data_nascimento',
-            // 'telefone',
-            // 'endereco',
-            // 'moradia:ntext',
-            // 'turno_atendimento',
-            // 'local_encaminhamento:ntext',
-            // 'local_terapia:ntext',
-            // 'motivo_psicoterapia',
-            // 'servico:ntext',
-            // 'observacao:ntext',
-             'statusDesc',
+            'statusDesc',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

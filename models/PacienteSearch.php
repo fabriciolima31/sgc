@@ -94,7 +94,7 @@ class PacienteSearch extends Paciente
     {
         if ($params['status'] != "") {
             $query = Paciente::find()->where(['status' => $params['status']]);
-            $query->joinWith("usuarioPaciente")->where(['Usuario_id' => Yii::$app->user->id]);
+            $query->joinWith("usuario_Paciente")->where(['Usuario_id' => Yii::$app->user->id, 'Usuario_Paciente.status' => '1']);
         }
 
         // add conditions that should always apply here
