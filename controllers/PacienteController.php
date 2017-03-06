@@ -28,14 +28,28 @@ class PacienteController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index'],
+                //'only' => ['index'],
                 'rules' => [
                     [
+                        'actions' => ['index', 'create'],
                         'allow' => true,
                         'roles' => ['@' ],
                         'matchCallback' => function ($rule, $action) {
                             return Yii::$app->user->identity->tipo == '4';
                         }
+                    ],
+                    [
+                        'actions' => ['meus-pacientes'],
+                        'allow' => true,
+                        'roles' => ['@' ],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo != '4';
+                        }
+                    ],
+                    [
+                        'actions' => ['view'],
+                        'allow' => true,
+                        'roles' => ['@' ],
                     ],
                 ],
             ],
@@ -156,7 +170,6 @@ class PacienteController extends Controller
         } else{
             $model = Paciente::find()->where(['id' => $id])->One();
         }
-
 
         if ($model !== null) {
             return $model;

@@ -120,7 +120,7 @@ class Paciente extends \yii\db\ActiveRecord
         if ($action == 'Alocar') {
             $this->status = 'EC';
         }else if($action == 'Sessao'){
-            $this->status = 'AT';
+            $this->status = 'EA';
         }
 
         $this->save();

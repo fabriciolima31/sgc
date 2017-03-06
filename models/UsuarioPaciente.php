@@ -44,8 +44,8 @@ class UsuarioPaciente extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Paciente_id' => 'Paciente ID',
-            'Usuario_id' => 'Usuario ID',
+            'Paciente_id' => 'Paciente',
+            'Usuario_id' => 'Terapeuta',
             'status' => 'Status',
         ];
     }

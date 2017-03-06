@@ -1,53 +1,92 @@
 <?php
 
+use yii\helpers\Html;
+use yii\grid\GridView;
+use app\models\Agenda;
+use app\models\Paciente;
+
 /* @var $this yii\web\View */
+/* @var $searchModel app\models\SessaoSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'My Yii Application';
+$this->title = 'Principal';
 ?>
-<div class="site-index">
+<div class="sessao-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+    <legend><h1>Sessões Agendadas</h1></legend>
+    
+    <?= GridView::widget([
+        'dataProvider' => $dataSessoesEE,
+        //'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            
+            [
+            'attribute' => 'Paciente_id',
+                'label' => "Paciente",
+                'value' => function ($model){
+                    $paciente = Paciente::find()->where(['id' => $model->Paciente_id])->one();
+                    return $paciente->nome;
+                }
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+            ],
+            [
+                'label' => 'Data ',
+                'value' => function ($model){
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+                    $agenda = Agenda::find()->where(['id' => $model->Agenda_id])->one();
 
-    <div class="body-content">
+                   return $agenda->data_inicio;
+                }
+            ],
+            [
+                'label' => 'Hora Inicial',
+                'value' => function ($model){
 
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
+                    $agenda = Agenda::find()->where(['id' => $model->Agenda_id])->one();
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
+                   return $agenda->horaInicio;
+                }
+            ],
+            //'horario',
+            'status',
+            
+            ['class' => 'yii\grid\ActionColumn',
+              'template'=>'{view}',
+                'buttons'=>[
+                    'view' => function ($url, $model) {
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['paciente/view', 'id' => $model->id], [
+                            'title' => Yii::t('yii', 'Detalhes'),
+                    ]);   
+                  }
+                ]
+            ],
+        ],
+    ]); ?>
 
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
+    
+    <legend><h1>Pacientes Pendendes de Contato</h1></legend>
+    
+    <?= GridView::widget([
+        'dataProvider' => $dataPacienteContato,
+        //'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            
+            'nome',
+            'telefone',
+            'statusDesc',
+            
+            ['class' => 'yii\grid\ActionColumn',
+              'template'=>'{view}',
+                'buttons'=>[
+                    'view' => function ($url, $model) {
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['paciente/view', 'id' => $model->id], [
+                            'title' => Yii::t('yii', 'Detalhes'),
+                    ]);   
+                  }
+                ]
+            ],
+        ],
+    ]); ?>
 </div>

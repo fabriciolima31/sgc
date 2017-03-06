@@ -27,6 +27,19 @@ class TurmaController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+             'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'all', 'update','view', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo == '4';
+                        }
+                    ],
+                ],
+            ],
         ];
     }
 

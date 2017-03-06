@@ -13,18 +13,14 @@ use app\models\User;
 <div class="usuario-paciente-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'Paciente_id')->textInput(['maxlength' => true]) ?>
     
     <?php 
-        $items = ArrayHelper::map(User::find()->where(['tipo' => '3', 'status' => 1])->all(), 'id', 'nome'); //Ver para pegar o Psicologo ou professor
+        $items = ArrayHelper::map(User::find()->where(['tipo' => '3', 'status' => 1])->orWhere(['tipo' => '2'])->all(), 'id', 'nome'); //Ver para pegar o Psicologo ou professor
         echo $form->field($model, 'Usuario_id')->dropDownList($items, ['prompt' => 'Selecione um Terapeuta'])
-    ?>    
-    
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
+    ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

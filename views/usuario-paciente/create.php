@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\UsuarioPaciente */
 
-$this->title = 'Create Usuario Paciente';
-$this->params['breadcrumbs'][] = ['label' => 'Usuario Pacientes', 'url' => ['index']];
+$this->title = 'Alocar Terapeura';
+$this->params['breadcrumbs'][] = ['label' => 'Pacientes Alocados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-paciente-create">

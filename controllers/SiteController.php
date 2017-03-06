@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use app\models\PacienteSearch;
+use app\models\SessaoSearch;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -22,7 +24,7 @@ class SiteController extends Controller
                 'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -60,7 +62,22 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (Yii::$app->user->identity->tipo == '4') {
+            return $this->redirect(["paciente/index", 'status' => 'LE']);
+        }
+        
+        $searchPacienteContato = new PacienteSearch();
+        $dataPacienteContato = $searchPacienteContato->searchMeusPacientes(['status' => 'EC']);
+        
+        $searchMSessoesEE = new SessaoSearch();
+        $dataSessoesEE = $searchMSessoesEE->searchSessoesEE(['status' => 'EE']);
+        
+        
+        return $this->render('index', [
+           //'searchModel' => $searchModel,
+           'dataPacienteContato' => $dataPacienteContato,
+           'dataSessoesEE' => $dataSessoesEE,
+        ]);
     }
 
     /**

@@ -71,6 +71,45 @@ class SessaoSearch extends Sessao
         return $dataProvider;
     }
     
+        /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchSessoesEE($params)
+    {
+        $query = Sessao::find()->where(['Usuarios_id' => Yii::$app->user->id, 'status' => 'EE']);
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'Paciente_id' => $this->Paciente_id,
+            'Usuarios_id' => $this->Usuarios_id,
+            'Consultorio_id' => $this->Consultorio_id,
+            'data' => $this->data,
+        ]);
+
+        //$query->andFilterWhere(['like', 'horario', $this->horario]);
+
+        return $dataProvider;
+    }
+    
     public function searchPaciente($params)
     {
         $query = UsuarioPaciente::find()->where(['Usuario_id' => Yii::$app->user->id, 'status' => '1']);
