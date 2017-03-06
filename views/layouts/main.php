@@ -37,8 +37,8 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
 
-            ['label' => 'Disciplinas', 'url' => ['/disciplina/index'], 'visible' => Yii::$app->user->identity->tipo == '4'],
-            ['label' => 'Turmas', 'url' => ['/turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4'],
+            !Yii::$app->user->isGuest ? ['label' => 'Disciplinas', 'url' => ['/disciplina/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
+            !Yii::$app->user->isGuest ? ['label' => 'Turmas', 'url' => ['/turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
             !Yii::$app->user->isGuest ? [
             'label' => 'Paciente',
             'items' => [
@@ -61,7 +61,7 @@ AppAsset::register($this);
                     "status" => 'AL']], 
                 ],
             ]: "",
-            [
+            !Yii::$app->user->isGuest ? [
             'label' => 'Usuários',
             'items' => [
                 ['label' => 'Professores', 'url' => ["/user/index", "perfil" =>1]], 
@@ -73,8 +73,8 @@ AppAsset::register($this);
                 ['label' => 'Administradores', 'url' => ["/user/index", "perfil" =>4]], 
                 ],
                 'visible' => Yii::$app->user->identity->tipo == '4',
-            ],
-            ['label' => 'Alocações', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'],
+            ] : "",
+            !Yii::$app->user->isGuest ? ['label' => 'Alocações', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

@@ -44,7 +44,7 @@ class Paciente extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['data_nascimento', 'moradia', 'local_encaminhamento', 'local_terapia', 
+            [['data_nascimento', 'moradia', 
                 'servico', 'nome', 'endereco', 'sexo', 'turno_atendimento',
                 'motivo_psicoterapia', 'telefone'], 'required'],
             [['data_nascimento', 'data_inscricao'], 'safe'],
