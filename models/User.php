@@ -5,6 +5,7 @@ namespace app\models;
 use yii\helpers\Security;
 use yii\web\IdentityInterface;
 use yiibr\brvalidator\CpfValidator;
+use app\models\Disciplina;
 
 /**
  * This is the model class for table "tbl_user".
@@ -34,13 +35,14 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
             [['cpf', 'nome', 'tipo', 'email'], 'required'],
             [['password','password_repeat'], 'required','on'=> 'create'],
             [['password','password_repeat'], 'required','on'=> 'updatesenha'],
-            [['turmasArray'], 'required','when' => function ($model) {
+            [['turmasArray'], 'required', 'on'=> 'create'  ,'when' => function ($model) {
                     return $model->tipo == '3';
                 }, 
              'whenClient'=> "function (attribute, value) {
                                                             return $('#user-tipo').val() == '3';
                                                         }"
             ],
+            [['turmasArray'], 'validateTurmas'],
             [['cpf'], 'string'],
             [['cpf'],  CpfValidator::className(), 'message' => 'CPF Inválido'],
             [['email'], 'email'],
@@ -145,6 +147,32 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
+    }
+
+    public function validateTurmas($attribute){
+        if (!$this->hasErrors()) {
+
+
+        $model_disciplinas_turmas = Disciplina::find()
+        ->select("Disciplina.id as disc_id, Turma.id as turma_id")
+        ->innerJoin("Turma","Disciplina.id = Turma.Disciplina_id")
+        ->where('Turma.id IN ('. implode(',',$this->turmasArray).')')->asArray()->all();
+;
+       
+        $incrementador = 0;
+        for($i=0; $i < count($model_disciplinas_turmas) ; $i++){
+            for($j=$i+1; $j < count($model_disciplinas_turmas); $j++ ){
+                if($model_disciplinas_turmas[$i]["disc_id"] == $model_disciplinas_turmas[$j]["disc_id"] ){ 
+                    $incrementador ++;
+                    break;
+                }
+            }
+        }
+
+            if ($incrementador > 0) {
+                $this->addError($attribute, 'Voce escolheu disciplinas Iguais.');
+            }
+        }
     }
 
     /**

@@ -74,8 +74,10 @@ use app\models\Turma;
 <script type="text/javascript">
 
 var selecao = document.getElementById("user-tipo").onchange = displayDate;
+ window.onload = displayDate;
 
 function displayDate() {
+
     if (document.getElementById("user-tipo").value == 3){
 
             $('#checkBoxDeTurmas').css({
@@ -89,6 +91,9 @@ function displayDate() {
             });        
     }
 }
+    
+    displayDate();
+ 
 
 </script>
 

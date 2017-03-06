@@ -101,67 +101,29 @@ class UserController extends Controller
                     $model = $model->existenteUsuario;
                 }
 
-
+                if ($model->save()) {
 
                     if ($model->tipo == 3){
 
                         $aluno_turma = new AlunoTurma();
-                        
-                        $arrayAux = [];
 
-                        $model_disciplinas_turmas = Disciplina::find()->select("Disciplina.id as disc_id, Turma.id as turma_id")->innerJoin("Turma","Disciplina.id = Turma.Disciplina_id")->where('Turma.id IN ('. implode(',',$model->turmasArray).')')->asArray()->all();
-
-;
-
-                       
-                        $incrementador = 0;
-                        for($i=0; $i < count($model_disciplinas_turmas) ; $i++){
-
-                            for($j=$i+1; $j < count($model_disciplinas_turmas); $j++ ){
-                                    if($model_disciplinas_turmas[$i]["disc_id"] == $model_disciplinas_turmas[$j]["disc_id"] ){ //
-                                        $arrayAux[$incrementador] = $model_disciplinas_turmas[$j]["turma_id"];
-                                        $incrementador ++;
-                                    }
+                            $i=0;
+                            while ($i < count($model->turmasArray)){
+                                $aluno_turma->isNewRecord = true;
+                                $aluno_turma->Usuarios_id = $model->id;
+                                $aluno_turma->Turma_id = $model->turmasArray[$i];
+                                $aluno_turma->save();
+                                $i++;
                             }
-
-                        }
-                        var_dump($arrayAux);
-                        echo "<br>";
-                        var_dump($model->turmasArray);
-                        echo "<br>";
-                        echo "<br>";
-                        var_dump($model_disciplinas_turmas);
-
-                        $model->turmasArray = array_diff($model_disciplinas_turmas[0], $arrayAux );
-                        echo "<br>aki:";
-                        var_dump($model->turmasArray );
-                        die;
-
-                        $i=0;
-
-                        while ($i < count($model->turmasArray)){
-
-                            $aluno_turma->isNewRecord = true;
-                            $aluno_turma->Usuarios_id = $model->id;
-                            $aluno_turma->Turma_id = $model->turmasArray[$i];
-                            $aluno_turma->save();
-                            $i++;
-                        }
-
+                        
                     }
 
-
-                
-                if ($model->save()) {
-
-
-
-
                     return $this->redirect(['view', 'id' => $model->id]);
+
                 }else{
-                    print_r($model->getErrors());
-                    die;
-                    return "ERRO AO SALVAR USUÁRIO";
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
                 }
             }
         }
