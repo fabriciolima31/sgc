@@ -6,13 +6,18 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Turma;
 
+
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
-<div class="user-form">
 
+
+
+
+<div class="user-form">
 
 
     <?php $form = ActiveForm::begin(); ?>
@@ -39,6 +44,20 @@ use app\models\Turma;
   
     <?= $form->field($model, 'tipo')->dropDownList(['1' => 'Professor', '2' => 'Psicólogo', 
         '3' => 'Aluno Terapeuta', '4' => 'Estagiário Administrativo'], ['prompt'=>'Selecione um Perfil ']); ?>
+
+    <div id="checkBoxDeTurmas" style="width: 30%; border: solid 1px lightgray; padding: 2px 1px 0px 4px; margin-bottom: 1%; display: none">
+        <?php 
+            $turmas = Turma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.*")->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")->all();
+
+            echo $form->field($model, 'turmasArray')
+            ->checkboxList(ArrayHelper::map($turmas,'id',                      
+                function($model, $defaultValue) {
+                        return $model['nome_da_disciplina'].' - Turma: '.$model['codigo'];
+                }
+
+            )); 
+        ?>
+    </div>
   
 
     <div class="form-group">
@@ -48,3 +67,29 @@ use app\models\Turma;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+
+<head>
+
+<script type="text/javascript">
+
+var selecao = document.getElementById("user-tipo").onchange = displayDate;
+
+function displayDate() {
+    if (document.getElementById("user-tipo").value == 3){
+
+            $('#checkBoxDeTurmas').css({
+                'display': 'block',
+            });
+
+    }
+    else{
+            $('#checkBoxDeTurmas').css({
+                'display': 'none',
+            });        
+    }
+}
+
+</script>
+
+</head>
