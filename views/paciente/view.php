@@ -5,9 +5,10 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Paciente */
-
+$url = Yii::$app->user->identity->tipo == '3' ? 'meus-pacientes' : 'index';
+        
 $this->title = $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Pacientes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Pacientes', 'url' => [$url, 'status' => $model->status]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="paciente-view">

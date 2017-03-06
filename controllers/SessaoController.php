@@ -45,22 +45,6 @@ class SessaoController extends Controller
             ],
         ];
     }
-
-    /**
-     * Lists all Sessao models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new SessaoSearch();
-        $dataProvider = $searchModel->searchPaciente(Yii::$app->request->queryParams);
-
-        return $this->render('indexpaciente', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-    
     /**
      * Lists all Sessao models.
      * @return mixed

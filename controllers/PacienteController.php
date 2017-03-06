@@ -33,6 +33,9 @@ class PacienteController extends Controller
                     [
                         'allow' => true,
                         'roles' => ['@' ],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo == '4';
+                        }
                     ],
                 ],
             ],
@@ -51,7 +54,7 @@ class PacienteController extends Controller
         $dataProvider = $searchModel->search($params);
         $paciente = new Paciente();
         
-        return $this->render('index', [
+        return $this->render('indexadministrador', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'statusDescricao' => $paciente->getStatus1($status),
@@ -65,16 +68,16 @@ class PacienteController extends Controller
     public function actionMeusPacientes($status)
     {
         $params['status'] = Yii::$app->request->queryParams['status'];
-        
+
         $searchModel = new PacienteSearch();
         $dataProvider = $searchModel->searchMeusPacientes($params);
 
         $paciente = new Paciente();
                 
-        return $this->render('index', [
+        return $this->render('indexterapeuta', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'statusDescricao' => $paciente->getStatus1($status),
+            'statusDescricao' => $paciente->getStatus1($params['status']),
         ]);
     }
 
@@ -136,9 +139,7 @@ class PacienteController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+       return "SERÀ MUDAR STATUS";
     }
 
     /**
@@ -150,7 +151,14 @@ class PacienteController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Paciente::findOne($id)) !== null) {
+        if (Yii::$app->user->identity->tipo != '4') {
+            $model = Paciente::find()->where(['id' => $id])->joinWith("usuario_Paciente")->andWhere(['Usuario_id' => Yii::$app->user->id, 'Usuario_Paciente.status' => '1'])->One();
+        } else{
+            $model = Paciente::find()->where(['id' => $id])->One();
+        }
+
+
+        if ($model !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

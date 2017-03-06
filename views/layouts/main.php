@@ -42,17 +42,23 @@ AppAsset::register($this);
             [
             'label' => 'Paciente',
             'items' => [
-                ['label' => 'Lista de Espera', 'url' => ["/paciente/index", "status" => 'LE']], 
+                ['label' => 'Lista de Espera', 'url' => ["/paciente/index", "status" => 'LE'], 
+                    'visible' => Yii::$app->user->identity->tipo == '4'], 
                 '<li class="divider"></li>', 
-                ['label' => 'Entrar em Contato', 'url' => ["/paciente/index", "status" => 'EC']], 
+                ['label' => 'Entrar em Contato', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index": "/paciente/meus-pacientes", 
+                    "status" => 'EC']], 
                 '<li class="divider"></li>',
-                ['label' => 'Em Atendimento', 'url' => ["/paciente/index", "status" => 'EA']], 
+                ['label' => 'Em Atendimento', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
+                    "status" => 'EA']],
                 '<li class="divider"></li>',
-                ['label' => 'Desistente', 'url' => ["/paciente/index", "status" => 'DE']], 
+                ['label' => 'Desistente', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
+                    "status" => 'DE']], 
                 '<li class="divider"></li>',
-                ['label' => 'Abandono', 'url' => ["/paciente/index", "status" => 'AB']], 
+                ['label' => 'Abandono', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
+                    "status" => 'AB']], 
                 '<li class="divider"></li>',
-                ['label' => 'Alta', 'url' => ["/paciente/index", "status" => 'AL']], 
+                ['label' => 'Alta', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
+                    "status" => 'AL']], 
                 ],
             ],
             [
@@ -67,7 +73,6 @@ AppAsset::register($this);
                 ['label' => 'Administradores', 'url' => ["/user/index", "perfil" =>4]], 
                 ],
             ],
-            ['label' => 'Sessão', 'url' => ['/sessao/index']],
             ['label' => 'Alocações', 'url' => ['/usuario-paciente/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
