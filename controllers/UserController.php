@@ -108,7 +108,16 @@ class UserController extends Controller
                         $aluno_turma = new AlunoTurma();
 
                             $i=0;
-                            while ($i < count($model->turmasArray)){
+
+                            if($model->turmasArray == ""){
+                                $frag = false;
+                            }
+                            else{
+                                $frag = true;
+                            }
+
+
+                            while ($frag && $i < count($model->turmasArray)){
                                 $aluno_turma->isNewRecord = true;
                                 $aluno_turma->Usuarios_id = $model->id;
                                 $aluno_turma->Turma_id = $model->turmasArray[$i];

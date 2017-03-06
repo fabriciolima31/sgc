@@ -49,6 +49,10 @@ use app\models\Turma;
         <?php 
             $turmas = Turma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.*")->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")->all();
 
+            if ($turmas == null){
+                echo "<div style='color:red'> Obs.: Não há Turmas Cadastradas. </div>";
+            }
+            else{
             echo $form->field($model, 'turmasArray')
             ->checkboxList(ArrayHelper::map($turmas,'id',                      
                 function($model, $defaultValue) {
@@ -56,6 +60,8 @@ use app\models\Turma;
                 }
 
             )); 
+            }
+
         ?>
     </div>
   

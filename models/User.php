@@ -35,13 +35,14 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
             [['cpf', 'nome', 'tipo', 'email'], 'required'],
             [['password','password_repeat'], 'required','on'=> 'create'],
             [['password','password_repeat'], 'required','on'=> 'updatesenha'],
-            [['turmasArray'], 'required', 'on'=> 'create'  ,'when' => function ($model) {
+            /*[['turmasArray'], 'required', 'on'=> 'create'  ,'when' => function ($model) {
                     return $model->tipo == '3';
                 }, 
              'whenClient'=> "function (attribute, value) {
                                                             return $('#user-tipo').val() == '3';
                                                         }"
             ],
+            */
             [['turmasArray'], 'validateTurmas'],
             [['cpf'], 'string'],
             [['cpf'],  CpfValidator::className(), 'message' => 'CPF Inválido'],
@@ -67,7 +68,7 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
             'status' => 'Status',
             'password_repeat' => 'Repetir Senha',
             'email' => 'Email',
-            'turmasArray' => 'Turmas'
+            'turmasArray' => 'Disciplina - Turma'
         ];
     }
     
