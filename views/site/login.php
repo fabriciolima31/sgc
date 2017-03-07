@@ -6,6 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\MaskedInput;
 
 $this->title = 'Autenticação';
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 
-        <?= $form->field($model, 'cpf')->textInput(['autofocus' => true]) ?>
+        <?= $form->field($model, 'cpf')->textInput(['autofocus' => true])->widget(MaskedInput::className(), [
+            'mask' => '999.999.999-99',]) ?>
 
         <?= $form->field($model, 'password')->passwordInput() ?>
 

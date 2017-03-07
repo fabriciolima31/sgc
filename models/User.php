@@ -194,7 +194,7 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password_hash = Security::generatePasswordHash($password);
+        $this->password_hash = Security::generatePasswordHash('SGC'.$password);
     }
 
     /**
