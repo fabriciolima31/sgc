@@ -47,7 +47,7 @@ class PacienteController extends Controller
                         }
                     ],
                     [
-                        'actions' => ['view'],
+                        'actions' => ['update', 'view', 'alterar-status'],
                         'allow' => true,
                         'roles' => ['@' ],
                     ],
@@ -144,16 +144,23 @@ class PacienteController extends Controller
             ]);
         }
     }
-
-    /**
-     * Deletes an existing Paciente model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
+    
+    public function actionAlterarStatus($id, $status)
     {
-       return "SERÀ MUDAR STATUS";
+        $model = $this->findModel($id);
+        
+        $model->status = $status;
+        
+        if($model->save()){
+            if (Yii::$app->user->identity->tipo == '4') {
+                return $this->redirect(['paciente/index', 'status' => 'AL']);
+            } else {
+                return $this->redirect(['paciente/  meus-pacientes', 'status' => 'AL']);
+            }
+        }else{
+            return "Ocorreu um Erro ao Alterar Status do paciente";
+        }
+        
     }
 
     /**

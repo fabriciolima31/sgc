@@ -19,13 +19,23 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Yii::$app->user->identity->tipo == '4' ? Html::a('Alocar', ['usuario-paciente/create', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
         <?= Yii::$app->user->identity->tipo == '3' ? Html::a('Sessões', ['sessao/all', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
-        <?= Html::a('Remover', ['delete', 'id' => $model->id], [
+        
+        <?= Html::a('Desistiu', ['alterar-status', 'id' => $model->id, 'status' => 'DE'], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Alterar Status para Desistente?',
                 'method' => 'post',
             ],
         ]) ?>
+        
+        <?= Html::a('Abandonou', ['alterar-status', 'id' => $model->id, 'status' => 'AB'], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Alterar Status para Abandono?',
+                'method' => 'post',
+            ],
+        ]) ?>
+
     </p>
 
     <?= DetailView::widget([

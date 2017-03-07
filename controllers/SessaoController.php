@@ -51,13 +51,17 @@ class SessaoController extends Controller
      */
     public function actionAll($id)
     {
+        $this->checaPaciente($id);
+        
+        $paciente = Paciente::find()->where(['id' => $id])->One();
+        
         $searchModel = new SessaoSearch();
         $dataProvider = $searchModel->search(['Paciente_id' => $id]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'Paciente_id'
+            'paciente' => $paciente,
         ]);
     }
 
@@ -80,6 +84,8 @@ class SessaoController extends Controller
      */
     public function actionCreate($id)
     {
+        $this->checaPaciente($id);
+        
         $model = new Sessao();
         $paciente = Paciente::find()->where(['id' => $id])->One();
         
@@ -95,19 +101,14 @@ class SessaoController extends Controller
 
                 $paciente->setStatus("Sessao");
                 $model->status = '1';
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['sessao/all', 'id' => $model->Paciente_id]);
             }
             else{
-                //return print_r($model->getErrors());
                 return $this->render('create', [
                     'model' => $model,
                 ]);
             }
-
-
-
         } else {
-            //return print_r($model->getErrors());
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -146,8 +147,16 @@ class SessaoController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function alteraStatus($status, $id){
+        if($status != 'OS' || $status != 'NO'){
+            return $this->redirect(['sessao/all', '$id' => $id]);
+        }
+        
+        $model->status = $status;
+        $model->save();
+    }
 
-public function actionDatas($consultorio)
+    public function actionDatas($consultorio)
     {
 
         $countPosts = Agenda::find()
@@ -186,6 +195,14 @@ public function actionDatas($consultorio)
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    protected function checaPaciente($id){
+        $model = \app\models\UsuarioPaciente::find()->where(['Usuario_id' => Yii::$app->user->id])->andWhere([
+            'Paciente_id' => $id])->One();
+        if($model == null){
+            throw new NotFoundHttpException('A página solicitada não existe.');
         }
     }
 }

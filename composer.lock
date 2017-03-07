@@ -150,16 +150,16 @@
         },
         {
             "name": "bower-asset/eonasdan-bootstrap-datetimepicker",
-            "version": "v4.17.45",
+            "version": "4.17.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Eonasdan/bootstrap-datetimepicker.git",
-                "reference": "bf88bcc394223787a3a874f572c2f231742e174e"
+                "reference": "25c11d79e614bc6463a87c3dd9cbf8280422e006"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Eonasdan/bootstrap-datetimepicker/zipball/bf88bcc394223787a3a874f572c2f231742e174e",
-                "reference": "bf88bcc394223787a3a874f572c2f231742e174e",
+                "url": "https://api.github.com/repos/Eonasdan/bootstrap-datetimepicker/zipball/25c11d79e614bc6463a87c3dd9cbf8280422e006",
+                "reference": "25c11d79e614bc6463a87c3dd9cbf8280422e006",
                 "shasum": ""
             },
             "require": {
@@ -226,6 +226,31 @@
             ]
         },
         {
+            "name": "bower-asset/jquery-ui",
+            "version": "1.11.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/components/jqueryui.git",
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/components/jqueryui/zipball/c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "reference": "c34f8dbf3ba57b3784b93f26119f436c0e8288e1",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "jquery-ui.js"
+                ],
+                "bower-asset-ignore": []
+            }
+        },
+        {
             "name": "bower-asset/jquery.inputmask",
             "version": "3.3.4",
             "source": {
@@ -280,7 +305,7 @@
         },
         {
             "name": "bower-asset/moment",
-            "version": "2.17.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moment/moment.git",
@@ -318,7 +343,8 @@
             },
             "license": [
                 "MIT"
-            ]
+            ],
+            "time": "2016-12-04 05:41:33"
         },
         {
             "name": "bower-asset/punycode",
@@ -945,12 +971,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "c9c2f5cd18bc784c6b093d7a022a27ca3642bf2c"
+                "reference": "baf4b48c6f2fee30fa346ab5bb2fefe550814d4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/c9c2f5cd18bc784c6b093d7a022a27ca3642bf2c",
-                "reference": "c9c2f5cd18bc784c6b093d7a022a27ca3642bf2c",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/baf4b48c6f2fee30fa346ab5bb2fefe550814d4f",
+                "reference": "baf4b48c6f2fee30fa346ab5bb2fefe550814d4f",
                 "shasum": ""
             },
             "require": {
@@ -1037,7 +1063,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2017-02-28 13:59:10"
+            "time": "2017-03-03 07:30:03"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -1141,22 +1167,32 @@
         },
         {
             "name": "yiisoft/yii2-jui",
-            "version": "2.0.0-beta",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-jui.git",
-                "reference": "24626ae44d56b86275e2dcdadf874bc21028a9f8"
+                "reference": "8ade6f3abe8bb69febae51082c91fc012609259f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/24626ae44d56b86275e2dcdadf874bc21028a9f8",
-                "reference": "24626ae44d56b86275e2dcdadf874bc21028a9f8",
+                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/8ade6f3abe8bb69febae51082c91fc012609259f",
+                "reference": "8ade6f3abe8bb69febae51082c91fc012609259f",
                 "shasum": ""
             },
             "require": {
-                "yiisoft/yii2": "*"
+                "bower-asset/jquery-ui": "1.11.*@stable",
+                "yiisoft/yii2": "~2.0.4"
             },
             "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                },
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "yii\\jui\\": ""
@@ -1169,18 +1205,15 @@
             "authors": [
                 {
                     "name": "Qiang Xue",
-                    "email": "qiang.xue@gmail.com",
-                    "homepage": "http://www.yiiframework.com/",
-                    "role": "Founder and project lead"
+                    "email": "qiang.xue@gmail.com"
                 }
             ],
             "description": "The Jquery UI extension for the Yii framework",
             "keywords": [
                 "jQuery UI",
-                "renderer",
                 "yii2"
             ],
-            "time": "2014-04-13 21:58:59"
+            "time": "2017-03-01 18:09:25"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -1546,12 +1579,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "a2dec96198bb146ffead806700074b0ec8d07f2f"
+                "reference": "24c140e9e25b0af0e0d772f1964685971efbf64d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/a2dec96198bb146ffead806700074b0ec8d07f2f",
-                "reference": "a2dec96198bb146ffead806700074b0ec8d07f2f",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/24c140e9e25b0af0e0d772f1964685971efbf64d",
+                "reference": "24c140e9e25b0af0e0d772f1964685971efbf64d",
                 "shasum": ""
             },
             "require": {
@@ -1588,7 +1621,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-02-01 09:18:35"
+            "time": "2017-03-01 16:12:18"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1887,12 +1920,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "a8acfca019c089ccf89cf5e9e2f5ea2856d81b34"
+                "reference": "abe41cb27f4e4207c6f54a09272969fe55e0bbff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/a8acfca019c089ccf89cf5e9e2f5ea2856d81b34",
-                "reference": "a8acfca019c089ccf89cf5e9e2f5ea2856d81b34",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/abe41cb27f4e4207c6f54a09272969fe55e0bbff",
+                "reference": "abe41cb27f4e4207c6f54a09272969fe55e0bbff",
                 "shasum": ""
             },
             "require": {
@@ -1903,13 +1936,13 @@
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
             "require-dev": {
-                "phpspec/phpspec": "^2.4.0",
+                "phpspec/phpspec": "^2.5|^3.2",
                 "phpunit/phpunit": "^4.8 || ^5.6.5"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev"
+                    "dev-master": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -1942,7 +1975,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-02-24 13:43:11"
+            "time": "2017-03-03 17:09:02"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1950,12 +1983,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "2f38365a8bc41c12d823c972f2ff78d9716ecbd4"
+                "reference": "09e2277d14ea467e5a984010f501343ef29ffc69"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/2f38365a8bc41c12d823c972f2ff78d9716ecbd4",
-                "reference": "2f38365a8bc41c12d823c972f2ff78d9716ecbd4",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/09e2277d14ea467e5a984010f501343ef29ffc69",
+                "reference": "09e2277d14ea467e5a984010f501343ef29ffc69",
                 "shasum": ""
             },
             "require": {
@@ -2005,7 +2038,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-02-27 19:00:39"
+            "time": "2017-03-01 09:12:17"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2199,12 +2232,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7d5e09690c1585c20e6fb3a35194234227c97aac"
+                "reference": "d6f7efc8d7445964782b45ab92115e50310f2ff1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7d5e09690c1585c20e6fb3a35194234227c97aac",
-                "reference": "7d5e09690c1585c20e6fb3a35194234227c97aac",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d6f7efc8d7445964782b45ab92115e50310f2ff1",
+                "reference": "d6f7efc8d7445964782b45ab92115e50310f2ff1",
                 "shasum": ""
             },
             "require": {
@@ -2273,7 +2306,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-02-20 14:35:00"
+            "time": "2017-03-02 16:53:36"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3007,12 +3040,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "99a527b431a926730f460640b82e2579dd3d39b5"
+                "reference": "63c11b96ebaab5fda1aa33c5eaf011d3e47396f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/99a527b431a926730f460640b82e2579dd3d39b5",
-                "reference": "99a527b431a926730f460640b82e2579dd3d39b5",
+                "url": "https://api.github.com/repos/symfony/console/zipball/63c11b96ebaab5fda1aa33c5eaf011d3e47396f1",
+                "reference": "63c11b96ebaab5fda1aa33c5eaf011d3e47396f1",
                 "shasum": ""
             },
             "require": {
@@ -3067,7 +3100,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-28 15:38:18"
+            "time": "2017-03-01 18:19:35"
         },
         {
             "name": "symfony/css-selector",
@@ -3411,12 +3444,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "4c908f89b687212bd827bbf4a9a766a87daf5861"
+                "reference": "902dfb757bbeab73e75258685b3661f92bbe087d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/4c908f89b687212bd827bbf4a9a766a87daf5861",
-                "reference": "4c908f89b687212bd827bbf4a9a766a87daf5861",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/902dfb757bbeab73e75258685b3661f92bbe087d",
+                "reference": "902dfb757bbeab73e75258685b3661f92bbe087d",
                 "shasum": ""
             },
             "require": {
@@ -3458,7 +3491,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-02-28 02:34:20"
+            "time": "2017-03-01 22:36:19"
         },
         {
             "name": "webmozart/assert",

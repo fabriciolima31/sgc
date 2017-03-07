@@ -55,7 +55,7 @@ $this->title = 'Principal';
               'template'=>'{view}',
                 'buttons'=>[
                     'view' => function ($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['paciente/view', 'id' => $model->id], [
+                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['paciente/view', 'id' => $model->Paciente_id], [
                             'title' => Yii::t('yii', 'Detalhes'),
                     ]);   
                   }

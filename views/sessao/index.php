@@ -9,8 +9,9 @@ use app\models\Paciente;
 /* @var $searchModel app\models\SessaoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Sessões Realizadas';
-$this->params['breadcrumbs'][] = ['label' => 'Sessões Realizadas - Pacientes', 'url' => ['index']];
+$this->title = 'Sessões de '.$paciente->nome;
+$this->params['breadcrumbs'][] = ['label' => 'Pacientes', 'url' => ['paciente/meus-pacientes', 'status' => $paciente->status]];
+$this->params['breadcrumbs'][] = ['label' => $paciente->nome, 'url' => ['paciente/view', 'id' => $paciente->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="sessao-index">
@@ -18,7 +19,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Nova Sessão', ['create', 'id'=> Yii::$app->request->get('id') ], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Adicionar Sessão', ['create', 'id'=> Yii::$app->request->get('id') ], ['class' => 'btn btn-success']) ?>
+        <?= Yii::$app->user->identity->tipo == '3' ?  Html::a('Dar Alta', ['alterar-status', 'id' => $paciente->id, 'status' => 'AL'], [
+            'class' => 'btn btn-success',
+            'data' => [
+                'confirm' => 'Atribuir Alta para o paciente?',
+                'method' => 'post',
+            ],
+        ]) : "" ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -26,15 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
-            [
-            'attribute' => 'Paciente_id',
-                'label' => "Paciente",
-                'value' => function ($model){
-                    $paciente = Paciente::find()->where(['id' => $model->Paciente_id])->one();
-                    return $paciente->nome;
-                }
-
-            ],
+//            [
+//            'attribute' => 'Paciente_id',
+//                'label' => "Paciente",
+//                'value' => function ($model){
+//                    $paciente = Paciente::find()->where(['id' => $model->Paciente_id])->one();
+//                    return $paciente->nome;
+//                }
+//
+//            ],
             [
                 'label' => 'Data ',
                 'value' => function ($model){
@@ -56,7 +64,22 @@ $this->params['breadcrumbs'][] = $this->title;
             //'horario',
             'status',
             
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+              'template'=>'{view} {ocorreu} {naoocorreu}',
+                'buttons'=>[
+                    'ocorreu' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-ok-sign"></span>', ['sessao/altera-status','status' => 'OS',
+                        'id' => $model->Paciente_id], [
+                            'title' => Yii::t('yii', 'Regitrar Consulta Ocorrida'),
+                    ]) ;   
+                  },
+                    'naoocorreu' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-remove-sign"></span>', ['sessao/altera-status', 'status' => 'OS', 'id' => $model->Paciente_id], [
+                            'title' => Yii::t('yii', 'Registrar consulta não ocorrida'),
+                    ]);   
+                  }
+                ]
+            ],
         ],
     ]); ?>
 </div>

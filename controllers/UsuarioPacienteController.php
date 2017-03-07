@@ -87,11 +87,11 @@ class UsuarioPacienteController extends Controller
         $paciente = Paciente::find()->where(['id'=> $id])->One();
         
         $model->Paciente_id = $id;
-        $model->status = 1;
-
+        $model->status = '1';
+       
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $paciente->setStatus("Alocar");
-            return $this->redirect(['view', 'Paciente_id' => $model->Paciente_id, 'Usuario_id' => $model->Usuario_id, 'status' => $model->status]);
+            return $this->redirect(['paciente/index', 'status' => 'EC']);
         } else {
             return $this->render('create', [
                 'model' => $model,
