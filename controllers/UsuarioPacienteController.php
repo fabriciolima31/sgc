@@ -135,6 +135,17 @@ class UsuarioPacienteController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionEncaminhar($id)
+    {
+
+        $this->findModel($Paciente_id, $Usuario_id, $status);
+
+        var_dump($this);
+        die;
+
+        return $this->redirect(['index']);
+    }
+
     /**
      * Finds the UsuarioPaciente model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

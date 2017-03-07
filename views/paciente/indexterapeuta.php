@@ -24,13 +24,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'statusDesc',
 
             ['class' => 'yii\grid\ActionColumn',
-              'template'=>'{view} {update} {sessao}',
+              'template'=>'{view} {update} {sessao} {encaminhar}',
                 'buttons'=>[
                     'sessao' => function ($url, $model) {
                     return Html::a('<span class="glyphicon glyphicon-blackboard"></span>', ['sessao/all', 'id' => $model->id], [
                             'title' => Yii::t('yii', 'Sessões'),
                     ]);   
-                  }
+                  },
+                'encaminhar' => function ($url, $model) {  
+                    return Html::a('<span class="glyphicon glyphicon-chevron-left"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id], [
+                                                'title' => Yii::t('yii', 'Encaminhar Para Lista de Espera'),
+                                        ]);   
+                  },
                 ]
             ],
         ],
