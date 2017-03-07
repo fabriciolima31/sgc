@@ -135,12 +135,12 @@ class UsuarioPacienteController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionEncaminhar($id)
+    public function actionEncaminhar($Paciente_id, $Usuario_id)
     {
 
-        $this->findModel($Paciente_id, $Usuario_id, $status);
-
-        var_dump($this);
+        //$model = UsuarioPaciente::find()->where(["Paciente_id" => $Paciente_id])->andWhere(["Usuario_id"=>$Usuario_id])->one();
+        echo "oi";
+        //var_dump($model);
         die;
 
         return $this->redirect(['index']);

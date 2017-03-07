@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Paciente;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PacienteSearch */
@@ -32,7 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);   
                   },
                 'encaminhar' => function ($url, $model) {  
-                    return Html::a('<span class="glyphicon glyphicon-chevron-left"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id], [
+
+                    $usuarioPaciente = Paciente::find()->where(["id" => $model->id])->one();
+                    $usuarioPaciente->status = "EE";
+                    $usuarioPaciente->save();
+
+
+                    return Html::a('<span class="glyphicon glyphicon-chevron-left"></span>', ['usuario-paciente/encaminhar', 'Paciente_id' => $model->id,
+                        //'Usuario_id' => $model->Usuario_id,
+                        ], [
                                                 'title' => Yii::t('yii', 'Encaminhar Para Lista de Espera'),
                                         ]);   
                   },
