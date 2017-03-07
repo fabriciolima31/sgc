@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Paciente;
+use app\models\UsuarioPaciente;
 use app\models\PacienteSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -102,8 +103,14 @@ class PacienteController extends Controller
      */
     public function actionView($id)
     {
+
+
+         $pacienteJaAlocado = (UsuarioPaciente::find()->where(['Paciente_id'=> $id])->andWhere(['status'=> 1])->count() == 1);
+
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'pacienteJaAlocado' => $pacienteJaAlocado,
         ]);
     }
 

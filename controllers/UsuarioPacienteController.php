@@ -85,7 +85,7 @@ class UsuarioPacienteController extends Controller
         $model = new UsuarioPaciente();
         
         $paciente = Paciente::find()->where(['id'=> $id])->One();
-        
+
         $model->Paciente_id = $id;
         $model->status = '1';
        
