@@ -30,6 +30,8 @@ class Paciente extends \yii\db\ActiveRecord
 {
     public $statusDescs = ["EN"=> "Encaminhado", "LE" => "Lista de Espera", 'EC' => "Entrar em Contato", 
         "EA" => "Em Atendimento", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"];
+    
+    public $prioridadeArray = ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'];
     /**
      * @inheritdoc
      */
@@ -53,6 +55,7 @@ class Paciente extends \yii\db\ActiveRecord
             [['status', 'sexo', 'turno_atendimento'], 'string', 'max' => 21],
             [['telefone'], 'string', 'max' => 10],
             [['motivo_psicoterapia'], 'string', 'max' => 45],
+            [['prioridade', 'complexidade'], 'string'],
         ];
     }
 

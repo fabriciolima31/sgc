@@ -20,6 +20,7 @@ class PacienteSearch extends Paciente
         return [
             [['id'], 'integer'],
             [['nome', 'status', 'sexo', 'data_nascimento', 'telefone', 'endereco', 'moradia', 'turno_atendimento', 'local_encaminhamento', 'local_terapia', 'motivo_psicoterapia', 'servico', 'observacao', 'data_inscricao'], 'safe'],
+            [['prioridade', 'complexidade'], 'safe'],
         ];
     }
 
@@ -78,7 +79,9 @@ class PacienteSearch extends Paciente
             ->andFilterWhere(['like', 'local_terapia', $this->local_terapia])
             ->andFilterWhere(['like', 'motivo_psicoterapia', $this->motivo_psicoterapia])
             ->andFilterWhere(['like', 'servico', $this->servico])
-            ->andFilterWhere(['like', 'observacao', $this->observacao]);
+            ->andFilterWhere(['like', 'observacao', $this->observacao])
+            ->andFilterWhere(['like', 'complexidade', $this->complexidade])
+            ->andFilterWhere(['like', 'prioridade', $this->prioridade]);
 
         return $dataProvider;
     }

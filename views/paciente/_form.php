@@ -38,6 +38,12 @@ use yii\widgets\MaskedInput;
     <?= $form->field($model, 'servico')->textInput()->label("<font color='#FF0000'>*</font> <b>Como soube do serviço?</b>"); ?>
 
     <?= $form->field($model, 'observacao')->textarea(['rows' => 6]) ?>
+    
+    <?= $form->field($model, 'prioridade')->dropDownList($model->prioridadeArray,['prompt'=>'Selecione uma Opção'])
+            ->label("<b>Prioridade:</b>"); ?>
+    
+    <?= $form->field($model, 'complexidade')->dropDownList($model->prioridadeArray,['prompt'=>'Selecione uma Opção'])
+            ->label("<b>Complexidade:</b>"); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Salvar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

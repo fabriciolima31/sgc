@@ -25,6 +25,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'nome',
             'statusDesc',
+            [
+              'label' => 'Prioridade',
+              'attribute' => 'prioridade',
+              'value' => function($model){
+                  if ($model->prioridade == null) {
+                    return "-";
+                  } else {
+                    return $model->prioridadeArray[$model->prioridade];
+                  }
+                },
+            ],
+            [
+              'label' => 'Complexidade',
+              'attribute' => 'complexidade',
+              'value' => function($model){
+                  if ($model->prioridade == null) {
+                    return "-";
+                  } else {
+                    return $model->prioridadeArray[$model->complexidade];
+                  }
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
