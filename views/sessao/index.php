@@ -33,15 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
-//            [
-//            'attribute' => 'Paciente_id',
-//                'label' => "Paciente",
-//                'value' => function ($model){
-//                    $paciente = Paciente::find()->where(['id' => $model->Paciente_id])->one();
-//                    return $paciente->nome;
-//                }
-//
-//            ],
             [
                 'label' => 'Data ',
                 'value' => function ($model){
@@ -60,7 +51,6 @@ $this->params['breadcrumbs'][] = $this->title;
                    return $agenda->horaInicio;
                 }
             ],
-            //'horario',
             'status',
             
             ['class' => 'yii\grid\ActionColumn',

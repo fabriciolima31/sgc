@@ -98,9 +98,14 @@ class SessaoController extends Controller
             $model->data = date('Y-m-d');
             
             if($model->save()){
-
                 $paciente->setStatus("Sessao");
                 $model->status = '1';
+                
+                $agenda = Agenda::find()->where(['id' => $model->Agenda_id])->One();
+                
+                $agenda->status = '0';
+                $agenda->save(false);
+               
                 return $this->redirect(['sessao/all', 'id' => $model->Paciente_id]);
             }
             else{
