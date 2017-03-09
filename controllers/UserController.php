@@ -4,7 +4,6 @@ namespace app\controllers;
 
 use Yii;
 use app\models\User;
-use app\models\Disciplina;
 use app\models\UserSearch;
 use app\models\AlunoTurma;
 use yii\web\Controller;
@@ -32,19 +31,37 @@ class UserController extends Controller
 
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index','update','view', 'delete'],
                 'rules' => [
-                    // allow authenticated users
                     [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@' ],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo == '4';
+                        }
+                    ],
+                    [
+                        'actions' => ['index', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@' ],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo != '4';
+                        }
+                    ],
+                    [
+                        //Verificar como ficar o update (cada usuaŕio ou estagiário)
+                        'actions' => ['update', 'view'],
+                        'allow' => true,
+                        'roles' => ['@' ],
+                    ],
+                    [
+                        'actions' => ['create'],
                         'allow' => true,
                         'roles' => ['@' , '?'],
                     ],
-                    // everything else is denied
+                            
                 ],
             ],
-
-
-
         ];
     }
 

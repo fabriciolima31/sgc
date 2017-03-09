@@ -65,8 +65,8 @@ class Agenda extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Consultorio_id' => 'Consultorio ID',
-            'Usuarios_id' => 'Usuarios ID',
+            'Consultorio_id' => 'Consultorio',
+            'Usuarios_id' => 'Usuario',
             'horaInicio' => 'Hora Inicio',
             'horaFim' => 'Hora Fim',
             'status' => 'Status',
