@@ -8,6 +8,16 @@ use app\models\User;
 /* @var $this yii\web\View */
 /* @var $model app\models\UsuarioPaciente */
 /* @var $form yii\widgets\ActiveForm */
+
+if ($existe_usuario_paciente > 0){
+	?>
+	<div class="alert alert-danger" style="text-align: center">
+        Atenção: <strong> Esse Paciente já está alocado para um Terapeuta! </strong>
+    </div>
+    <?php
+}
+
+
 ?>
 
 <div class="usuario-paciente-form">
@@ -20,7 +30,7 @@ use app\models\User;
     ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary' , 'disabled' => ($existe_usuario_paciente > 0)]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

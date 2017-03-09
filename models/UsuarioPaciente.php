@@ -32,7 +32,9 @@ class UsuarioPaciente extends \yii\db\ActiveRecord
         return [
             [['Paciente_id', 'Usuario_id', 'status'], 'required'],
             [['Paciente_id', 'Usuario_id'], 'integer'],
+            [['observacao'], 'required','on'=> 'encaminhar'],
             [['status'], 'string', 'max' => 1],
+            [['observacao'], 'string', 'max' => 500],
             [['Paciente_id'], 'exist', 'skipOnError' => true, 'targetClass' => Paciente::className(), 'targetAttribute' => ['Paciente_id' => 'id']],
             [['Usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['Usuario_id' => 'id']],
         ];

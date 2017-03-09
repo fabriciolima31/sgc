@@ -180,7 +180,7 @@ class PacienteController extends Controller
     protected function findModel($id)
     {
         if (Yii::$app->user->identity->tipo != '4') {
-            $model = Paciente::find()->where(['id' => $id])->joinWith("usuario_Paciente")->andWhere(['Usuario_id' => Yii::$app->user->id, 'Usuario_Paciente.status' => '1'])->One();
+            $model = Paciente::find()->where(['Paciente.id' => $id])->joinWith("usuario_Paciente")->andWhere(['Usuario_id' => Yii::$app->user->id, 'Usuario_Paciente.status' => '1'])->One();
         } else{
             $model = Paciente::find()->where(['id' => $id])->One();
         }

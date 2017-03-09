@@ -28,7 +28,7 @@ class UsuarioPacienteController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            'access' => [
+           /* 'access' => [
                 'class' => \yii\filters\AccessControl::className(),
                 'only' => ['index','update','view', 'delete'],
                 'rules' => [
@@ -42,7 +42,7 @@ class UsuarioPacienteController extends Controller
                     ],
                     // everything else is denied
                 ],
-            ],
+            ],*/
         ];
     }
 
@@ -83,18 +83,22 @@ class UsuarioPacienteController extends Controller
     public function actionCreate($id)
     {
         $model = new UsuarioPaciente();
-        
+        $existe_usuario_paciente = UsuarioPaciente::find()->where(["Paciente_id" => $id])->andWhere(["status" => "1"])->count();
+       
         $paciente = Paciente::find()->where(['id'=> $id])->One();
 
         $model->Paciente_id = $id;
         $model->status = '1';
+
+
        
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($existe_usuario_paciente == 0 && $model->load(Yii::$app->request->post()) && $model->save()) {
             $paciente->setStatus("Alocar");
             return $this->redirect(['paciente/index', 'status' => 'EC']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'existe_usuario_paciente' => $existe_usuario_paciente ,
             ]);
         }
     }
@@ -135,15 +139,39 @@ class UsuarioPacienteController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionEncaminhar($Paciente_id, $Usuario_id)
+    public function actionEncaminhar($id)
     {
+            
+        /*           
+                    $paciente = Paciente::find()->where(["id" => $Paciente_id])->one();
+                    $paciente->status = "LE";
+                    $paciente->save();
 
-        //$model = UsuarioPaciente::find()->where(["Paciente_id" => $Paciente_id])->andWhere(["Usuario_id"=>$Usuario_id])->one();
-        echo "oi";
-        //var_dump($model);
-        die;
+                    $usuarioPaciente = UsuarioPaciente::find()->where(["Paciente_id" => $Paciente_id ])->andWhere(["status" => "1"])->one();
+                    $usuarioPaciente->status = "0";
+                    $usuarioPaciente->save();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['paciente/meus-pacientes', 'status' => 'EC']);
+        */
+
+        $paciente = Paciente::find()->where(["id" => $id])->one();
+        $paciente->status = "LE";
+
+        $model = UsuarioPaciente::find()->where(["Paciente_id" => $id ])->andWhere(["status" => "1"])->one();
+        $model->status = '0';
+        $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a justificativa(observação)
+        
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $paciente->save();
+            return $this->redirect(['paciente/meus-pacientes', 'status' => 'EC']);
+        }
+        else{
+
+            return $this->render('justificativa', [
+                'model' => $model,
+           ]);
+        }
+   
     }
 
     /**

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\UsuarioPaciente */
 
-$this->title = 'Alocar Terapeura';
+$this->title = 'Alocar Terapeuta';
 $this->params['breadcrumbs'][] = ['label' => 'Pacientes Alocados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'existe_usuario_paciente' => $existe_usuario_paciente,
     ]) ?>
 
 </div>
