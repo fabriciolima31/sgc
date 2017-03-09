@@ -153,12 +153,25 @@ class SessaoController extends Controller
     }
 
     public function actionAlteraStatus($status, $idPaciente, $idSessao){
-        if($status == 'OS' || $status == 'NO'){
-            $model = Sessao::findOne(['id' => $idSessao]);
-            $model->status = $status;
-            $model->save();
+        
+        $model = Sessao::findOne(['id' => $idSessao]);
+        $model->status = $status;
+        $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a justificativa(observação)
+
+        if($status == 'OS'){
+                $model->observacao = "Sessão Realizada";
+                $model->save();
+                return $this->redirect(['sessao/all', 'id' => $idPaciente]);
         }
-        return $this->redirect(['sessao/all', 'id' => $idPaciente]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+           return $this->redirect(['sessao/all', 'id' => $idPaciente]);
+        }
+
+        return $this->render('justificativa', [
+                    'model' => $model,
+        ]); 
+        
     }
 
     public function actionDatas($consultorio)

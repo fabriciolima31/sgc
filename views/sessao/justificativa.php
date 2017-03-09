@@ -8,8 +8,8 @@ use app\models\User;
 /* @var $this yii\web\View */
 /* @var $model app\models\UsuarioPaciente */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Usuario Pacientes', 'url' => ['index']];
+$this->title = "Sessão não Ocorrida";
+$this->params['breadcrumbs'][] = ['label' => 'Sessão Não Ocorrida', 'url' => ['sessao/all', 'id'=> Yii::$app->request->get('idPaciente') ]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-paciente-view">
