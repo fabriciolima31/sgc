@@ -30,7 +30,7 @@ class SessaoController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'all', 'update','view', 'delete'],
+                'only' => ['index', 'all', 'update','view', 'delete', 'altera-status'],
                 'rules' => [
                     // allow authenticated users
                     [
@@ -147,13 +147,13 @@ class SessaoController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function alteraStatus($status, $id){
-        if($status != 'OS' || $status != 'NO'){
-            return $this->redirect(['sessao/all', '$id' => $id]);
+    public function actionAlteraStatus($status, $idPaciente, $idSessao){
+        if($status == 'OS' || $status == 'NO'){
+            $model = Sessao::findOne(['id' => $idSessao]);
+            $model->status = $status;
+            $model->save();
         }
-        
-        $model->status = $status;
-        $model->save();
+        return $this->redirect(['sessao/all', 'id' => $idPaciente]);
     }
 
     public function actionDatas($consultorio)

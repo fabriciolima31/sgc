@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Paciente;
+use app\models\Sessao;
 use app\models\UsuarioPaciente;
 use app\models\PacienteSearch;
 use yii\web\Controller;
@@ -82,7 +83,7 @@ class PacienteController extends Controller
      */
     public function actionMeusPacientes($status)
     {
-        $params['status'] = Yii::$app->request->queryParams['status'];
+        $params['status'] = $status;
 
         $searchModel = new PacienteSearch();
         $dataProvider = $searchModel->searchMeusPacientes($params);
@@ -104,8 +105,9 @@ class PacienteController extends Controller
     public function actionView($id)
     {
 
-
-         $pacienteJaAlocado = (UsuarioPaciente::find()->where(['Paciente_id'=> $id])->andWhere(['status'=> 1])->count() == 1);
+        $this->findModel($id);
+        
+        $pacienteJaAlocado = (UsuarioPaciente::find()->where(['Paciente_id'=> $id])->andWhere(['status'=> 1])->count() == 1);
 
 
         return $this->render('view', [
@@ -158,11 +160,18 @@ class PacienteController extends Controller
         
         $model->status = $status;
         
+        $usuarioPacientes = Sessao::findAll(['Paciente_id' => $id, 'status' => 'EE']);
+        
+        foreach ($usuarioPacientes as $usuarioPaciente) {
+            $usuarioPaciente->status = 'FE';
+            $usuarioPaciente->save();
+        }
+        
         if($model->save()){
             if (Yii::$app->user->identity->tipo == '4') {
                 return $this->redirect(['paciente/index', 'status' => 'AL']);
             } else {
-                return $this->redirect(['paciente/  meus-pacientes', 'status' => 'AL']);
+                return $this->redirect(['paciente/meus-pacientes', 'status' => 'AL']);
             }
         }else{
             return "Ocorreu um Erro ao Alterar Status do paciente";

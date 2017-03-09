@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Agenda;
-use app\models\Paciente;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SessaoSearch */
@@ -68,15 +67,16 @@ $this->params['breadcrumbs'][] = $this->title;
               'template'=>'{view} {ocorreu} {naoocorreu}',
                 'buttons'=>[
                     'ocorreu' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-ok-sign"></span>', ['sessao/altera-status','status' => 'OS',
-                        'id' => $model->Paciente_id], [
+                        return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-ok-sign"></span>', ['sessao/altera-status','status' => 'OS',
+                        'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id], [
                             'title' => Yii::t('yii', 'Regitrar Consulta Ocorrida'),
-                    ]) ;   
+                    ]) : "" ;
                   },
                     'naoocorreu' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-remove-sign"></span>', ['sessao/altera-status', 'status' => 'OS', 'id' => $model->Paciente_id], [
+                        return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-remove-sign"></span>', ['sessao/altera-status', 'status' => 'NO', 
+                            'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id], [
                             'title' => Yii::t('yii', 'Registrar consulta não ocorrida'),
-                    ]);   
+                    ]) : "";   
                   }
                 ]
             ],
