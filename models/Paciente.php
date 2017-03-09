@@ -28,10 +28,15 @@ use Yii;
  */
 class Paciente extends \yii\db\ActiveRecord
 {
+    //Ambos os Arrays foram copiados para indexadministrador
     public $statusDescs = ["EN"=> "Encaminhado", "LE" => "Lista de Espera", 'EC' => "Entrar em Contato", 
         "EA" => "Em Atendimento", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"];
     
     public $prioridadeArray = ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'];
+    
+    public $turno_atendimentoArray = ['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite'];
+    
+        
     /**
      * @inheritdoc
      */
@@ -109,6 +114,21 @@ class Paciente extends \yii\db\ActiveRecord
     }
     
     /*
+     * Descricao da prioridade e complexidade
+     */
+    public function getPrioridadeDesc(){
+        return $this->prioridade == null ? "-" : $this->prioridadeArray[$this->prioridade];
+    }
+    
+    /*
+     * Descricao do turno de Atendimento
+     */
+    public function getTurnoAtendimentoDesc(){
+        return $this->turno_atendimentoArray[$this->turno_atendimento];
+    }
+
+
+    /*
      * Descricão dos status
      */
     public function getStatus1($status){
@@ -159,5 +179,13 @@ class Paciente extends \yii\db\ActiveRecord
         $mes = substr($this->data_nascimento,5,2); //pega os 2 caracteres, a contar do índice 2
         $dia = substr($this->data_nascimento,8,2); //pega os 2 caracteres, a contar do índice 0
         $this->data_nascimento = $dia."-".$mes."-".$ano;
+    }
+    
+    public function statusFinal(){
+        if (!($this->status == 'DE' || $this->status == 'AB' || $this->status == 'AL')) {
+            return true;
+        }
+        
+        return false;
     }
 }

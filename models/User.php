@@ -43,6 +43,7 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
                                                         }"
             ],
             */
+            ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'E-mail informado já cadastrado.'],
             [['turmasArray'], 'validateTurmas'],
             [['cpf'], 'string'],
             [['cpf'],  CpfValidator::className(), 'message' => 'CPF Inválido'],

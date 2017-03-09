@@ -170,10 +170,9 @@ class SessaoController extends Controller
 
         return $this->render('justificativa', [
                     'model' => $model,
-        ]); 
-        
+        ]);
     }
-
+    
     public function actionDatas($consultorio)
     {
 

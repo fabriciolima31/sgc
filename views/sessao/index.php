@@ -18,8 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Adicionar Sessão', ['create', 'id'=> Yii::$app->request->get('id') ], ['class' => 'btn btn-success']) ?>
-        <?= Yii::$app->user->identity->tipo == '3' ?  Html::a('Dar Alta', ['alterar-status', 'id' => $paciente->id, 'status' => 'AL'], [
+        <?= $paciente->statusFinal() ? Html::a('Adicionar Sessão', ['create', 'id'=> Yii::$app->request->get('id') ], ['class' => 'btn btn-success']) : "" ?>
+        <?= $paciente->statusFinal() && Yii::$app->user->identity->tipo == '3' ?  Html::a('Dar Alta', ['paciente/alterar-status', 'id' => $paciente->id, 'status' => 'AL'], [
             'class' => 'btn btn-success',
             'data' => [
                 'confirm' => 'Atribuir Alta para o paciente?',

@@ -20,21 +20,21 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= (Yii::$app->user->identity->tipo == '4' && $pacienteJaAlocado != 1) ? Html::a('Alocar', ['usuario-paciente/create', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
         <?= Yii::$app->user->identity->tipo == '3' ? Html::a('Sessões', ['sessao/all', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
         
-        <?= Html::a('Desistiu', ['alterar-status', 'id' => $model->id, 'status' => 'DE'], [
+        <?= $model->statusFinal() ? Html::a('Desistiu', ['alterar-status', 'id' => $model->id, 'status' => 'DE'], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Alterar Status para Desistente?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ]) : "" ?>
         
-        <?= Html::a('Abandonou', ['alterar-status', 'id' => $model->id, 'status' => 'AB'], [
+        <?= $model->statusFinal() ? Html::a('Abandonou', ['alterar-status', 'id' => $model->id, 'status' => 'AB'], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Alterar Status para Abandono?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ]) : "" ?>
 
     </p>
 

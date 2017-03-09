@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\ConsultorioSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Consultorios';
+$this->title = 'Consultórios';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="consultorio-index">
@@ -24,15 +24,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'nome',
+            [
+                'label' => 'Status',
+                'attribute' => 'status',
+                'filter' => Html::activeDropDownList($searchModel, 'status', ['1' => 'Habilitado', '0' => 'Desabilitado'],
+                        ['class'=>'form-control','prompt' => 'Selecione um Status']),
+                'value' => function ($model) {
+                    return $model->status == '1' ? 'Hablitado' : 'Desabilitado';
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn',
-              'template'=>'{update} {habilitar} {desabilitars}',
+              'template'=>'{update} {status}',
                 'buttons'=>[
-                    'habilitar' => function ($url, $model) {
-                        return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-ok-sign"></span>', ['sessao/altera-status','status' => 'OS',
-                        'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id], [
-                            'title' => Yii::t('yii', 'Regitrar Consulta Ocorrida'),
-                    ]) : "" ;
+                    'status' => function ($url, $model) {
+                        return $model->status == '1' ? Html::a('<span class="glyphicon glyphicon-remove-sign"></span>', ['altera-status', 'id' => $model->id , 'status' => '0'], [
+                            'title' => Yii::t('yii', 'Desabilitar Consultório'),
+                    ]) : Html::a('<span class="glyphicon glyphicon-ok-sign"></span>', ['altera-status', 'id' => $model->id, 'status' => '1'], [
+                            'title' => Yii::t('yii', 'Habilitar Consultório'),
+                    ]) ;
                   },
                 ]
             ],

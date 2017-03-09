@@ -19,7 +19,7 @@ class ConsultorioSearch extends Consultorio
     {
         return [
             [['id'], 'integer'],
-            [['nome'], 'safe'],
+            [['nome', 'status'], 'safe'],
         ];
     }
 
@@ -62,7 +62,8 @@ class ConsultorioSearch extends Consultorio
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome]);
+        $query->andFilterWhere(['like', 'nome', $this->nome])
+                ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

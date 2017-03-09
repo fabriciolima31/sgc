@@ -53,19 +53,7 @@ class ConsultorioController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
-    /**
-     * Displays a single Consultorio model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
+    
     /**
      * Creates a new Consultorio model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -76,7 +64,7 @@ class ConsultorioController extends Controller
         $model = new Consultorio();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -109,9 +97,13 @@ class ConsultorioController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionAlteraStatus($id, $status)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if($status == '1' || $status == '0'){
+            $model->status = $status;
+            $model->save();
+        }
 
         return $this->redirect(['index']);
     }

@@ -5,10 +5,6 @@ use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Consultorio;
 use app\models\User;
-
-use yii\grid\GridView;
-
-use kartik\datecontrol\Module;
 use kartik\datecontrol\DateControl;
 use dosamigos\datepicker\DatePicker;
 
@@ -79,7 +75,7 @@ use dosamigos\datepicker\DatePicker;
     <?php $form = ActiveForm::begin(); ?>
 
 <?php 
-    $items = ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
+    $items = ArrayHelper::map(Consultorio::find()->where(['status' => '1'])->all(), 'id', 'nome');
     echo $form->field($model, 'Consultorio_id')->dropDownList($items,['prompt' => 'Selecione um Consultório']);
 ?>
 

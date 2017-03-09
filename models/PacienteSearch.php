@@ -65,21 +65,20 @@ class PacienteSearch extends Paciente
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'data_nascimento' => $this->data_nascimento,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'sexo', $this->sexo])
-            ->andFilterWhere(['like', 'telefone', $this->telefone])
-            ->andFilterWhere(['like', 'endereco', $this->endereco])
-            ->andFilterWhere(['like', 'moradia', $this->moradia])
+//            ->andFilterWhere(['like', 'sexo', $this->sexo])
+//            ->andFilterWhere(['like', 'telefone', $this->telefone])
+//            ->andFilterWhere(['like', 'endereco', $this->endereco])
+//            ->andFilterWhere(['like', 'moradia', $this->moradia])
             ->andFilterWhere(['like', 'turno_atendimento', $this->turno_atendimento])
-            ->andFilterWhere(['like', 'local_encaminhamento', $this->local_encaminhamento])
-            ->andFilterWhere(['like', 'local_terapia', $this->local_terapia])
-            ->andFilterWhere(['like', 'motivo_psicoterapia', $this->motivo_psicoterapia])
-            ->andFilterWhere(['like', 'servico', $this->servico])
-            ->andFilterWhere(['like', 'observacao', $this->observacao])
+//            ->andFilterWhere(['like', 'local_encaminhamento', $this->local_encaminhamento])
+//            ->andFilterWhere(['like', 'local_terapia', $this->local_terapia])
+//            ->andFilterWhere(['like', 'motivo_psicoterapia', $this->motivo_psicoterapia])
+//            ->andFilterWhere(['like', 'servico', $this->servico])
+//            ->andFilterWhere(['like', 'observacao', $this->observacao])
             ->andFilterWhere(['like', 'complexidade', $this->complexidade])
             ->andFilterWhere(['like', 'prioridade', $this->prioridade]);
 

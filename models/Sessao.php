@@ -21,6 +21,7 @@ class Sessao extends \yii\db\ActiveRecord
 {
 
     public $data;
+    public $statusDescArray = ['EE' => 'Em Espera', 'NO' => 'Não Ocorrida', 'OS' => 'Ocorrida', 'FE' => 'Fechada'];
     /**
      * @inheritdoc
      */
