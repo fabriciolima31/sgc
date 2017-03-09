@@ -24,10 +24,28 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            //'id',
             'nome',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'label' => 'Status',
+                'attribute' => 'status',
+                'filter' => Html::activeDropDownList($searchModel, 'status', ['1' => 'Habilitado', '0' => 'Desabilitado'],
+                        ['class'=>'form-control','prompt' => 'Selecione um Status']),
+                'value' => function ($model) {
+                    return $model->status == '1' ? 'Hablitado' : 'Desabilitado';
+                }
+            ],
+            ['class' => 'yii\grid\ActionColumn',
+              'template'=>'{update} {status}',
+                'buttons'=>[
+                    'status' => function ($url, $model) {
+                        return $model->status == '1' ? Html::a('<span class="glyphicon glyphicon-remove-sign"></span>', ['altera-status', 'id' => $model->id , 'status' => '0'], [
+                            'title' => Yii::t('yii', 'Desabilitar Consultório'),
+                    ]) : Html::a('<span class="glyphicon glyphicon-ok-sign"></span>', ['altera-status', 'id' => $model->id, 'status' => '1'], [
+                            'title' => Yii::t('yii', 'Habilitar Consultório'),
+                    ]) ;
+                  },
+                ]
+            ],
         ],
     ]); ?>
 </div>

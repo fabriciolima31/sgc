@@ -5,7 +5,6 @@ use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use app\models\Disciplina;
 use app\models\Turma;
-use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TurmaSearch */

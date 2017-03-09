@@ -43,27 +43,6 @@ class TurmaController extends Controller
         ];
     }
 
-
-
-    public function converterDatas_para_AAAA_MM_DD($data) {
-
-        $ano = substr($data,6,4); //pega os 4 ultimos caracteres, a contar do índice 4
-        $mes = substr($data,3,2); //pega os 2 caracteres, a contar do índice 2
-        $dia = substr($data,0,2); //pega os 2 caracteres, a contar do índice 0
-        $data_formatada = $ano."-".$mes."-".$dia;
-        return $data_formatada; //retorna data formatada: AAAA-MM-DD
-}
-
-    public function converterDatas_para_DD_MM_AAAA($data) {
-
-        $ano = substr($data,0,4); //pega os 4 ultimos caracteres, a contar do índice 4
-        $mes = substr($data,5,2); //pega os 2 caracteres, a contar do índice 2
-        $dia = substr($data,8,2); //pega os 2 caracteres, a contar do índice 0
-        $data_formatada = $dia."-".$mes."-".$ano;
-        return $data_formatada; //retorna data formatada: AAAA-MM-DD
-}
-
-
     /**
      * Lists all Turma models.
      * @return mixed
@@ -189,5 +168,23 @@ class TurmaController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+    public function converterDatas_para_AAAA_MM_DD($data) {
+
+        $ano = substr($data,6,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($data,3,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($data,0,2); //pega os 2 caracteres, a contar do índice 0
+        $data_formatada = $ano."-".$mes."-".$dia;
+        return $data_formatada; //retorna data formatada: AAAA-MM-DD
+    }
+
+    public function converterDatas_para_DD_MM_AAAA($data) {
+
+        $ano = substr($data,0,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($data,5,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($data,8,2); //pega os 2 caracteres, a contar do índice 0
+        $data_formatada = $dia."-".$mes."-".$ano;
+        return $data_formatada; //retorna data formatada: AAAA-MM-DD
     }
 }

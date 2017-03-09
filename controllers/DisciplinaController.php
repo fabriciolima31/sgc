@@ -58,18 +58,6 @@ class DisciplinaController extends Controller
     }
 
     /**
-     * Displays a single Disciplina model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Disciplina model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -107,14 +95,17 @@ class DisciplinaController extends Controller
     }
 
     /**
-     * Deletes an existing Disciplina model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * Disable an existing Consultorio model.
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionAlteraStatus($id, $status)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        if($status == '1' || $status == '0'){
+            $model->status = $status;
+            $model->save();
+        }
 
         return $this->redirect(['index']);
     }

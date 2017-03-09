@@ -30,6 +30,7 @@ class Disciplina extends \yii\db\ActiveRecord
         return [
             [['nome'], 'required'],
             [['nome'], 'string', 'max' => 45],
+            [['status'], 'string'],
         ];
     }
 
@@ -39,7 +40,6 @@ class Disciplina extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
             'nome' => 'Nome',
         ];
     }

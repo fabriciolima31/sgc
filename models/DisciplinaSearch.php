@@ -19,7 +19,7 @@ class DisciplinaSearch extends Disciplina
     {
         return [
             [['id'], 'integer'],
-            [['nome'], 'safe'],
+            [['nome', 'status'], 'safe'],
         ];
     }
 
@@ -60,6 +60,7 @@ class DisciplinaSearch extends Disciplina
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome]);

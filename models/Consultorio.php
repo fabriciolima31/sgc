@@ -33,6 +33,7 @@ class Consultorio extends \yii\db\ActiveRecord
             [['nome'], 'required'],
             [['id'], 'integer'],
             [['nome'], 'string', 'max' => 45],
+            [['status'], 'string'],
         ];
     }
 
