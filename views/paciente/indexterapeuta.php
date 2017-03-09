@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use app\models\Paciente;
-
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PacienteSearch */
@@ -36,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'encaminhar' => function ($url, $model) {  
 
                     return Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id,
-                        //'Usuario_id' => $model->Usuario_id,
                         ], [
                                 'title' => Yii::t('yii', 'Encaminhar Para Lista de Espera'),
                                 

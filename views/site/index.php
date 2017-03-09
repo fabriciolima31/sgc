@@ -17,7 +17,7 @@ $this->title = 'Principal';
     
     <?= GridView::widget([
         'dataProvider' => $dataSessoesEE,
-        //'filterModel' => $searchModel,
+        //'filterModel' => $searchMSessoesEE,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
@@ -48,8 +48,16 @@ $this->title = 'Principal';
                    return $agenda->horaInicio;
                 }
             ],
-            //'horario',
-            'status',
+            [
+                'label' => 'Status',
+                'attribute' => 'status',
+                'filter' => Html::activeDropDownList($searchMSessoesEE, 'status', ['EE' => 'Em Espera', 'NO' => 'Não Ocorrida', 
+                    'OS' => 'Ocorrida', 'FE' => 'Fechada'],
+                        ['class'=>'form-control','prompt' => 'Selecione um Status']),
+                'value' => function ($model) {
+                    return $model->statusDesc;
+                }
+            ],
             
             ['class' => 'yii\grid\ActionColumn',
               'template'=>'{view}',
@@ -69,22 +77,37 @@ $this->title = 'Principal';
     
     <?= GridView::widget([
         'dataProvider' => $dataPacienteContato,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchPacienteContato,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
             'nome',
             'telefone',
-            'statusDesc',
             
             ['class' => 'yii\grid\ActionColumn',
-              'template'=>'{view}',
+              'template'=>'{view} {update} {sessao} {encaminhar}',
                 'buttons'=>[
-                    'view' => function ($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['paciente/view', 'id' => $model->id], [
-                            'title' => Yii::t('yii', 'Detalhes'),
-                    ]);   
-                  }
+                    'sessao' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-blackboard"></span>', ['sessao/all', 'id' => $model->id], [
+                                'title' => Yii::t('yii', 'Sessões'),
+                        ]);   
+                    },
+                    'encaminhar' => function ($url, $model) {
+                    return Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id,
+                        ], [
+                                'title' => Yii::t('yii', 'Encaminhar Para Lista de Espera'),            
+                        'data' => [
+                        'confirm' => 'Você tem certeza que deseja encaminhar este paciente de volta para a LISTA DE ESPERA?',
+                        'method' => 'post',
+
+                        ],
+                        ]);   
+                    },
+                   'update' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['paciente/update', 'id' => $model->id], [
+                                'title' => Yii::t('yii', 'Atualizar'),
+                        ]);   
+                    },    
                 ]
             ],
         ],

@@ -70,6 +70,10 @@ class Sessao extends \yii\db\ActiveRecord
         $this->converterDatas_para_DD_MM_AAAA();
         return true;
     }
+    
+    public function getStatusDesc(){
+        return $this->statusDescArray[$this->status];
+    }
 
     /**
      * @return \yii\db\ActiveQuery

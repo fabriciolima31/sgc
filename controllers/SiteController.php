@@ -74,7 +74,8 @@ class SiteController extends Controller
         
         
         return $this->render('index', [
-           //'searchModel' => $searchModel,
+           'searchPacienteContato' => $searchPacienteContato,
+            'searchMSessoesEE' => $searchMSessoesEE,
            'dataPacienteContato' => $dataPacienteContato,
            'dataSessoesEE' => $dataSessoesEE,
         ]);

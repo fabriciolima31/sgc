@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\UsuarioPaciente */

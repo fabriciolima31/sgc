@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'label' => 'Paciente Status',
-                'value' => 'paciente.status',
+                'value' => 'paciente.statusDesc',
             ],
 
             ['class' => 'yii\grid\ActionColumn'],
