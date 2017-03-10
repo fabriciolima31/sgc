@@ -35,7 +35,6 @@ class Paciente extends \yii\db\ActiveRecord
     public $prioridadeArray = ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'];
     
     public $turno_atendimentoArray = ['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite'];
-    
         
     /**
      * @inheritdoc
@@ -105,6 +104,14 @@ class Paciente extends \yii\db\ActiveRecord
         return $this->hasMany(UsuarioPaciente::className(), ['Paciente_id' => 'id']);
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPacienteFalta()
+    {
+        return $this->hasMany(Paciente_Falta::className(), ['Paciente_id' => 'id']);
+    }
+    
     
     /*
      * Descricão dos status
@@ -162,6 +169,14 @@ class Paciente extends \yii\db\ActiveRecord
     
     public function afterFind() {
         $this->converterDatas_para_DD_MM_AAAA();
+        
+        if($this->status == 'EA'){
+            $pacienteFalta = PacienteFalta::find()->where(['Paciente_id' => $this->id]);
+            if($pacienteFalta->FaltaNaoJustificada >= 3 || ($pacienteFalta->FaltaJustificada + $pacienteFalta->FaltaNaoJustificada) >= 5){
+                $this->status = 'AB';
+                $this->save();
+            }
+        }
         return true;
     }
     

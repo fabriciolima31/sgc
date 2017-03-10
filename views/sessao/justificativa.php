@@ -7,7 +7,7 @@ use yii\widgets\ActiveForm;
 /* @var $model app\models\UsuarioPaciente */
 
 $this->title = "Sessão não Ocorrida";
-$this->params['breadcrumbs'][] = ['label' => 'Sessão Não Ocorrida', 'url' => ['sessao/all', 'id'=> Yii::$app->request->get('idPaciente') ]];
+$this->params['breadcrumbs'][] = ['label' => 'Sessões', 'url' => ['sessao/all', 'id'=> Yii::$app->request->get('idPaciente') ]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="usuario-paciente-view">
@@ -16,7 +16,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'observacao')->textarea(['rows' => 6])->label("<font color='#FF0000'>*</font> <b>Justificativa?</b>"); ?>
+    <?= $form->field($model, 'paciente')->dropDownList($model->statusNODescArray,['prompt' => 'Selecione um Motivo.'])->label("<font color='#FF0000'>*</font> <b>Motivo</b>") ?>
+    
+    <?= $form->field($model, 'observacao')->textarea(['rows' => 6])->label("<font color='#FF0000'>*</font> <b>Descrição</b>"); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary' , ]) ?>
