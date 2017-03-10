@@ -15,6 +15,11 @@ use Yii;
  */
 class AlunoTurma extends \yii\db\ActiveRecord
 {
+
+    public $nome_da_disciplina;
+    public $codigo_da_turma;
+    public $id_da_turma;
+
     /**
      * @inheritdoc
      */

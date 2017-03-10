@@ -4,10 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Consultorio;
+use app\models\Turma;
 use app\models\User;
 use kartik\datecontrol\DateControl;
 use dosamigos\datepicker\DatePicker;
-
+use yii\helpers\Url;
 
 
 
@@ -79,10 +80,39 @@ use dosamigos\datepicker\DatePicker;
     echo $form->field($model, 'Consultorio_id')->dropDownList($items,['prompt' => 'Selecione um Consultório']);
 ?>
 
+
 <?php 
-    $items = ArrayHelper::map(User::find()->where(['tipo' => 3])->all(), 'id', 'nome');
-    echo $form->field($model, 'Usuarios_id')->dropDownList($items,['prompt' => 'Selecione um Usuário']);
+    //$items = ArrayHelper::map(User::find()->where(['tipo' => 3])->all(), 'id', 'nome');
+    //echo $form->field($model, 'Usuarios_id')->dropDownList($items,['prompt' => 'Selecione um Usuário']);
 ?>
+
+<?php
+
+    $dataCategory=ArrayHelper::map(User::find()->where(['tipo' => 3])->all(), 'id', 'nome');
+        echo $form->field($model, 'Usuarios_id')->dropDownList($dataCategory, 
+             ['prompt'=>'Selecione um Consultório',
+              'onchange'=>'
+                $.post( "'.Url::to('index.php?r=agenda/turmas&id_terapeuta=').'"+$(this).val(), function( data ) {
+                  $( "select#agenda-turma_id" ).html( data );
+                });
+            ']);
+
+
+?>
+
+
+        <?php 
+            $turmas = Turma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.*")->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")->where(["Turma.id" => -9999])->all();
+            echo $form->field($model, 'Turma_id')
+            ->dropDownList(ArrayHelper::map($turmas,'id',                      
+                function($model, $defaultValue) {
+                        return $model['nome_da_disciplina'].' - Turma: '.$model['codigo'];
+                }
+
+            ),['prompt'=>'Escolha uma Disciplina e Turma']); 
+
+
+        ?>
 
     <div style="border: solid 1px lightgray; padding: 2px 1px 0px 4px; margin-bottom: 1%">
 <?php echo $form->field($model, 'diaSemanaArray')->checkboxList(['0' => "Domingo" , '1' => 'Segunda-Feira', '2' => 'Terça-Feira', '3' => 'Quarta-Feira', '4' => 'Quinta-Feira', '5' => 'Sexta-Feira', '6' => 'Sábado' ]); ?>
