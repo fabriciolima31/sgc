@@ -102,12 +102,7 @@ use yii\helpers\Url;
 
 
         <?php 
-            $turmas = Turma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.*")->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")->all();
-
-            if ($turmas == null){
-                echo "<div style='color:red'> Obs.: Não há Turmas Cadastradas. </div>";
-            }
-            else{
+            $turmas = Turma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.*")->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")->where(["Turma.id" => -9999])->all();
             echo $form->field($model, 'Turma_id')
             ->dropDownList(ArrayHelper::map($turmas,'id',                      
                 function($model, $defaultValue) {
@@ -115,7 +110,7 @@ use yii\helpers\Url;
                 }
 
             ),['prompt'=>'Escolha uma Disciplina e Turma']); 
-            }
+
 
         ?>
 
