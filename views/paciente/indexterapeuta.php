@@ -31,9 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
                             'title' => Yii::t('yii', 'Sessões'),
                     ]);   
                   },
-                'encaminhar' => function ($url, $model) {  
+                    'encaminhar' => function ($url, $model) {  
 
-                    return Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id,
+                    return $model->status == 'EC' ? Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id,
                         ], [
                                 'title' => Yii::t('yii', 'Encaminhar Para Lista de Espera'),
                                 
@@ -42,6 +42,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'method' => 'post',
 
                     ],
+                    ]) : ""; 
+                  },
+                   'update' => function ($url, $model) {
+                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['paciente/update', 'id' => $model->id], [
+                            'title' => Yii::t('yii', 'Atualizar'),
                     ]);   
                   },
                 ]

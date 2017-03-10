@@ -171,9 +171,16 @@ class Paciente extends \yii\db\ActiveRecord
         $this->converterDatas_para_DD_MM_AAAA();
         
         if($this->status == 'EA'){
-            $pacienteFalta = PacienteFalta::find()->where(['Paciente_id' => $this->id]);
+            $pacienteFalta = PacienteFalta::find()->where(['Paciente_id' => $this->id])->one();
             if($pacienteFalta->FaltaNaoJustificada >= 3 || ($pacienteFalta->FaltaJustificada + $pacienteFalta->FaltaNaoJustificada) >= 5){
                 $this->status = 'AB';
+                
+                $usuarioPacientes = Sessao::findAll(['Paciente_id' => $this->id, 'status' => 'EE']);
+        
+                foreach ($usuarioPacientes as $usuarioPaciente) {
+                    $usuarioPaciente->status = 'FE';
+                    $usuarioPaciente->save();
+                }
                 $this->save();
             }
         }

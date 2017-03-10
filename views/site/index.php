@@ -77,12 +77,39 @@ $this->title = 'Principal';
     
     <?= GridView::widget([
         'dataProvider' => $dataPacienteContato,
-        'filterModel' => $searchPacienteContato,
+        //'filterModel' => $searchPacienteContato,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
             'nome',
             'telefone',
+            [
+                'label' => 'Prioridade',
+                'attribute' => 'prioridade',
+                'filter' => Html::activeDropDownList($searchPacienteContato, 'prioridade', ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'],
+                        ['class'=>'form-control','prompt' => '']),
+                'value' => function ($model) {
+                    return $model->prioridadeDesc;
+                }
+            ],
+            [
+                'label' => 'Complexidade',
+                'attribute' => 'complexidade',
+                'filter' => Html::activeDropDownList($searchPacienteContato, 'complexidade', ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'],
+                        ['class'=>'form-control','prompt' => '']),
+                'value' => function ($model) {
+                    return $model->prioridadeDesc;
+                }
+            ],
+            [
+                'label' => 'Turno',
+                'attribute' => 'turno_atendimento',
+                'filter' => Html::activeDropDownList($searchPacienteContato, 'turno_atendimento', ['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite'],
+                        ['class'=>'form-control','prompt' => '']),
+                'value' => function ($model) {
+                    return $model->turnoAtendimentoDesc;
+                }
+            ],
             
             ['class' => 'yii\grid\ActionColumn',
               'template'=>'{view} {update} {sessao} {encaminhar}',
@@ -107,7 +134,12 @@ $this->title = 'Principal';
                         return Html::a('<span class="glyphicon glyphicon-pencil"></span>', ['paciente/update', 'id' => $model->id], [
                                 'title' => Yii::t('yii', 'Atualizar'),
                         ]);   
-                    },    
+                    },
+                    'view' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['paciente/view', 'id' => $model->id], [
+                                'title' => Yii::t('yii', 'Visualizar'),
+                        ]);   
+                    },
                 ]
             ],
         ],

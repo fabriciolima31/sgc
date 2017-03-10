@@ -21,6 +21,7 @@ class Sessao extends \yii\db\ActiveRecord
 {
 
     public $data;
+    public $pacienteFalta;
     public $statusDescArray = ['EE' => 'Em Espera', 'NO' => 'Não Ocorrida', 'OS' => 'Ocorrida', 'FE' => 'Fechada'];
     public $statusNODescArray = ['PCJ' => 'Paciente Ausente COM justificativa', 'PSJ' => 'Paciente Ausente SEM justificativa', 'TA' => 'Terapeuta Ausente', 'OI' => 'Outro Impedimento'];
     /**
@@ -45,6 +46,7 @@ class Sessao extends \yii\db\ActiveRecord
             }, 'whenClient' => "function (attribute, value) {
                 return false;
             }"],
+            [['pacienteFalta'], 'string'],
             [['status'], 'required','on'=> 'altera-status'],
             [['observacao'], 'string', 'max' => 500],
             [['Consultorio_id'], 'exist', 'skipOnError' => true, 'targetClass' => Consultorio::className(), 'targetAttribute' => ['Consultorio_id' => 'id']],

@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'paciente')->dropDownList($model->statusNODescArray,['prompt' => 'Selecione um Motivo.'])->label("<font color='#FF0000'>*</font> <b>Motivo</b>") ?>
+    <?= $form->field($model, 'pacienteFalta')->dropDownList($model->statusNODescArray,['prompt' => 'Selecione um Motivo.'])->label("<font color='#FF0000'>*</font> <b>Motivo</b>") ?>
     
     <?= $form->field($model, 'observacao')->textarea(['rows' => 6])->label("<font color='#FF0000'>*</font> <b>Descrição</b>"); ?>
 

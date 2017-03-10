@@ -171,7 +171,7 @@ class PacienteController extends Controller
             if (Yii::$app->user->identity->tipo == '4') {
                 return $this->redirect(['paciente/index', 'status' => 'AL']);
             } else {
-                return $this->redirect(['paciente/meus-pacientes', 'status' => 'AL']);
+                return $this->redirect(['paciente/meus-pacientes', 'status' => $status]);
             }
         }else{
             return "Ocorreu um Erro ao Alterar Status do paciente";

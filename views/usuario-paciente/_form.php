@@ -30,7 +30,7 @@ if ($existe_usuario_paciente > 0){
     ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary' , 'disabled' => ($existe_usuario_paciente > 0)]) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Alocar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary' , 'disabled' => ($existe_usuario_paciente > 0)]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

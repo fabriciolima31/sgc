@@ -88,11 +88,18 @@ class SessaoController extends Controller
         $this->checaPaciente($id);
         
         $model = new Sessao();
+        
         $paciente = Paciente::find()->where(['id' => $id])->One();
+        
+        if(PacienteFalta::find()->where(['Paciente_id' => $id])->one() == null){
+            $pacienteFalta = new PacienteFalta();
+            $pacienteFalta->Paciente_id = $id;
+            $pacienteFalta->save();
+        }
         
         $model->Paciente_id = $id;
         $model->Usuarios_id = Yii::$app->user->id;
-       
+        $model->status = 'EE';
         if ($model->load(Yii::$app->request->post())) {
 
             $model->Agenda_id = $model->data;
@@ -122,25 +129,6 @@ class SessaoController extends Controller
     }
 
     /**
-     * Updates an existing Sessao model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
      * Deletes an existing Sessao model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
@@ -155,7 +143,7 @@ class SessaoController extends Controller
 
     public function actionAlteraStatus($status, $idPaciente, $idSessao){
         
-        $modelPacienteFalta = PacienteFalta::find()->where(['Paciente_id' => $idPaciente]);
+        $modelPacienteFalta = PacienteFalta::find()->where(['Paciente_id' => $idPaciente])->one();
         
         $model = Sessao::findOne(['id' => $idSessao]);
         $model->status = $status;
@@ -169,11 +157,13 @@ class SessaoController extends Controller
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if($model->status == 'PSJ'){
+            if($model->pacienteFalta == 'PSJ'){
                 $modelPacienteFalta->FaltaNaoJustificada++;
-            }else if($model->status == 'PCJ'){
+                $modelPacienteFalta->save();
+            }else if($model->pacienteFalta == 'PCJ'){
                 $modelPacienteFalta->FaltaNaoJustificada = 0;
                 $modelPacienteFalta->FaltaJustificada++;
+                $modelPacienteFalta->save();
             }
             
            return $this->redirect(['sessao/all', 'id' => $idPaciente]);

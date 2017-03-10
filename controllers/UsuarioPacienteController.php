@@ -154,7 +154,7 @@ class UsuarioPacienteController extends Controller
         return $this->redirect(['paciente/meus-pacientes', 'status' => 'EC']);
         */
 
-        $paciente = Paciente::find()->where(["id" => $id])->one();
+        $paciente = $this->findPaciente($id);
         $paciente->status = "LE";
 
         $model = UsuarioPaciente::find()->where(["Paciente_id" => $id ])->andWhere(["status" => "1"])->one();
@@ -189,6 +189,15 @@ class UsuarioPacienteController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    protected function findPaciente($Paciente_id)
+    {
+        if (($model = Paciente::find()->where(["id" => $Paciente_id, 'status' => 'EC'])->one()) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Página solicitada não existe.');
         }
     }
 }

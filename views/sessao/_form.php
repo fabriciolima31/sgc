@@ -20,7 +20,7 @@ use yii\helpers\Url;
 
     <?php 
         $items = ArrayHelper::map(Paciente::find()->all(), 'id', 'nome');
-        echo $form->field($model, 'Paciente_id')->dropDownList($items, ['prompt' => 'Selecione um Paciente'])
+        echo $form->field($model, 'Paciente_id', ['readyOnly' => true])->dropDownList($items, ['prompt' => 'Selecione um Paciente'])
     ?>
     
     <?php 
@@ -40,16 +40,7 @@ use yii\helpers\Url;
                 $dataPost,           
                 ['prompt'=>'Selecione um Dia', 'id'=>'data_inicio',]
         );
-
-        //$items = ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
-        //echo $form->field($model, 'Consultorio_id')->dropDownList($items, ['prompt' => 'Selecione um Consultório'])
-    ?> 
-
-    <?php //echo $form->field($model, 'data')->textInput(['readonly' => true]) ?>
-
-    <?php //echo $form->field($model, 'horario')->textInput(['maxlength' => true]) ?>
-    
-    <?= $form->field($model, 'status')->dropDownList(['EE' => 'Em Espera', 'NC' => 'Não Ocorrida', 'OS' => 'Ocorrida']) //Leitura para create e escirta para update ?>   
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

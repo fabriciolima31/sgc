@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use app\models\Paciente;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PacienteSearch */
