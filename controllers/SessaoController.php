@@ -189,12 +189,13 @@ class SessaoController extends Controller
 
  
         if($countPosts>0){
+                echo '<option value="default" disabled selected="selected"> Selecione uma opção </option>';
             foreach($posts as $post){
                 echo "<option value='".$post->id."'>Dia: ".$post->data_inicio." às ".$post->horaInicio."</option>";
             }
         }
         else{
-            //echo "<option value= '0'> Não há nenhuma data e horário</option>";
+            echo '<option value="default" disabled selected="selected"> Não há Data e Horário </option>';
         }
  
     }

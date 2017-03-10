@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Agenda;
+use app\models\AlunoTurma;
 use app\models\AgendaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -201,6 +202,35 @@ class AgendaController extends Controller
 
         return $this->redirect(['index']);
     }
+
+
+    public function actionTurmas($id_terapeuta)
+    {
+
+        $countPosts = AlunoTurma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.codigo as codigo_da_turma, Turma.id as id_da_turma")
+                ->innerJoin("Turma","Turma.id = Aluno_Turma.Turma_id")
+                ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
+                ->where(['Usuarios_id' => $id_terapeuta ])
+                ->count();
+ 
+        $posts = AlunoTurma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.codigo as codigo_da_turma, Turma.id as id_da_turma")
+                ->innerJoin("Turma","Turma.id = Aluno_Turma.Turma_id")
+                ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
+                ->where(['Usuarios_id' => $id_terapeuta ])
+                ->all();
+ 
+        if($countPosts>0){
+                echo '<option value="default" disabled selected="selected"> Selecione uma opção </option>';
+            foreach($posts as $post){
+                echo "<option value='".$post->id_da_turma."'>Disciplina: ".$post->nome_da_disciplina." - Turma: ".$post->codigo_da_turma."</option>";
+            }
+        }
+        else{
+            echo '<option value="default" disabled selected="selected"> Não há Disciplina/Turma para esse Usuário </option>';
+        }
+ 
+    }
+
 
     /**
      * Finds the Agenda model based on its primary key value.
