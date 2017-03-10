@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Sessao;
 use app\models\Paciente;
+use app\models\PacienteFalta;
 use app\models\Agenda;
 use app\models\SessaoSearch;
 use yii\web\Controller;
@@ -154,17 +155,27 @@ class SessaoController extends Controller
 
     public function actionAlteraStatus($status, $idPaciente, $idSessao){
         
+        $modelPacienteFalta = PacienteFalta::find()->where(['Paciente_id' => $idPaciente]);
+        
         $model = Sessao::findOne(['id' => $idSessao]);
         $model->status = $status;
         $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a justificativa(observação)
 
         if($status == 'OS'){
+                $modelPacienteFalta->FaltaNaoJustificada = 0;
                 $model->observacao = "Sessão Realizada";
                 $model->save();
                 return $this->redirect(['sessao/all', 'id' => $idPaciente]);
         }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if($model->status == 'PSJ'){
+                $modelPacienteFalta->FaltaNaoJustificada++;
+            }else if($model->status == 'PCJ'){
+                $modelPacienteFalta->FaltaNaoJustificada = 0;
+                $modelPacienteFalta->FaltaJustificada++;
+            }
+            
            return $this->redirect(['sessao/all', 'id' => $idPaciente]);
         }
 
