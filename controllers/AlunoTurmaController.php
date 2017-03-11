@@ -8,6 +8,8 @@ use app\models\AlunoTurmaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use kartik\mpdf\Pdf;
+
 
 /**
  * AlunoTurmaController implements the CRUD actions for AlunoTurma model.
@@ -82,18 +84,44 @@ class AlunoTurmaController extends Controller
      * @param integer $Usuarios_id
      * @return mixed
      */
-    public function actionUpdate($Turma_id, $Usuarios_id)
+    public function actionReport()
     {
-        $model = $this->findModel($Turma_id, $Usuarios_id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'Turma_id' => $model->Turma_id, 'Usuarios_id' => $model->Usuarios_id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+
+    $model = new AlunoTurma();
+    $html = $model->getHtmlParaRelatorio();
+
+    $pdf = new Pdf([
+        // set to use core fonts only
+        'mode' => Pdf::MODE_CORE, 
+        // A4 paper format
+        'format' => Pdf::FORMAT_A4, 
+        // portrait orientation
+        'orientation' => Pdf::ORIENT_PORTRAIT, 
+        // stream to browser inline
+        'destination' => Pdf::DEST_BROWSER, 
+        // your html content input
+        'content' => $html,  
+        // format content from your own css file if needed or use the
+        // enhanced bootstrap css built by Krajee for mPDF formatting 
+        'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+        // any css to be embedded if required
+        'cssInline' => '.kv-heading-1{font-size:18px}', 
+         // set mPDF properties on the fly
+        'options' => ['title' => 'Krajee Report Title'],
+         // call mPDF methods on the fly
+        'methods' => [ 
+            'SetHeader'=>['Relatório'], 
+            'SetFooter'=>['{PAGENO}'],
+        ]
+    ]);
+
+
+    return $pdf->render();
+
     }
+
+
 
     /**
      * Deletes an existing AlunoTurma model.

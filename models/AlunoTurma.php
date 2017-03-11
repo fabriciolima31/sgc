@@ -19,6 +19,7 @@ class AlunoTurma extends \yii\db\ActiveRecord
     public $nome_da_disciplina;
     public $codigo_da_turma;
     public $id_da_turma;
+    public $nome_do_professor;
 
     /**
      * @inheritdoc
@@ -67,4 +68,5 @@ class AlunoTurma extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Usuarios::className(), ['id' => 'Usuarios_id']);
     }
+
 }
