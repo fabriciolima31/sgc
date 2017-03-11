@@ -172,8 +172,10 @@ class Paciente extends \yii\db\ActiveRecord
         
         if($this->status == 'EA'){
             $pacienteFalta = PacienteFalta::find()->where(['Paciente_id' => $this->id])->one();
-            if($pacienteFalta->FaltaNaoJustificada >= 3 || ($pacienteFalta->FaltaJustificada + $pacienteFalta->FaltaNaoJustificada) >= 5){
+            if($pacienteFalta->FaltaNaoJustificadaSeguida >= 3 || ($pacienteFalta->FaltaJustificada + $pacienteFalta->FaltaNaoJustificada) >= 5){
                 $this->status = 'AB';
+                $pacienteFalta->status = '0';
+                $pacienteFalta->save(false);
                 
                 $this->fecharSessoes();
                 

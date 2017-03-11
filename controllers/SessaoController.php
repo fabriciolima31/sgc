@@ -116,19 +116,6 @@ class SessaoController extends Controller
         }
     }
 
-    /**
-     * Deletes an existing Sessao model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
     public function actionAlteraStatus($status, $idPaciente, $idSessao){
         
         $modelPacienteFalta = PacienteFalta::find()->where(['Paciente_id' => $idPaciente])->one();
@@ -138,7 +125,7 @@ class SessaoController extends Controller
         $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a justificativa(observação)
 
         if($status == 'OS'){
-                $modelPacienteFalta->FaltaNaoJustificada = 0;
+                $modelPacienteFalta->FaltaNaoJustificadaSeguida = 0;
                 $model->observacao = "Sessão Realizada";
                 $model->save();
                 return $this->redirect(['sessao/all', 'id' => $idPaciente]);
@@ -146,10 +133,11 @@ class SessaoController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if($model->pacienteFalta == 'PSJ'){
+                $modelPacienteFalta->FaltaNaoJustificadaSeguida++;
                 $modelPacienteFalta->FaltaNaoJustificada++;
                 $modelPacienteFalta->save();
             }else if($model->pacienteFalta == 'PCJ'){
-                $modelPacienteFalta->FaltaNaoJustificada = 0;
+                $modelPacienteFalta->FaltaNaoJustificadaSeguida = 0;
                 $modelPacienteFalta->FaltaJustificada++;
                 $modelPacienteFalta->save();
             }
@@ -169,12 +157,14 @@ class SessaoController extends Controller
                 ->where(['Consultorio_id' => $consultorio ])
                 ->andWhere(['status' => 1])
                 ->andWhere("data_inicio >= CURDATE()")
+                ->andWhere("horaInicio >= CURTIME()")
                 ->count();
  
         $posts = Agenda::find()
                 ->where(['Consultorio_id' => $consultorio])
                 ->andWhere(['status' => 1])
                 ->andWhere("data_inicio >= CURDATE()")
+                ->andWhere("horaInicio >= CURTIME()")
                 ->orderBy('id ASC')
                 ->all();
 

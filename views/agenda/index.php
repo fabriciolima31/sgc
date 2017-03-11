@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Criar Agendamento', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Yii::$app->user->identity->tipo == '4' ? Html::a('Criar Agendamento', ['create'], ['class' => 'btn btn-success']) : "" ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

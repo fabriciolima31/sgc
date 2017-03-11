@@ -29,11 +29,19 @@ class AgendaController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'view', 'update', 'delete'],
                 'rules' => [
                     [
+                        'actions' => ['index', 'view', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['@' ],
+                    ],
+                    [
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['@' ],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo == '4';
+                        }
                     ],
                 ],
             ],
@@ -196,9 +204,12 @@ class AgendaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionAlteraStatus($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        
+        $model->status = '2';
+        $model->save(false);
 
         return $this->redirect(['index']);
     }
@@ -241,7 +252,7 @@ class AgendaController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Agenda::findOne($id)) !== null) {
+        if (($model = Agenda::find()->where(['id' => $id, 'Usuarios_id' => Yii::$app->user->id, 'status' => '1'])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

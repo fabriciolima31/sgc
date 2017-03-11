@@ -30,7 +30,7 @@ class PacienteFalta extends \yii\db\ActiveRecord
     {
         return [
             [['Paciente_id'], 'required'],
-            [['Paciente_id', 'FaltaJustificada', 'FaltaNaoJustificada'], 'integer'],
+            [['Paciente_id', 'FaltaJustificada', 'FaltaNaoJustificada', 'FaltaNaoJustificadaSeguida'], 'integer'],
             [['status'], 'string', 'max' => 1],
         ];
     }

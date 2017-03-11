@@ -242,6 +242,7 @@ class Agenda extends \yii\db\ActiveRecord
         ->andWhere(['between', 'horaInicio', $horaInicio, $horaFim])
         ->andWhere(['between', 'data_inicio', $data_inicio, $data_fim])
         ->andWhere('diaSemana IN ('. implode(',',$diaSemanaArray).')')
+        ->andWhere('status = 1 OR status = 0')
         ->asArray()
         ->all();
 

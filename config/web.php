@@ -8,6 +8,7 @@ $config = [
     'bootstrap' => ['log'],
     'name' => 'SGC - Sistema de Gerenciamento de Consultas',
     'language'=>'pt_br',
+    'timeZone' => 'America/Manaus',
 
 
 
