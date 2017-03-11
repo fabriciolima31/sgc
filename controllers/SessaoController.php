@@ -67,18 +67,6 @@ class SessaoController extends Controller
     }
 
     /**
-     * Displays a single Sessao model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Sessao model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed

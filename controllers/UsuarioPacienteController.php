@@ -162,6 +162,7 @@ class UsuarioPacienteController extends Controller
         $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a justificativa(observação)
         
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $paciente->fecharSessoes();
             $paciente->save();
             return $this->redirect(['paciente/meus-pacientes', 'status' => 'EC']);
         }
@@ -194,7 +195,7 @@ class UsuarioPacienteController extends Controller
     
     protected function findPaciente($Paciente_id)
     {
-        if (($model = Paciente::find()->where(["id" => $Paciente_id, 'status' => 'EC'])->one()) !== null) {
+        if (($model = Paciente::find()->where(["id" => $Paciente_id])->andWhere('status = \'EC\' OR status = \'EA\'')->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('Página solicitada não existe.');

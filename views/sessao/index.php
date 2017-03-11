@@ -19,7 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= $paciente->statusFinal() ? Html::a('Adicionar Sessão', ['create', 'id'=> Yii::$app->request->get('id') ], ['class' => 'btn btn-success']) : "" ?>
-        <?= $paciente->statusFinal() && Yii::$app->user->identity->tipo == '3' ?  Html::a('Dar Alta', ['paciente/alterar-status', 'id' => $paciente->id, 'status' => 'AL'], [
+        <?= $paciente->statusFinal() ? Html::a('Ir para Agendamento', ['agenda/create'], ['class' => 'btn btn-primary']) : "" ?>
+        <?= $paciente->statusFinal() && Yii::$app->user->identity->tipo == '3' ?  Html::a('Dar Alta ao Paciente', ['paciente/alterar-status', 'id' => $paciente->id, 'status' => 'AL'], [
             'class' => 'btn btn-success',
             'data' => [
                 'confirm' => 'Atribuir Alta para o paciente?',
@@ -51,8 +52,15 @@ $this->params['breadcrumbs'][] = $this->title;
                    return $agenda->horaInicio;
                 }
             ],
-            'status',
-            
+            [
+                'label' => 'Status',
+                'attribute' => 'status',
+                'filter' => Html::activeDropDownList($searchModel, 'status', ['EE' => 'Em Espera', 'NO' => 'Não Ocorrida', 'OS' => 'Ocorrida', 'FE' => 'Fechada'],
+                        ['class'=>'form-control','prompt' => '']),
+                'value' => function ($model) { 
+                   return $model->statusDesc;
+                }
+            ],
             ['class' => 'yii\grid\ActionColumn',
               'template'=>'{view} {ocorreu} {naoocorreu}',
                 'buttons'=>[

@@ -24,6 +24,7 @@ class Sessao extends \yii\db\ActiveRecord
     public $pacienteFalta;
     public $statusDescArray = ['EE' => 'Em Espera', 'NO' => 'Não Ocorrida', 'OS' => 'Ocorrida', 'FE' => 'Fechada'];
     public $statusNODescArray = ['PCJ' => 'Paciente Ausente COM justificativa', 'PSJ' => 'Paciente Ausente SEM justificativa', 'TA' => 'Terapeuta Ausente', 'OI' => 'Outro Impedimento'];
+    
     /**
      * @inheritdoc
      */

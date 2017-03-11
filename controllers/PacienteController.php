@@ -160,12 +160,7 @@ class PacienteController extends Controller
         
         $model->status = $status;
         
-        $usuarioPacientes = Sessao::findAll(['Paciente_id' => $id, 'status' => 'EE']);
-        
-        foreach ($usuarioPacientes as $usuarioPaciente) {
-            $usuarioPaciente->status = 'FE';
-            $usuarioPaciente->save();
-        }
+        $model->fecharSessoes();
         
         if($model->save()){
             if (Yii::$app->user->identity->tipo == '4') {

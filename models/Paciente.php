@@ -175,18 +175,27 @@ class Paciente extends \yii\db\ActiveRecord
             if($pacienteFalta->FaltaNaoJustificada >= 3 || ($pacienteFalta->FaltaJustificada + $pacienteFalta->FaltaNaoJustificada) >= 5){
                 $this->status = 'AB';
                 
-                $usuarioPacientes = Sessao::findAll(['Paciente_id' => $this->id, 'status' => 'EE']);
-        
-                foreach ($usuarioPacientes as $usuarioPaciente) {
-                    $usuarioPaciente->status = 'FE';
-                    $usuarioPaciente->save();
-                }
+                $this->fecharSessoes();
+                
                 $this->save();
             }
         }
         return true;
     }
     
+    public function fecharSessoes(){
+        $sessoesPacientes = Sessao::findAll(['Paciente_id' => $this->id, 'status' => 'EE']);
+        
+        foreach ($sessoesPacientes as $sessoesPaciente) {
+            $agendaPaciente = Agenda::find()->where(['id' => $sessoesPaciente->Agenda_id])->one();
+            $agendaPaciente->status = '1';
+            $agendaPaciente->save(false);
+            $sessoesPaciente->status = 'FE';
+            $sessoesPaciente->save();
+        }
+    }
+
+
     public function converterDatas_para_AAAA_MM_DD() {
 
         $ano = substr($this->data_nascimento,6,4); //pega os 4 ultimos caracteres, a contar do índice 4

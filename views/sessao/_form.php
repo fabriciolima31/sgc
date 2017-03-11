@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\models\Paciente;
 use app\models\Agenda;
 use app\models\Consultorio;
 use yii\helpers\Url;
@@ -17,11 +16,6 @@ use yii\helpers\Url;
 <div class="sessao-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?php 
-        $items = ArrayHelper::map(Paciente::find()->all(), 'id', 'nome');
-        echo $form->field($model, 'Paciente_id', ['readyOnly' => true])->dropDownList($items, ['prompt' => 'Selecione um Paciente'])
-    ?>
     
     <?php 
 
