@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AgendaSearch */
@@ -24,7 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
-            'consultorio.nome',
+            [
+            'attribute'=>'consultorio.nome',
+            'label' => 'Local',
+            ],
             'data_inicio',
             //'data_fim',
             [
@@ -43,7 +47,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'horaInicio',
-            'horaFim',
+            ['attribute' => 'Usuarios_id',
+            'label' => 'Aluno Terapeuta',
+            'value' => function ($model){
+                    $usuario = User::find()->select("Usuarios.nome")->where(["id"=>$model->Usuarios_id])->one();
+                    return $usuario->nome;
+
+            }
+            ],
 
 
             ['class' => 'yii\grid\ActionColumn',

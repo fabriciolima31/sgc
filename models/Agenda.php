@@ -84,7 +84,7 @@ class Agenda extends \yii\db\ActiveRecord
             $date1= $this->data_inicio;
             $date2= date('d-m-Y');
 
-        if ($date1 < $date2) {
+        if (strtotime($date1) < strtotime($date2)) {
                 $this->addError($attribute, 'Informe uma data igual ou posterior a '.date('d-m-Y'));
                 //$validator->addError($this, $attribute, 'The value "{value}" is not acceptable for {attribute}.');
             }
@@ -235,15 +235,6 @@ class Agenda extends \yii\db\ActiveRecord
         $data_fim = $this->converterDatas_para_AAAA_MM_DD_com_Retorno($data_fim);
 
         $model = new Agenda();
-/*
-        $horaInicio = "08:00";
-        $horaFim = "12:00";
-
-        $data_inicio = "2017-03-05";
-        $data_fim = "2017-03-18";
-
-*/
-
 
         $this->dadosConflituosos = $model->find()
         ->select(['diaSemana','horaInicio as Hora','DATE_FORMAT(data_inicio,"%d/%m/%Y") as Data'])

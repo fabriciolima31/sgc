@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\User;
+use app\models\Disciplina;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Agenda */
@@ -58,7 +60,25 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
             ],
             'horaInicio',
-            'horaFim',
+            ['attribute' => 'Usuarios_id',
+            'label' => 'Aluno Terapeuta',
+            'value' => function ($model){
+                    $usuario = User::find()->select("Usuarios.nome")->where(["id"=>$model->Usuarios_id])->one();
+                    return $usuario->nome;
+
+            }
+            ],
+            ['attribute' => 'Turma_id',
+            'label' => 'Disciplina',
+            'value' => function ($model){
+                    $disciplina = Disciplina::find()
+                    ->select("Disciplina.nome")
+                    ->innerJoin("Turma as T","T.Disciplina_id = Disciplina.id" )
+                    ->where(["T.id"=>$model->Turma_id])->one();
+                    return $disciplina->nome;
+
+            }
+            ],
 
         ],
     ]) ?>

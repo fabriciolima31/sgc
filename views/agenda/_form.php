@@ -94,8 +94,8 @@ use yii\helpers\Url;
               'onchange'=>'
                 $.post( "'.Url::to('index.php?r=agenda/turmas&id_terapeuta=').'"+$(this).val(), function( data ) {
                   $( "select#agenda-turma_id" ).html( data );
-                });
-            ']);
+                });'
+            ]);
 
 
 ?>
@@ -109,7 +109,15 @@ use yii\helpers\Url;
                         return $model['nome_da_disciplina'].' - Turma: '.$model['codigo'];
                 }
 
-            ),['prompt'=>'Escolha uma Disciplina e Turma']); 
+            ),['prompt'=>'Escolha uma Disciplina e Turma',
+                'onMouseOver'=>'
+                $.post( "'.Url::to('index.php?r=agenda/turmas&id_terapeuta=').'"+$("select#agenda-usuarios_id").val(), function( data ) {
+                   var x = $( "select#agenda-turma_id").val();
+                    if(x == null || x == ""){
+                     $( "select#agenda-turma_id" ).html( data );
+                    }
+                });',
+            ]); 
 
 
         ?>
@@ -163,7 +171,7 @@ use yii\helpers\Url;
 
 <script type="text/javascript">
 
-    //gambiarra
+
     if(document.getElementById("agenda-horainicio-disp").value == ''){
         document.getElementById("agenda-horainicio-disp").value = 0;
         document.getElementById("agenda-horafim-disp").value = 0;

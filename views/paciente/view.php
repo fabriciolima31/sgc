@@ -16,9 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= (Yii::$app->user->identity->tipo == '4' && $pacienteJaAlocado != 1) ? Html::a('Alocar', ['usuario-paciente/create', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
-        <?= Yii::$app->user->identity->tipo == '3' ? Html::a('Sessões', ['sessao/all', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
+        <?= Yii::$app->user->identity->tipo == '3' ? Html::a('Sessões', ['sessao/all', 'id' => $model->id], ['class' => 'btn btn-success']) : "" ?>
         
         <?= $model->statusFinal() ? Html::a('Desistiu', ['alterar-status', 'id' => $model->id, 'status' => 'DE'], [
             'class' => 'btn btn-danger',
@@ -29,12 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) : "" ?>
         
         <?= $model->statusFinal() ? Html::a('Abandonou', ['alterar-status', 'id' => $model->id, 'status' => 'AB'], [
-            'class' => 'btn btn-danger',
+            'class' => 'btn btn-warning',
             'data' => [
                 'confirm' => 'Alterar Status para Abandono?',
                 'method' => 'post',
             ],
         ]) : "" ?>
+        <?= Html::a('Editar Dados', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 
     </p>
 
