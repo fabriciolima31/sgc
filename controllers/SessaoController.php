@@ -168,15 +168,17 @@ class SessaoController extends Controller
         $countPosts = Agenda::find()
                 ->where(['Consultorio_id' => $consultorio ])
                 ->andWhere(['status' => 1])
+                ->andWhere("data_inicio >= CURDATE()")
                 ->count();
  
         $posts = Agenda::find()
                 ->where(['Consultorio_id' => $consultorio])
                 ->andWhere(['status' => 1])
+                ->andWhere("data_inicio >= CURDATE()")
                 ->orderBy('id ASC')
                 ->all();
 
- 
+
         if($countPosts>0){
                 echo '<option value="default" disabled selected="selected"> Selecione uma opção </option>';
             foreach($posts as $post){
