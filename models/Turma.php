@@ -45,6 +45,7 @@ class Turma extends \yii\db\ActiveRecord
             [['Disciplina_id'], 'integer'],
             [['codigo', 'semestre'], 'string', 'max' => 10],
             [['ano'], 'string', 'max' => 4],
+            [['status'], 'string'], 
             [['Disciplina_id'], 'exist', 'skipOnError' => true, 'targetClass' => Disciplina::className(), 'targetAttribute' => ['Disciplina_id' => 'id']],
         ];
     }

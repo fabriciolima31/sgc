@@ -38,9 +38,37 @@ class AlunoTurmaSearch extends AlunoTurma
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function searchTurmas($params)
     {
-        $query = AlunoTurma::find();
+        $query = AlunoTurma::find()->select('Turma_id')->groupBy('Turma_id');
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'Turma_id' => $this->Turma_id,
+            'Usuarios_id' => $this->Usuarios_id,
+        ]);
+
+        return $dataProvider;
+    }
+    
+    public function searchAlunos($params)
+    {
+        $query = AlunoTurma::find()->where(['Turma_id' => $params['Turma_id']]);
+        $query->joinWith('usuario', 'Usuarios.id');
 
         // add conditions that should always apply here
 

@@ -64,9 +64,9 @@ class AlunoTurma extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUsuarios()
+    public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'Usuarios_id']);
+        return $this->hasOne(User::className(), ['id' => 'Usuarios_id']);
     }
 
 }

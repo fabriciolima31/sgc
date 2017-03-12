@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'Sistema de Gerenciamento de Consultas',
+        'brandLabel' => 'SGC',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -77,7 +77,8 @@ AppAsset::register($this);
                 ],
                 'visible' => Yii::$app->user->identity->tipo == '4',
             ] : "",
-            !Yii::$app->user->isGuest ? ['label' => 'Alocações', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
+            !Yii::$app->user->isGuest ? ['label' => 'Alocações de Pacientes', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
+            !Yii::$app->user->isGuest ? ['label' => 'Alocações de Alunos', 'url' => ['/aluno-turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

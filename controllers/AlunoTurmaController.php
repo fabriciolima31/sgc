@@ -28,6 +28,21 @@ class AlunoTurmaController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['index', 'indexAlunos', 'view', 'delete'],
+                'rules' => [
+                    // allow authenticated users
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo == '4';
+                        }
+                    ],
+                    // everything else is denied
+                ],
+            ],
         ];
     }
 
@@ -38,9 +53,24 @@ class AlunoTurmaController extends Controller
     public function actionIndex()
     {
         $searchModel = new AlunoTurmaSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchTurmas(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    
+    /**
+     * Lists all AlunoTurma models.
+     * @return mixed
+     */
+    public function actionIndexAlunos($id)
+    {
+        $searchModel = new AlunoTurmaSearch();
+        $dataProvider = $searchModel->searchAlunos(['Turma_id' => $id]);
+
+        return $this->render('indexAlunos', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -68,8 +98,15 @@ class AlunoTurmaController extends Controller
     {
         $model = new AlunoTurma();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'Turma_id' => $model->Turma_id, 'Usuarios_id' => $model->Usuarios_id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($this->checaAlocacao($model->Turma_id, $model->Usuarios_id) == null){
+                if($model->save()){
+                    return $this->redirect(['view', 'Turma_id' => $model->Turma_id, 'Usuarios_id' => $model->Usuarios_id]);
+                }else{
+                    return "Erro ao Alocar";
+                }
+                return "Já cadastrado";
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -151,6 +188,15 @@ class AlunoTurmaController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    protected function checaAlocacao($Turma_id, $Usuarios_id)
+    {
+        if (($model = AlunoTurma::findOne(['Turma_id' => $Turma_id, 'Usuarios_id' => $Usuarios_id])) !== null) {
+            return $model;
+        } else {
+            return null;
         }
     }
 }

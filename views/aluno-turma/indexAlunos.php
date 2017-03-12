@@ -7,7 +7,8 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AlunoTurmaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Alocações de Alunos em Turmas - Turmas';
+$this->title = 'Alocações de Alunos em Turmas - Alunos';
+$this->params['breadcrumbs'][] = ['label' => 'Alocações de Alunos em Turmas  - Turmas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aluno-turma-index">
@@ -24,23 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            [
-                'label' => 'Turma',
-                'attribute' => 'Turma_id',
-                'value' => function($model){
-                    return $model->turma->disciplina->nome." - Turma".$model->turma->codigo;
-                }
-            ],
+            'usuario.nome',
 
             ['class' => 'yii\grid\ActionColumn',
               'template'=>'{view}',
-                 'buttons'=>[
-                    'view' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['aluno-turma/index-alunos','id' => $model->Turma_id,], [
-                            'title' => Yii::t('yii', 'Regitrar Consulta Ocorrida'),
-                    ]);
-                  },
-                ]
             ],
         ],
     ]); ?>
