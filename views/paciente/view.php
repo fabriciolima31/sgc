@@ -70,24 +70,26 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
     
-    <legend><h3>Faltas do Paciente</h3></legend>
-    
-   <?= DetailView::widget([
-        'model' => $modelFaltas,
-        'attributes' => [
-            [
-                'label' => 'Faltas Justificadas',
-                'value' => $modelFaltas->FaltaJustificada,
+  <?php if($modelFaltas != null){ ?>
+        <legend><h3>Faltas do Paciente</h3></legend>
+
+       <?= DetailView::widget([
+            'model' => $modelFaltas,
+            'attributes' => [
+                [
+                    'label' => 'Faltas Justificadas',
+                    'value' => $modelFaltas->FaltaJustificada,
+                ],
+                [
+                    'label' => 'Faltas Não Justificadas',
+                    'value' => $modelFaltas->FaltaNaoJustificada,
+                ],
+                [
+                    'label' => 'Total de Faltas',
+                    'value' => $modelFaltas->FaltaNaoJustificada + $modelFaltas->FaltaJustificada,
+                ],
             ],
-            [
-                'label' => 'Faltas Não Justificadas',
-                'value' => $modelFaltas->FaltaNaoJustificada,
-            ],
-            [
-                'label' => 'Total de Faltas',
-                'value' => $modelFaltas->FaltaNaoJustificada + $modelFaltas->FaltaJustificada,
-            ],
-        ],
-    ]) ?>
+        ]) ?>
+    <?php } ?>
 
 </div>

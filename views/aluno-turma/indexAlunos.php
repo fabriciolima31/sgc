@@ -8,16 +8,15 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Alocações de Alunos em Turmas - Alunos';
-$this->params['breadcrumbs'][] = ['label' => 'Alocações de Alunos em Turmas  - Turmas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Alocações de Alunos em Turmas - Turmas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aluno-turma-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Alocar Aluno à Turma', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Alocar Aluno à Turma', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,7 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'usuario.nome',
 
             ['class' => 'yii\grid\ActionColumn',
-              'template'=>'{view}',
+              'template'=>'{desalocar}',
+                'buttons'=>[
+                    'desalocar' => function ($url, $model) {
+                        return Html::a('<span class="glyphicon glyphicon-remove-sign"></span>', ['aluno-turma/delete','Turma_id' => $model->Turma_id,
+                            'Usuarios_id' => $model->Usuarios_id], [
+                            'data' => [
+                                'confirm' => 'Você tem certeza desalocar o aluno \''.$model->usuario->nome.'\'?',
+                                'method' => 'post',],
+                            'title' => Yii::t('yii', 'Desalocar'),
+                    ]);
+                  },
+                ]
             ],
         ],
     ]); ?>

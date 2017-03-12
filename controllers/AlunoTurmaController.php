@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\AlunoTurma;
 use app\models\AlunoTurmaSearch;
+use app\models\TurmaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,8 +53,8 @@ class AlunoTurmaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new AlunoTurmaSearch();
-        $dataProvider = $searchModel->searchTurmas(Yii::$app->request->queryParams);
+        $searchModel = new TurmaSearch();
+        $dataProvider = $searchModel->searchTurmasAtivas(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -73,21 +74,10 @@ class AlunoTurmaController extends Controller
         return $this->render('indexAlunos', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'id' => $id,
         ]);
     }
 
-    /**
-     * Displays a single AlunoTurma model.
-     * @param integer $Turma_id
-     * @param integer $Usuarios_id
-     * @return mixed
-     */
-    public function actionView($Turma_id, $Usuarios_id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($Turma_id, $Usuarios_id),
-        ]);
-    }
 
     /**
      * Creates a new AlunoTurma model.
@@ -97,20 +87,24 @@ class AlunoTurmaController extends Controller
     public function actionCreate()
     {
         $model = new AlunoTurma();
+        
+        if (isset(Yii::$app->request->queryParams['id'])) {
+            $model->Turma_id = Yii::$app->request->queryParams['id'];
+        }
 
         if ($model->load(Yii::$app->request->post())) {
 
             
             if($model->checaAlocacao($model->Turma_id, $model->Usuarios_id) == null && $model->verificaSeAlunoJaEstaVinculadoTurma() == 0){
 
-                        if($model->save()){
-                            return $this->redirect(['view', 'Turma_id' => $model->Turma_id, 'Usuarios_id' => $model->Usuarios_id]);
-                        }
-           }
+                if($model->save()){
+                    return $this->redirect(['index-alunos', 'id' => $model->Turma_id]);
+                }
+            }
                 
-                        return $this->render('create', [
-                            'model' => $model,
-                        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
 
         } else {
             return $this->render('create', [
@@ -176,7 +170,7 @@ class AlunoTurmaController extends Controller
     {
         $this->findModel($Turma_id, $Usuarios_id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index-alunos', 'id' => $Turma_id]);
     }
 
     /**

@@ -15,20 +15,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Alocar Aluno à Turma', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             [
                 'label' => 'Turma',
-                'attribute' => 'Turma_id',
+                'attribute' => 'Disciplina_id',
                 'value' => function($model){
-                    return $model->turma->disciplina->nome." - Turma".$model->turma->codigo;
+                    return $model->disciplina->nome." - Turma".$model->codigo;
+                }
+            ],
+            [
+                'label' => 'Data Início',
+                'attribute' => 'data_inicio',
+                'value' => function($model){
+                    return $model->data_inicio;
                 }
             ],
 
@@ -36,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
               'template'=>'{view}',
                  'buttons'=>[
                     'view' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['aluno-turma/index-alunos','id' => $model->Turma_id,], [
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', ['aluno-turma/index-alunos','id' => $model->id,], [
                             'title' => Yii::t('yii', 'Regitrar Consulta Ocorrida'),
                     ]);
                   },

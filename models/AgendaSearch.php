@@ -41,7 +41,7 @@ class AgendaSearch extends Agenda
      */
     public function search($params)
     {
-        $query = Agenda::find()->where(['status' => '1']);
+        $query = Agenda::find()->where(['status' => '1'])->orderBy('data_inicio, horaInicio');
 
         // add conditions that should always apply here
 

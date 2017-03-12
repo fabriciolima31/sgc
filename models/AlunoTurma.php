@@ -50,8 +50,8 @@ class AlunoTurma extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'Turma_id' => 'Turma ID',
-            'Usuarios_id' => 'Alunos',
+            'Turma_id' => 'Turma',
+            'Usuarios_id' => 'Aluno',
         ];
     }
 

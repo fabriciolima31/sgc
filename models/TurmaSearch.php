@@ -71,4 +71,37 @@ class TurmaSearch extends Turma
 
         return $dataProvider;
     }
+    
+        public function searchTurmasAtivas($params)
+    {
+        $query = Turma::find()->where("data_fim >= CURDATE()");
+
+        // add conditions that should always apply here
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        // grid filtering conditions
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'data_inicio' => $this->data_inicio,
+            'data_fim' => $this->data_fim,
+            'Disciplina_id' => $this->Disciplina_id,
+        ]);
+
+        $query->andFilterWhere(['like', 'codigo', $this->codigo])
+            ->andFilterWhere(['like', 'ano', $this->ano])
+            ->andFilterWhere(['like', 'semestre', $this->semestre]);
+
+        return $dataProvider;
+    }
 }

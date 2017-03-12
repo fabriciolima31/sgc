@@ -46,7 +46,6 @@ class Turma extends \yii\db\ActiveRecord
             [['Disciplina_id'], 'integer'],
             [['codigo', 'semestre'], 'string', 'max' => 10],
             [['ano'], 'string', 'max' => 4],
-            [['status'], 'string'], 
             [['Disciplina_id'], 'exist', 'skipOnError' => true, 'targetClass' => Disciplina::className(), 'targetAttribute' => ['Disciplina_id' => 'id']],
         ];
     }
@@ -90,5 +89,41 @@ class Turma extends \yii\db\ActiveRecord
     public function getUsuarios()
     {
         return $this->hasMany(User::className(), ['id' => 'Usuarios_id'])->viaTable('Professor_Turma', ['Turma_id' => 'id']);
+    }
+    
+        public function afterFind() {
+        $this->converterDatas_para_DD_MM_AAAA();
+        return true;
+    }
+    
+    public function beforeSave($insert) {
+        $this->converterDatas_para_AAAA_MM_DD();
+        return true;
+    }
+    
+    public function converterDatas_para_AAAA_MM_DD() {
+
+        $ano = substr($this->data_inicio,6,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($this->data_inicio,3,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($this->data_inicio,0,2); //pega os 2 caracteres, a contar do índice 0
+        $this->data_inicio = $ano."-".$mes."-".$dia;
+        
+        $ano = substr($this->data_fim,6,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($this->data_fim,3,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($this->data_fim,0,2); //pega os 2 caracteres, a contar do índice 0
+        $this->data_fim = $ano."-".$mes."-".$dia;
+    }
+
+    public function converterDatas_para_DD_MM_AAAA() {
+
+        $ano = substr($this->data_inicio,0,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($this->data_inicio,5,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($this->data_inicio,8,2); //pega os 2 caracteres, a contar do índice 0
+        $this->data_inicio = $dia."-".$mes."-".$ano;
+        
+        $ano = substr($this->data_fim,0,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($this->data_fim,5,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($this->data_fim,8,2); //pega os 2 caracteres, a contar do índice 0
+        $this->data_fim = $dia."-".$mes."-".$ano;
     }
 }
