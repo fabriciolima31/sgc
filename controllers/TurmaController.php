@@ -69,8 +69,8 @@ class TurmaController extends Controller
     {
         $model = $this->findModel($id);
 
-        $model->data_inicio = $this->converterDatas_para_DD_MM_AAAA($model->data_inicio); 
-        $model->data_fim = $this->converterDatas_para_DD_MM_AAAA($model->data_fim);
+        //$model->data_inicio = $this->converterDatas_para_DD_MM_AAAA($model->data_inicio); 
+        //$model->data_fim = $this->converterDatas_para_DD_MM_AAAA($model->data_fim);
 
         return $this->render('view', [
             'model' => $model,
@@ -90,8 +90,8 @@ class TurmaController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             //as duas linhas abaixo convertem as data de  DD-MM-AAAA para AAAA-MM-DD
-            $model->data_inicio = $this->converterDatas_para_AAAA_MM_DD($model->data_inicio); 
-            $model->data_fim = $this->converterDatas_para_AAAA_MM_DD($model->data_fim);
+            //$model->data_inicio = $this->converterDatas_para_AAAA_MM_DD($model->data_inicio); 
+            //$model->data_fim = $this->converterDatas_para_AAAA_MM_DD($model->data_fim);
             
             if ($model->save()){
 
@@ -126,13 +126,9 @@ class TurmaController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
-            $model->data_inicio = $this->converterDatas_para_AAAA_MM_DD($model->data_inicio);
-            $model->data_fim = $this->converterDatas_para_AAAA_MM_DD($model->data_fim);
-
             if($model->save()){
                return $this->redirect(['view', 'id' => $model->id]);
             }
-
 
         } else {
             return $this->render('update', [
