@@ -33,6 +33,8 @@ class Paciente extends \yii\db\ActiveRecord
         "EA" => "Em Atendimento", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"];
     
     public $prioridadeArray = ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'];
+
+    public $complexidadeArray = ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'];
     
     public $turno_atendimentoArray = ['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite'];
         
@@ -125,6 +127,10 @@ class Paciente extends \yii\db\ActiveRecord
      */
     public function getPrioridadeDesc(){
         return $this->prioridade == null ? "-" : $this->prioridadeArray[$this->prioridade];
+    }
+
+    public function getComplexidadeDesc(){
+        return $this->complexidade == null ? "-" : $this->complexidadeArray[$this->complexidade];
     }
     
     /*

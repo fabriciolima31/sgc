@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::activeDropDownList($searchModel, 'complexidade', ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'],
                         ['class'=>'form-control','prompt' => '']),
                 'value' => function ($model) {
-                    return $model->prioridadeDesc;
+                    return $model->complexidadeDesc;
                 }
             ],
             [

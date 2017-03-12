@@ -67,7 +67,8 @@ class PacienteController extends Controller
         $params['status'] = Yii::$app->request->queryParams['status'];
         
         $searchModel = new PacienteSearch();
-        $dataProvider = $searchModel->search($params);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         $paciente = new Paciente();
         
         return $this->render('indexadministrador', [

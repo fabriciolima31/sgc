@@ -48,6 +48,7 @@ class PacienteSearch extends Paciente
             $query = Paciente::find();
         }
 
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -61,11 +62,6 @@ class PacienteSearch extends Paciente
             // $query->where('0=1');
             return $dataProvider;
         }
-
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'status', $this->status])
