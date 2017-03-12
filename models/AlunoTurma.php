@@ -85,15 +85,17 @@ class AlunoTurma extends \yii\db\ActiveRecord
     public function verificaSeAlunoJaEstaVinculadoTurma(){
 
         $disciplina = Turma::find()
-        ->select("Disciplina.id as id_da_disciplina")
+        ->select("Disciplina.id as id_da_disciplina, Turma.ano, Turma.semestre")
         ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
         ->where(["Turma.id" => $this->Turma_id])->one();
-        
+
+
         $usuarioJaEstaNessaDisciplina = AlunoTurma::find()
         ->select("Disciplina.id")
         ->innerJoin("Turma","Aluno_Turma.Turma_id = Turma.id")
         ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
-        //->where(["Turma.id" => $this->Turma_id])
+        ->where(['Turma.ano' => $disciplina->ano])
+        ->andWhere(['Turma.semestre' => $disciplina->semestre])
         ->andWhere(["Disciplina.id" => $disciplina->id_da_disciplina])
         ->andWhere(["Aluno_Turma.Usuarios_id" => $this->Usuarios_id])
         ->count();
