@@ -38,6 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </p>
 
+    <legend><h3>Informações do Paciente</h3></legend>
+    
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
@@ -65,6 +67,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'motivo_psicoterapia',
             'servico:ntext',
             'observacao:ntext',
+        ],
+    ]) ?>
+    
+    <legend><h3>Faltas do Paciente</h3></legend>
+    
+   <?= DetailView::widget([
+        'model' => $modelFaltas,
+        'attributes' => [
+            [
+                'label' => 'Faltas Justificadas',
+                'value' => $modelFaltas->FaltaJustificada,
+            ],
+            [
+                'label' => 'Faltas Não Justificadas',
+                'value' => $modelFaltas->FaltaNaoJustificada,
+            ],
+            [
+                'label' => 'Total de Faltas',
+                'value' => $modelFaltas->FaltaNaoJustificada + $modelFaltas->FaltaJustificada,
+            ],
         ],
     ]) ?>
 

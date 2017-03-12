@@ -4,7 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Paciente;
-use app\models\Sessao;
+use app\models\PacienteFalta;
 use app\models\UsuarioPaciente;
 use app\models\PacienteSearch;
 use yii\web\Controller;
@@ -108,11 +108,12 @@ class PacienteController extends Controller
         $this->findModel($id);
         
         $pacienteJaAlocado = (UsuarioPaciente::find()->where(['Paciente_id'=> $id])->andWhere(['status'=> 1])->count() == 1);
-
+        $modelFaltas = PacienteFalta::find()->where(['Paciente_id' => $id])->one();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
             'pacienteJaAlocado' => $pacienteJaAlocado,
+            'modelFaltas' => $modelFaltas,
         ]);
     }
 
