@@ -25,6 +25,7 @@ class Turma extends \yii\db\ActiveRecord
     public $Professor_id;
     public $nome_do_usuario;
     public $nome_da_disciplina;
+    public $id_da_disciplina;
 
     /**
      * @inheritdoc

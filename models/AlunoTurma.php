@@ -21,6 +21,8 @@ class AlunoTurma extends \yii\db\ActiveRecord
     public $id_da_turma;
     public $nome_do_professor;
 
+
+
     /**
      * @inheritdoc
      */
@@ -68,5 +70,40 @@ class AlunoTurma extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'Usuarios_id']);
     }
+
+    public function checaAlocacao($Turma_id, $Usuarios_id)
+    {
+        if (($model = AlunoTurma::findOne(['Turma_id' => $Turma_id, 'Usuarios_id' => $Usuarios_id])) !== null) {
+            $this->addError("Usuarios_id", "Este aluno já  está alocado nessa disciplina");
+            return $model;
+
+        } else {
+            return null;
+        }
+    }
+
+    public function verificaSeAlunoJaEstaVinculadoTurma(){
+
+        $disciplina = Turma::find()
+        ->select("Disciplina.id as id_da_disciplina")
+        ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
+        ->where(["Turma.id" => $this->Turma_id])->one();
+        
+        $usuarioJaEstaNessaDisciplina = AlunoTurma::find()
+        ->select("Disciplina.id")
+        ->innerJoin("Turma","Aluno_Turma.Turma_id = Turma.id")
+        ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
+        //->where(["Turma.id" => $this->Turma_id])
+        ->andWhere(["Disciplina.id" => $disciplina->id_da_disciplina])
+        ->andWhere(["Aluno_Turma.Usuarios_id" => $this->Usuarios_id])
+        ->count();
+
+        if($usuarioJaEstaNessaDisciplina > 0){
+            $this->addError("Usuarios_id", "Este aluno já está alocado nessa disciplina, porém em outra turma");
+            return 1;
+        }
+        return 0;
+
+    }    
 
 }

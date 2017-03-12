@@ -99,14 +99,19 @@ class AlunoTurmaController extends Controller
         $model = new AlunoTurma();
 
         if ($model->load(Yii::$app->request->post())) {
-            if($this->checaAlocacao($model->Turma_id, $model->Usuarios_id) == null){
-                if($model->save()){
-                    return $this->redirect(['view', 'Turma_id' => $model->Turma_id, 'Usuarios_id' => $model->Usuarios_id]);
-                }else{
-                    return "Erro ao Alocar";
-                }
-                return "Já cadastrado";
-            }
+
+            
+            if($model->checaAlocacao($model->Turma_id, $model->Usuarios_id) == null && $model->verificaSeAlunoJaEstaVinculadoTurma() == 0){
+
+                        if($model->save()){
+                            return $this->redirect(['view', 'Turma_id' => $model->Turma_id, 'Usuarios_id' => $model->Usuarios_id]);
+                        }
+           }
+                
+                        return $this->render('create', [
+                            'model' => $model,
+                        ]);
+
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -191,12 +196,4 @@ class AlunoTurmaController extends Controller
         }
     }
     
-    protected function checaAlocacao($Turma_id, $Usuarios_id)
-    {
-        if (($model = AlunoTurma::findOne(['Turma_id' => $Turma_id, 'Usuarios_id' => $Usuarios_id])) !== null) {
-            return $model;
-        } else {
-            return null;
-        }
-    }
 }
