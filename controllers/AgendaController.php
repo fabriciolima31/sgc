@@ -31,7 +31,7 @@ class AgendaController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'update', 'delete','turmas'],
                         'allow' => true,
                         'roles' => ['@' ],
                     ],
