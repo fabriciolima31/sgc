@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= $paciente->statusFinal() ? Html::a('Adicionar Sessão', ['create', 'id'=> Yii::$app->request->get('id') ], ['class' => 'btn btn-success']) : "" ?>
-        <?= $paciente->statusFinal() ? Html::a('Ir para Agendamento', ['agenda/create'], ['class' => 'btn btn-primary']) : "" ?>
+        <?php //echo $paciente->statusFinal() ? Html::a('Ir para Agendamento', ['agenda/create'], ['class' => 'btn btn-primary']) : "" ?>
         <?= $paciente->statusFinal() && Yii::$app->user->identity->tipo == '3' ?  Html::a('Dar Alta ao Paciente', ['paciente/alterar-status', 'id' => $paciente->id, 'status' => 'AL'], [
             'class' => 'btn btn-success',
             'data' => [
