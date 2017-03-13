@@ -102,26 +102,6 @@ class UsuarioPacienteController extends Controller
         }
     }
 
-    /**
-     * Updates an existing UsuarioPaciente model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $Paciente_id
-     * @param integer $Usuario_id
-     * @param string $status
-     * @return mixed
-     */
-    public function actionUpdate($Paciente_id, $Usuario_id, $status)
-    {
-        $model = $this->findModel($Paciente_id, $Usuario_id, $status);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'Paciente_id' => $model->Paciente_id, 'Usuario_id' => $model->Usuario_id, 'status' => $model->status]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
 
     /**
      * Deletes an existing UsuarioPaciente model.
@@ -140,19 +120,6 @@ class UsuarioPacienteController extends Controller
 
     public function actionEncaminhar($id)
     {
-            
-        /*           
-                    $paciente = Paciente::find()->where(["id" => $Paciente_id])->one();
-                    $paciente->status = "LE";
-                    $paciente->save();
-
-                    $usuarioPaciente = UsuarioPaciente::find()->where(["Paciente_id" => $Paciente_id ])->andWhere(["status" => "1"])->one();
-                    $usuarioPaciente->status = "0";
-                    $usuarioPaciente->save();
-
-        return $this->redirect(['paciente/meus-pacientes', 'status' => 'EC']);
-        */
-
         $paciente = $this->findPaciente($id);
         $paciente->status = "LE";
 
@@ -166,12 +133,24 @@ class UsuarioPacienteController extends Controller
             return $this->redirect(['paciente/meus-pacientes', 'status' => 'EC']);
         }
         else{
-
             return $this->render('justificativa', [
                 'model' => $model,
            ]);
         }
-   
+    }
+    
+    public function actionEncaminharTerapeuta($id)
+    {
+        $paciente = $this->findPaciente($id);
+
+        $model = UsuarioPaciente::find()->where(["Paciente_id" => $id ])->andWhere(["status" => "1"])->one();
+        $model->status = '0';
+        $model->save();
+        
+        $paciente->fecharSessoes();
+        $paciente->save();
+        
+        $this->redirect(['create', 'id' => $id]);
     }
 
     /**
@@ -195,6 +174,15 @@ class UsuarioPacienteController extends Controller
     protected function findPaciente($Paciente_id)
     {
         if (($model = Paciente::find()->where(["id" => $Paciente_id])->andWhere('status = \'EC\' OR status = \'EA\'')->one()) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('Página solicitada não existe.');
+        }
+    }
+    
+    protected function findAlocacao($id)
+    {
+        if (($model = UsuarioPaciente::find()->where(["id" => $id])->andWhere('status = \'1\'')->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('Página solicitada não existe.');

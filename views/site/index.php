@@ -120,7 +120,7 @@ $this->title = 'Principal';
                         ]);   
                     },
                     'encaminhar' => function ($url, $model) {
-                    return Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id,
+                    return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id,
                         ], [
                                 'title' => Yii::t('yii', 'Encaminhar Para Lista de Espera'),            
                         'data' => [

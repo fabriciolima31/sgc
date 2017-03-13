@@ -41,7 +41,7 @@ class UsuarioPacienteSearch extends UsuarioPaciente
      */
     public function search($params)
     {
-        $query = UsuarioPaciente::find();
+        $query = UsuarioPaciente::find()->where(['status' => '1']);
 
         // add conditions that should always apply here
 

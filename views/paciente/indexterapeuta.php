@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   },
                     'encaminhar' => function ($url, $model) {  
 
-                    return $model->status == 'EC' || $model->status == 'EA' ? Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id,
+                    return $model->status == 'EC' || $model->status == 'EA' ? Html::a('<span class="glyphicon glyphicon-list-alt"></span>', ['usuario-paciente/encaminhar', 'id' => $model->id,
                         ], [
                                 'title' => Yii::t('yii', 'Encaminhar Para Lista de Espera'),
                                 

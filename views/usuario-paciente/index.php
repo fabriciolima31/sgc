@@ -34,7 +34,24 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'paciente.statusDesc',
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+              'template'=>'{encaminharLE}  {encaminharOT}',
+                'buttons'=>[
+                    'encaminharLE' => function ($url, $model) {  
+                        return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', ['usuario-paciente/encaminhar', 'id' => $model->Paciente_id], [
+                                'title' => Yii::t('yii', 'Encaminhar para fila de Espera'),
+                        ]);                                
+                    },
+                    'encaminharOT' => function ($url, $model) {  
+                        return Html::a('<span class="glyphicon glyphicon-user"></span>', ['usuario-paciente/encaminhar-terapeuta', 'id' => $model->Paciente_id], [
+                            'data' => [
+                                'confirm' => 'Deseja Alocar o paciente \''.$model->paciente->nome.'\' para outro terapeuta?',
+                            ],
+                                'title' => Yii::t('yii', 'Encaminhar para outro Terapeuta'),
+                        ]);                                
+                    },
+              ]                            
+            ],
         ],
     ]); ?>
 </div>
