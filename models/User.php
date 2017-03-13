@@ -35,14 +35,6 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
             [['cpf', 'nome', 'tipo', 'email'], 'required'],
             [['password','password_repeat'], 'required','on'=> 'create'],
             [['password','password_repeat'], 'required','on'=> 'updatesenha'],
-            /*[['turmasArray'], 'required', 'on'=> 'create'  ,'when' => function ($model) {
-                    return $model->tipo == '3';
-                }, 
-             'whenClient'=> "function (attribute, value) {
-                                                            return $('#user-tipo').val() == '3';
-                                                        }"
-            ],
-            */
             ['email', 'unique', 'targetClass' => '\app\models\User', 'message' => 'E-mail informado já cadastrado.'],
             [['turmasArray'], 'validateTurmas'],
             [['cpf'], 'string'],
@@ -261,5 +253,13 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
             }
         }
         return 0;
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAlunoTurmas()
+    {
+        return $this->hasMany(AlunoTurma::className(), ['Usuarios_id' => 'id']);
     }
 }

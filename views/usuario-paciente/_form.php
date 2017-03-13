@@ -25,7 +25,11 @@ if ($existe_usuario_paciente > 0){
     <?php $form = ActiveForm::begin(); ?>
     
     <?php 
-        $items = ArrayHelper::map(User::find()->where(['tipo' => '3', 'status' => 1])->orWhere(['tipo' => '2'])->all(), 'id', 'nome'); //Ver para pegar o Psicologo ou professor
+        //$items = ArrayHelper::map(User::find()->where(['tipo' => '3', 'status' => 1])->orWhere(['tipo' => '2'])->all(), 'id', 'nome');
+        
+        $items = ArrayHelper::map(User::find()->select('Usuarios.id, Usuarios.nome')->innerJoin('Aluno_Turma', 'Usuarios_id = Usuarios.id')
+                ->innerJoin('Turma', 'Turma_id = Turma.id')->where('data_fim > CURDATE()')->orderBy('Usuarios.nome')->all(), 'id', 'nome');
+        
         echo $form->field($model, 'Usuario_id')->dropDownList($items, ['prompt' => 'Selecione um Terapeuta'])
     ?>
 

@@ -90,7 +90,6 @@ class UsuarioPacienteController extends Controller
         $model->Paciente_id = $id;
         $model->status = '1';
 
-
        
         if ($existe_usuario_paciente == 0 && $model->load(Yii::$app->request->post()) && $model->save()) {
             $paciente->setStatus("Alocar");
