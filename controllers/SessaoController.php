@@ -31,7 +31,7 @@ class SessaoController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'all', 'update','view', 'delete', 'altera-status'],
+                'only' => ['index', 'all', 'update','view', 'delete', 'altera-status', 'datas'],
                 'rules' => [
                     // allow authenticated users
                     [
@@ -156,15 +156,15 @@ class SessaoController extends Controller
         $countPosts = Agenda::find()
                 ->where(['Consultorio_id' => $consultorio ])
                 ->andWhere(['status' => 1])
-                ->andWhere("data_inicio >= CURDATE()")
-                ->andWhere("horaInicio >= CURTIME()")
+                ->andWhere("data_inicio > CURDATE()")
+                ->orWhere("data_inicio = CURDATE() AND horaInicio >= CURTIME()")
                 ->count();
  
         $posts = Agenda::find()
                 ->where(['Consultorio_id' => $consultorio])
                 ->andWhere(['status' => 1])
                 ->andWhere("data_inicio >= CURDATE()")
-                ->andWhere("horaInicio >= CURTIME()")
+                ->orWhere("data_inicio = CURDATE() AND horaInicio >= CURTIME()")
                 ->orderBy('id ASC')
                 ->all();
 
