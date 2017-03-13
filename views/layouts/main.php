@@ -40,7 +40,8 @@ AppAsset::register($this);
             !Yii::$app->user->isGuest ? ['label' => 'Disciplinas', 'url' => ['/disciplina/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
             !Yii::$app->user->isGuest ? ['label' => 'Consultórios', 'url' => ['/consultorio/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
             !Yii::$app->user->isGuest ? ['label' => 'Agendamento', 'url' => ['/agenda/index'], 'visible' => Yii::$app->user->identity->tipo != '4']: "",
-            !Yii::$app->user->isGuest ? ['label' => 'Relatório', 'url' => ['/relatorio/report'],'linkOptions' => ['target' => '_blank'], 'visible' => Yii::$app->user->identity->tipo != '4']: "",
+            /* !Yii::$app->user->isGuest ? ['label' => 'Relatório', 'url' => ['/relatorio/report'],'linkOptions' => ['target' => '_blank'], 'visible' => Yii::$app->user->identity->tipo != '4']: "",
+            */
             !Yii::$app->user->isGuest ? ['label' => 'Turmas', 'url' => ['/turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
             !Yii::$app->user->isGuest ? [
             'label' => 'Paciente',

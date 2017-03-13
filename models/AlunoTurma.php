@@ -20,6 +20,8 @@ class AlunoTurma extends \yii\db\ActiveRecord
     public $codigo_da_turma;
     public $id_da_turma;
     public $nome_do_professor;
+    public $ano;
+    public $semestre;
 
 
 

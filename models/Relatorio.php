@@ -8,7 +8,7 @@ use Yii;
 class Relatorio extends \yii\db\ActiveRecord
 {
 
-    public function getHtmlParaRelatorio(){
+    public function getHtmlParaRelatorioPdf(){
 
         $id_usuario_logado = Yii::$app->user->identity->id;
         $usuario_logado = User::find()->where(['id' => $id_usuario_logado ])->one()->nome;
@@ -50,7 +50,7 @@ class Relatorio extends \yii\db\ActiveRecord
             </head>
             <body>
 
-            <h4> Aluno: '.$usuario_logado.' </h4><hr>';
+            <!-- <h4> Aluno: '.$usuario_logado.' </h4><hr> -->';
 
             for($i=0; $i < count($disciplina_cursando); $i++){
                 $html = $html . '
@@ -67,4 +67,83 @@ class Relatorio extends \yii\db\ActiveRecord
 
         return $html;
     }
+
+    public function getDadosParaRelatorio($id){
+        
+        $id_usuario_logado = $id;
+        $usuario_logado = User::find()->where(['id' => $id_usuario_logado ])->one()->nome;
+        $disciplina_cursando = AlunoTurma::find()
+                    ->select("D.nome as nome_da_disciplina, T.codigo as codigo_da_turma, T.id as id_da_turma, U.nome as nome_do_professor, T.semestre, T.ano")
+                    ->where(['Aluno_Turma.Usuarios_id' => $id_usuario_logado ])
+                    ->innerJoin("Turma as T", "T.id = Aluno_Turma.Turma_id")
+                    ->innerJoin("Disciplina as D", "D.id = T.Disciplina_id")
+                    ->innerJoin("Professor_Turma as PT","PT.Turma_id = T.id")
+                    ->innerJoin("Usuarios as U","U.id = PT.Usuarios_id")
+                    ->all();
+
+
+        for ($i=0; $i<count($disciplina_cursando); $i++){
+
+            $array_ids_das_turmas[$i] = $disciplina_cursando[$i]->id_da_turma;
+
+            $sessoes_turma[$array_ids_das_turmas[$i]] = Sessao::find()
+            ->select("count(Sessao.Paciente_id) as contagem_pacientes")
+            ->innerJoin("Agenda","Agenda.id = Sessao.Agenda_id")
+            ->innerJoin("Paciente","Paciente.id = Sessao.Paciente_id")
+            ->where(['Turma_id' => $disciplina_cursando[$i]->id_da_turma])
+            ->andwhere(["Sessao.status" => "OS"])
+            ->andWhere(["Sessao.Usuarios_id" => $id_usuario_logado])
+            ->groupBy("Sessao.Paciente_id")
+            ->count();
+        }
+
+
+
+//$disciplina_cursando[$i]->id_da_turma;
+
+//O aluno x atendeu 20 pacientes da disciplina Y cujo professor é o Z
+
+        $html ="<h2 style='text-align:center'> Informações estatísticas sobre Atendimentos </h2>";
+
+        $html = $html. "<table class='table'>";
+            $html = $html . "<tr>";   
+
+                $html = $html . "<th>";   
+                $html = $html . "Cod. Turma";
+                $html = $html . "</th>";   
+
+                $html = $html . "<th>";   
+                $html = $html . "Período";
+                $html = $html . "</th>";   
+
+                $html = $html . "<th>";   
+                $html = $html . "Disciplina";
+                $html = $html . "</th>";   
+
+                $html = $html . "<th>";   
+                $html = $html . "Professor";
+                $html = $html . "</th>";   
+
+                $html = $html . "<th>";   
+                $html = $html . "N. Atendimentos";
+                $html = $html . "</th>";  
+
+            $html = $html . "</tr>";   
+
+            for($i=0; $i < count($disciplina_cursando); $i++){
+                $html = $html . "<tr>";   
+                $html = $html . '
+                <td>'.$disciplina_cursando[$i]->codigo_da_turma.' </td>
+                <td>'.$disciplina_cursando[$i]->ano.'/'.$disciplina_cursando[$i]->semestre.' </td>
+                <td>'.$disciplina_cursando[$i]->nome_da_disciplina.'</td>
+                <td>'.$disciplina_cursando[$i]->nome_do_professor.' </td>
+                <td>'.$sessoes_turma[$disciplina_cursando[$i]->id_da_turma].' </td>
+                ';
+                $html = $html . "</tr>";    
+            }
+        $html = $html . "</table>";
+
+        return $html;
+    }
+
 }

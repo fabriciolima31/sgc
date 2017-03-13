@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\models\Relatorio;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
@@ -42,5 +43,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]) ?>
+
+    <?php
+    
+    $request = Yii::$app->request;
+    $id = $request->get('id');
+
+    $model = new Relatorio();
+    $html = $model->getDadosParaRelatorio($id);
+
+    echo $html;
+
+
+    ?>
 
 </div>
