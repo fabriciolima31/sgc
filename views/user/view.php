@@ -46,13 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
     
-    $request = Yii::$app->request;
-    $id = $request->get('id');
 
-    $model = new Relatorio();
-    $html = $model->getDadosParaRelatorio($id);
-
-    echo $html;
 
 
     ?>

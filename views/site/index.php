@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\models\Agenda;
 use app\models\Paciente;
+use app\models\Relatorio;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SessaoSearch */
@@ -73,7 +74,7 @@ $this->title = 'Principal';
     ]); ?>
 
     
-    <legend><h1>Pacientes Pendendes de Contato</h1></legend>
+    <legend><h1>Pacientes Pendentes de Contato</h1></legend>
     
     <?= GridView::widget([
         'dataProvider' => $dataPacienteContato,
@@ -144,4 +145,22 @@ $this->title = 'Principal';
             ],
         ],
     ]); ?>
+
+
+    <?php
+    
+        if(Yii::$app->user->identity->tipo == '3' || Yii::$app->user->identity->tipo == '2'){
+            
+            $request = Yii::$app->request;
+            $id = Yii::$app->user->identity->id;
+
+            $model = new Relatorio();
+            $html = $model->getDadosParaRelatorio($id);
+            echo $html;
+        }
+
+
+    ?>
+
+
 </div>
