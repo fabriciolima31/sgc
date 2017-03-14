@@ -141,16 +141,26 @@ class UsuarioPacienteController extends Controller
     
     public function actionEncaminharTerapeuta($id)
     {
-        $paciente = $this->findPaciente($id);
+        $model = new UsuarioPaciente();
+        $existente = UsuarioPaciente::find()->where(["Paciente_id" => $id])->andWhere(["status" => "1"])->one();
+       
+        $paciente = Paciente::find()->where(['id'=> $id])->One();
 
-        $model = UsuarioPaciente::find()->where(["Paciente_id" => $id ])->andWhere(["status" => "1"])->one();
-        $model->status = '0';
-        $model->save();
-        
-        $paciente->fecharSessoes();
-        $paciente->save();
-        
-        $this->redirect(['create', 'id' => $id]);
+        $model->Paciente_id = $id;
+        $model->status = '1';
+        $existente->status = '0';
+       
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $paciente->fecharSessoes();
+            $paciente->setStatus("Alocar");
+            $existente->save();
+            return $this->redirect(['paciente/index', 'status' => 'EC']);
+        } else {
+            return $this->render('create', [
+                'model' => $model,
+                'existe_usuario_paciente' => 0 ,
+            ]);
+        }
     }
 
     /**

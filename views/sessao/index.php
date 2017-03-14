@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             ['class' => 'yii\grid\ActionColumn',
-              'template'=>'{view} {ocorreu} {naoocorreu}',
+              'template'=>'{ocorreu} {naoocorreu}',
                 'buttons'=>[
                     'ocorreu' => function ($url, $model) {
                         return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-ok-sign"></span>', ['sessao/altera-status','status' => 'OS',
