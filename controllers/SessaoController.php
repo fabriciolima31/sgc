@@ -171,14 +171,14 @@ class SessaoController extends Controller
                 ->andWhere(['Agenda.status' => 1])
                 ->andWhere("Agenda.data_inicio >= CURDATE()")
                 ->orWhere("Agenda.data_inicio = CURDATE() AND horaInicio >= CURTIME()")
-                ->orderBy('Agenda.data_inicio ASC')
+                ->orderBy('Agenda.data_inicio, nome_da_disciplina ASC')
                 ->all();
 
 
         if($countPosts>0){
                 echo '<option value="default" disabled selected="selected"> Selecione uma opção </option>';
             foreach($posts as $post){
-                echo "<option value='".$post->id."'>Dia: ".$post->data_inicio." às ".$post->horaInicio." -> ".$post->nome_da_disciplina."</option>";
+                echo "<option value='".$post->id."'>Dia: ".$post->data_inicio." às ".$post->horaInicio." referente à disciplina: ".$post->nome_da_disciplina."</option>";
             }
         }
         else{

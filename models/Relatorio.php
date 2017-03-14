@@ -87,13 +87,13 @@ class Relatorio extends \yii\db\ActiveRecord
             $array_ids_das_turmas[$i] = $disciplina_cursando[$i]->id_da_turma;
 
             $sessoes_turma[$array_ids_das_turmas[$i]] = Sessao::find()
-            ->select("count(Sessao.Paciente_id) as contagem_pacientes")
+            ->select("count(Sessao.id) as contagem_pacientes")
             ->innerJoin("Agenda","Agenda.id = Sessao.Agenda_id")
             ->innerJoin("Paciente","Paciente.id = Sessao.Paciente_id")
             ->where(['Turma_id' => $disciplina_cursando[$i]->id_da_turma])
             ->andwhere(["Sessao.status" => "OS"])
             ->andWhere(["Sessao.Usuarios_id" => $id_usuario_logado])
-            ->groupBy("Sessao.Paciente_id")
+            ->groupBy("Sessao.id")
             ->count();
         }
 
