@@ -30,6 +30,8 @@ class Agenda extends \yii\db\ActiveRecord
     public $numerica;
     public $dadosConflituosos;
 
+    public $nome_da_disciplina;
+
 
     /**
      * @inheritdoc

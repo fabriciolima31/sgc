@@ -154,25 +154,31 @@ class SessaoController extends Controller
     {
 
         $countPosts = Agenda::find()
+                ->select("D.nome as nome_da_disciplina, T.*, Agenda.*")
                 ->where(['Consultorio_id' => $consultorio ])
-                ->andWhere(['status' => 1])
-                ->andWhere("data_inicio > CURDATE()")
-                ->orWhere("data_inicio = CURDATE() AND horaInicio >= CURTIME()")
+                ->innerJoin("Turma as T","T.id = Agenda.Turma_id")
+                ->innerJoin("Disciplina as D","D.id = T.Disciplina_id")
+                ->andWhere(['Agenda.status' => 1])
+                ->andWhere("Agenda.data_inicio > CURDATE()")
+                ->orWhere("Agenda.data_inicio = CURDATE() AND horaInicio >= CURTIME()")
                 ->count();
  
         $posts = Agenda::find()
+                ->select("D.nome as nome_da_disciplina, T.*, Agenda.*")
+                ->innerJoin("Turma as T","T.id = Agenda.Turma_id")
+                ->innerJoin("Disciplina as D","D.id = T.Disciplina_id")
                 ->where(['Consultorio_id' => $consultorio])
-                ->andWhere(['status' => 1])
-                ->andWhere("data_inicio >= CURDATE()")
-                ->orWhere("data_inicio = CURDATE() AND horaInicio >= CURTIME()")
-                ->orderBy('id ASC')
+                ->andWhere(['Agenda.status' => 1])
+                ->andWhere("Agenda.data_inicio >= CURDATE()")
+                ->orWhere("Agenda.data_inicio = CURDATE() AND horaInicio >= CURTIME()")
+                ->orderBy('Agenda.data_inicio ASC')
                 ->all();
 
 
         if($countPosts>0){
                 echo '<option value="default" disabled selected="selected"> Selecione uma opção </option>';
             foreach($posts as $post){
-                echo "<option value='".$post->id."'>Dia: ".$post->data_inicio." às ".$post->horaInicio."</option>";
+                echo "<option value='".$post->id."'>Dia: ".$post->data_inicio." às ".$post->horaInicio." -> ".$post->nome_da_disciplina."</option>";
             }
         }
         else{
