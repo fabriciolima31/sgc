@@ -48,7 +48,10 @@ AppAsset::register($this);
             'items' => [
                 ['label' => 'Lista de Espera', 'url' => ["/paciente/index", "status" => 'LE'], 
                     'visible' => Yii::$app->user->identity->tipo == '4'], 
-                '<li class="divider"></li>', 
+                '<li class="divider"></li>',
+                ['label' => 'Devolvidos', 'url' => ["/paciente/index", "status" => 'DV'], 
+                    'visible' => Yii::$app->user->identity->tipo == '4'], 
+                '<li class="divider"></li>',
                 ['label' => 'Entrar em Contato', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index": "/paciente/meus-pacientes", 
                     "status" => 'EC']], 
                 '<li class="divider"></li>',
