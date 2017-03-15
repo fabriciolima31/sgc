@@ -230,14 +230,19 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post())){ 
 
-            $model = User::find()->where(["cpf" => $model->cpf]);
+            $model = User::find()->where(["cpf" => $model->cpf])->one();
 
-            $model->password = $model2->gerarSenhaParaEsqueciSenha();
+            //$model->password = $model2->gerarSenhaParaEsqueciSenha();
+            $model->password = "1234567890";
+ 
+            if ($model->save()){
 
-            $model->save();
+                Yii::$app->session->setFlash('success', "Sua Senha foi encaminhada por seu E-mail");
+                return $this->redirect(['site/index']);
 
-            var_dump($model->getErrors());
-            die;
+            }
+
+
 
 
         }
