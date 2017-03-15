@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
-use app\models\User;
+use app\models\UsuarioPaciente;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\UsuarioPaciente */
@@ -17,7 +17,6 @@ if ($existe_usuario_paciente > 0){
     <?php
 }
 
-
 ?>
 
 <div class="usuario-paciente-form">
@@ -25,12 +24,7 @@ if ($existe_usuario_paciente > 0){
     <?php $form = ActiveForm::begin(); ?>
     
     <?php 
-        //$items = ArrayHelper::map(User::find()->where(['tipo' => '3', 'status' => 1])->orWhere(['tipo' => '2'])->all(), 'id', 'nome');
-        
-        $items = ArrayHelper::map(User::find()->select('Usuarios.id, Usuarios.nome')->leftJoin('Aluno_Turma', 'Usuarios_id = Usuarios.id')
-                ->leftJoin('Turma', 'Turma_id = Turma.id')->where('data_fim > CURDATE()')->orWhere(['Usuarios.tipo' => '2'])->orderBy('Usuarios.nome')->all(), 'id', 'nome');
-        
-        echo $form->field($model, 'Usuario_id')->dropDownList($items, ['prompt' => 'Selecione um Terapeuta'])
+        echo $form->field($model, 'Usuario_id')->dropDownList($terapeutas, ['prompt' => 'Selecione um Terapeuta'])
     ?>
 
     <div class="form-group">
@@ -40,3 +34,33 @@ if ($existe_usuario_paciente > 0){
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<h1> Histórico de Alocacões desse Paciente </h1>
+        
+        <table class="table" style="margin-top:2%">
+            <tr>
+                <th> Terapeuta </th>
+                <th>  Justificativa </th>
+            </tr>
+
+<?php
+    if(count($historicoTerapeutasAnterioresAoPaciente)){
+?>
+                <?php 
+                        for($i=0; $i<count($historicoTerapeutasAnterioresAoPaciente); $i++){
+                ?>
+            <tr>
+                    <td> <?= $historicoTerapeutasAnterioresAoPaciente[$i]['nome_do_terapeuta'] ?> </td>
+                    <td> <?= $historicoTerapeutasAnterioresAoPaciente[$i]['observacao'] ?> </td>
+            </tr>
+                <?php 
+                        }
+
+                ?>
+<?php
+    }
+    else{
+        echo "<tr style='color:red'> <td> Não há alocações anteriores </td> </tr>";
+    }
+?>
+        </table>

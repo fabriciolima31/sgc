@@ -84,12 +84,15 @@ class UsuarioPacienteController extends Controller
     {
         $model = new UsuarioPaciente();
         $existe_usuario_paciente = UsuarioPaciente::find()->where(["Paciente_id" => $id])->andWhere(["status" => "1"])->count();
-       
+
+        $historicoTerapeutasAnterioresAoPaciente = $model->listarHistoricoTerapeutasDoPaciente($id);
+
         $paciente = Paciente::find()->where(['id'=> $id])->One();
 
         $model->Paciente_id = $id;
         $model->status = '1';
 
+        $terapeutas = $model->gerarListaDeTerapeutas();
        
         if ($existe_usuario_paciente == 0 && $model->load(Yii::$app->request->post()) && $model->save()) {
             $paciente->setStatus("Alocar");
@@ -98,6 +101,8 @@ class UsuarioPacienteController extends Controller
             return $this->render('create', [
                 'model' => $model,
                 'existe_usuario_paciente' => $existe_usuario_paciente ,
+                'terapeutas' => $terapeutas,
+                'historicoTerapeutasAnterioresAoPaciente' => $historicoTerapeutasAnterioresAoPaciente,
             ]);
         }
     }

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "Usuario_Paciente".
@@ -66,5 +67,27 @@ class UsuarioPaciente extends \yii\db\ActiveRecord
     public function getUsuario()
     {
         return $this->hasOne(User::className(), ['id' => 'Usuario_id']);
+    }
+
+    public function gerarListaDeTerapeutas(){
+
+        $terapeutas = ArrayHelper::map(User::find()->select('Usuarios.id, Usuarios.nome')->leftJoin('Aluno_Turma', 'Usuarios_id = Usuarios.id')
+                ->leftJoin('Turma', 'Turma_id = Turma.id')->where('data_fim > CURDATE()')->orWhere(['Usuarios.tipo' => '2'])->orderBy('Usuarios.nome')->all(), 'id', 'nome');
+
+        return $terapeutas;
+
+
+    }
+
+    public function listarHistoricoTerapeutasDoPaciente($id){
+      $terapeutas_anteriores =  UsuarioPaciente::find()
+                                ->select("Usuario_Paciente.*, Usuarios.nome as nome_do_terapeuta")
+                                ->innerJoin("Usuarios","Usuario_Paciente.Usuario_id = Usuarios.id")
+                                ->where(["Paciente_id" => $id])
+                                ->andWhere(["Usuario_Paciente.status" => "0"])
+                                ->asArray()
+                                ->all();
+
+      return $terapeutas_anteriores;
     }
 }

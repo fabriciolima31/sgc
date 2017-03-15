@@ -17,6 +17,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_form', [
         'model' => $model,
         'existe_usuario_paciente' => $existe_usuario_paciente,
+        'terapeutas' => $terapeutas,
+        'historicoTerapeutasAnterioresAoPaciente' => $historicoTerapeutasAnterioresAoPaciente,
     ]) ?>
 
 </div>
