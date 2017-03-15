@@ -50,12 +50,12 @@ class UserController extends Controller
                     ],
                     [
                         //Verificar como ficar o update (cada usuaŕio ou estagiário)
-                        'actions' => ['update', 'view'],
+                        'actions' => ['update', 'view', 'updatesenha'],
                         'allow' => true,
                         'roles' => ['@' ],
                     ],
                     [
-                        'actions' => ['create'],
+                        'actions' => ['create','esquecisenha'],
                         'allow' => true,
                         'roles' => ['@' , '?'],
                     ],
@@ -209,6 +209,31 @@ class UserController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function actionEsquecisenha()
+    {
+
+        $model = new User();
+        $model2 = new User();
+
+        if ($model->load(Yii::$app->request->post())){ 
+
+            $model = User::find()->where(["cpf" => $model->cpf]);
+
+            $model->password = $model2->gerarSenhaParaEsqueciSenha();
+
+            $model->save();
+
+            var_dump($model->getErrors());
+            die;
+
+
+        }
+
+        return $this->render('esquecisenha', [
+            'model' => $model,
+        ]);
     }
 
     /**

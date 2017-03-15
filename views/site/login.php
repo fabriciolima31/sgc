@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div style="margin-bottom: 2%">
             <?= Html::submitButton('Efetuar Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
             <?= Html::a('Novo Cadastro', ['user/create'], ['class' => 'btn btn-info']) ?>
+            <?= Html::a('Esqueci Minha Senha', ['user/esquecisenha'], ['class' => 'btn btn-success']) ?>
         </div>
 
 

@@ -262,4 +262,15 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
     {
         return $this->hasMany(AlunoTurma::className(), ['Usuarios_id' => 'id']);
     }
+
+    public function gerarSenhaParaEsqueciSenha(){
+
+        //DETERMINA OS CARACTERES QUE CONTERÃO A SENHA
+        $caracteres = "0123456789abcdefghijklmnopqrstuvwxyz+-/()";
+        //EMBARALHA OS CARACTERES E PEGA APENAS OS 10 PRIMEIROS
+        $mistura = substr(str_shuffle($caracteres),0,10);
+        //EXIBE O RESULTADO
+        return $mistura;
+        
+    }
 }
