@@ -36,6 +36,7 @@ $config = [
 
 
     'components' => [
+
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '-1H31Mydg8eC6UOL4VyVrT1qsSKqE-Za',
@@ -52,10 +53,22 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@app/mail',
+            //'class' => 'nickcv\mandrill\Mailer',
+            //'apikey' => 'JyGzSha5VEKJCw9u5Gy5Rg',
+            //'useMandrillTemplates' => false,
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                 'class' => 'Swift_SmtpTransport',
+                 'host' => 'smtp.gmail.com',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+                 'username' => 'ufamsistemaconsulta@gmail.com',
+                 'password' => 'icomp123',
+                 'port' => '25', // Port 25 is a very common port too
+                 'encryption' => 'ssl', // It is often used, check your provider or mail server specs
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

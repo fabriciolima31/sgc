@@ -17,7 +17,7 @@
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.5",
         "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "yiisoft/yii2-swiftmailer": "^2.0",
         "yiibr/yii2-br-validator": "*",
         "et-soft/yii2-widget-select-year": "*",
         "trntv/yii2-datetime-widget": "^1.0",

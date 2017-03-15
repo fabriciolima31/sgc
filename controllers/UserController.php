@@ -237,6 +237,17 @@ class UserController extends Controller
  
             if ($model->save()){
 
+                $x = Yii::$app->mailer->compose()
+                ->setFrom('ufamsistemaconsulta@gmail.com')
+                ->setTo('thiagoleitexd@gmail.com.com')
+                ->setSubject('Message subject')
+                ->setTextBody('Plain text content')
+                ->setHtmlBody('<b>HTML content</b>')
+                ->send();
+
+                var_dump($x);
+                die;
+
                 Yii::$app->session->setFlash('success', "Sua Senha foi encaminhada por seu E-mail");
                 return $this->redirect(['site/index']);
 
