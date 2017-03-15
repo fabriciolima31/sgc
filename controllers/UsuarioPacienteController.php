@@ -126,7 +126,7 @@ class UsuarioPacienteController extends Controller
     public function actionEncaminhar($id)
     {
         $paciente = $this->findPaciente($id);
-        $paciente->status = "LE";
+        $paciente->status = "DV";
 
         $model = UsuarioPaciente::find()->where(["Paciente_id" => $id ])->andWhere(["status" => "1"])->one();
         $model->status = '0';

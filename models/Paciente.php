@@ -30,7 +30,8 @@ class Paciente extends \yii\db\ActiveRecord
 {
     //Ambos os Arrays foram copiados para indexadministrador
     public $statusDescs = ["EN"=> "Encaminhado", "LE" => "Lista de Espera", 'EC' => "Entrar em Contato", 
-        "EA" => "Em Atendimento", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"];
+        "EA" => "Em Atendimento", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta", 
+        "DV" => "Devolvido"];
     
     public $prioridadeArray = ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'];
 
