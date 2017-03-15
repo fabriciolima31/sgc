@@ -128,6 +128,7 @@ class PacienteController extends Controller
         $model = new Paciente();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Paciente cadastado com sucesso.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -147,9 +148,9 @@ class PacienteController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Paciente '".$model->nome."' foi alterado com sucesso.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            //return print_r($model->getErrors());
             return $this->render('update', [
                 'model' => $model,
             ]);
@@ -165,13 +166,19 @@ class PacienteController extends Controller
         $model->fecharSessoes();
         
         if($model->save()){
+            Yii::$app->session->setFlash('success', "Status do paciente '".$model->nome."' alterado com sucesso.");
             if (Yii::$app->user->identity->tipo == '4') {
-                return $this->redirect(['paciente/index', 'status' => 'AL']);
+                return $this->redirect(['paciente/index', 'status' => $status]);
             } else {
                 return $this->redirect(['paciente/meus-pacientes', 'status' => $status]);
             }
         }else{
-            return "Ocorreu um Erro ao Alterar Status do paciente";
+            Yii::$app->session->setFlash('danger', "Ocorreu um erro ao alterar status do paciente.");
+        }
+        if (Yii::$app->user->identity->tipo == '4') {
+            return $this->redirect(['paciente/index', 'status' => 'LE']);
+        } else {
+            return $this->redirect(['paciente/meus-pacientes', 'status' => $status]);
         }
         
     }

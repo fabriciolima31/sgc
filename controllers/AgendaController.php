@@ -94,8 +94,6 @@ class AgendaController extends Controller
 
             if($quantidade_dados_conflituosos > 0){
 
-                echo "dados conflituosos";
-
                 return $this->render('create', [
                     'model' => $model,
                     'dadosConflituosos' => $dadosConflituosos,
@@ -153,6 +151,7 @@ class AgendaController extends Controller
                     }
 
                 }
+                Yii::$app->session->setFlash('success', "Agendamento realizado com sucesso.");
                 return $this->redirect(['index']);
             }
 
@@ -168,8 +167,6 @@ class AgendaController extends Controller
 
 
             echo $model->diaSemanaArray;
-            echo "oi";
-
 
             return $this->render('create', [
                 'model' => $model,
@@ -185,18 +182,18 @@ class AgendaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
-    }
+//    public function actionUpdate($id)
+//    {
+//        $model = $this->findModel($id);
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->id]);
+//        } else {
+//            return $this->render('update', [
+//                'model' => $model,
+//            ]);
+//        }
+//    }
 
     /**
      * Deletes an existing Agenda model.

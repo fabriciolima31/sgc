@@ -98,6 +98,7 @@ class AlunoTurmaController extends Controller
             if($model->checaAlocacao($model->Turma_id, $model->Usuarios_id) == null && $model->verificaSeAlunoJaEstaVinculadoTurma() == 0){
 
                 if($model->save()){
+                    Yii::$app->session->setFlash('success', "Aluno alocado para a turma com sucesso.");
                     return $this->redirect(['index-alunos', 'id' => $model->Turma_id]);
                 }
             }
@@ -169,7 +170,9 @@ class AlunoTurmaController extends Controller
     public function actionDelete($Turma_id, $Usuarios_id)
     {
         $this->findModel($Turma_id, $Usuarios_id)->delete();
-
+        
+        Yii::$app->session->setFlash('success', "Aluno removido da turma com sucesso.");
+        
         return $this->redirect(['index-alunos', 'id' => $Turma_id]);
     }
 

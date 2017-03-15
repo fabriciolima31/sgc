@@ -67,6 +67,7 @@ class DisciplinaController extends Controller
         $model = new Disciplina();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Disciplina cadastrada com sucesso.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -86,6 +87,7 @@ class DisciplinaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "A disciplina '".$model->nome."' foi alterada com sucesso.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -105,6 +107,7 @@ class DisciplinaController extends Controller
         if($status == '1' || $status == '0'){
             $model->status = $status;
             $model->save();
+            Yii::$app->session->setFlash('success', "'".$model->nome."' foi '".$model->statusDesc."'.");
         }
 
         return $this->redirect(['index']);

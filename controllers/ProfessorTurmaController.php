@@ -77,6 +77,7 @@ class ProfessorTurmaController extends Controller
         $model = new ProfessorTurma();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "'".$model->usuarios->nome."' foi alocado para a turma '".$model->turma->codigo."'.");
             return $this->redirect(['view', 'Turma_id' => $model->Turma_id, 'Usuarios_id' => $model->Usuarios_id]);
         } else {
             return $this->render('create', [

@@ -102,9 +102,11 @@ class SessaoController extends Controller
                 $agenda->status = '0';
                 $agenda->save(false);
                
+                Yii::$app->session->setFlash('success', "Sessão adicionada com sucesso.");
                 return $this->redirect(['sessao/all', 'id' => $model->Paciente_id]);
             }
             else{
+                Yii::$app->session->setFlash('danger', "Ocorreu um erro ao adicionar a sessão.");
                 return $this->render('create', [
                     'model' => $model,
                 ]);
@@ -128,6 +130,7 @@ class SessaoController extends Controller
                 $modelPacienteFalta->FaltaNaoJustificadaSeguida = 0;
                 $model->observacao = "Sessão Realizada";
                 $model->save();
+                Yii::$app->session->setFlash('success', "Registro de sessão como 'Ocorrida' efetuado com sucesso.");
                 return $this->redirect(['sessao/all', 'id' => $idPaciente]);
         }
 
@@ -141,7 +144,7 @@ class SessaoController extends Controller
                 $modelPacienteFalta->FaltaJustificada++;
                 $modelPacienteFalta->save();
             }
-            
+           Yii::$app->session->setFlash('success', "Registro de sessão efetuado com sucesso.");
            return $this->redirect(['sessao/all', 'id' => $idPaciente]);
         }
 
@@ -152,7 +155,6 @@ class SessaoController extends Controller
     
     public function actionDatas($consultorio)
     {
-
         $countPosts = Agenda::find()
                 ->select("D.nome as nome_da_disciplina, T.*, Agenda.*")
                 ->where(['Consultorio_id' => $consultorio ])

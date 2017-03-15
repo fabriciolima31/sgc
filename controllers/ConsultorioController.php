@@ -64,6 +64,7 @@ class ConsultorioController extends Controller
         $model = new Consultorio();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Consultório cadastrado com sucesso.");
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -83,6 +84,7 @@ class ConsultorioController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "O consultório '".$model->nome."' foi atualizado.");
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -103,8 +105,9 @@ class ConsultorioController extends Controller
         if($status == '1' || $status == '0'){
             $model->status = $status;
             $model->save();
+            Yii::$app->session->setFlash('success', "'".$model->nome."' foi '".$model->statusDesc."'.");
         }
-
+        
         return $this->redirect(['index']);
     }
 

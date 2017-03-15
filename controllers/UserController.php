@@ -143,10 +143,11 @@ class UserController extends Controller
                             }
                         
                     }
-
+                    Yii::$app->session->setFlash('success', "'".$model->perfil."' cadastrado com sucesso.");
                     return $this->redirect(['view', 'id' => $model->id]);
 
                 }else{
+                    Yii::$app->session->setFlash('danger', "Erro ao cadastrar usuário.");
                     return $this->render('create', [
                         'model' => $model,
                     ]);
@@ -176,10 +177,14 @@ class UserController extends Controller
             $atributos = array_diff($atributos, ["password","cpf"]);
 
             if($model->save(true,$atributos)) {
+                Yii::$app->session->setFlash('success', "'".$model->nome."' alterado com sucesso.");
                 return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->session->setFlash('danger', "Erro ao alterar usuário.");
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
             }
-
-
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -200,7 +205,13 @@ class UserController extends Controller
             $atributos = array("password");
             
             if($model->save(true,$atributos)) {
+                Yii::$app->session->setFlash('success', "Senha alterada com sucesso.");
                 return $this->redirect(['view', 'id' => $model->id]);
+            }else{
+                Yii::$app->session->setFlash('danger', "Erro ao alterar senha.");
+                return $this->render('updatesenha', [
+                    'model' => $model,
+                ]);
             }
 
 
@@ -244,14 +255,14 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        //$this->findModel($id)->delete();
-        
         $model = $this->findModel($id);
         $model->status = '0';
         
         if (!$model->save(false)) {
-            return "Erro ao remover";
+            Yii::$app->session->setFlash('danger', "Erro ao remover Usuário.");
         }
+        
+        Yii::$app->session->setFlash('success', "Usuario removido com sucesso.");
 
         return $this->redirect(['index']);
     }

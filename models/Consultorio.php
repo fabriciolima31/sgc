@@ -71,4 +71,8 @@ class Consultorio extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Sessao::className(), ['Consultorio_id' => 'id']);
     }
+    
+    public function getStatusDesc(){
+        return $this->status == 1 ? "Habilitado" : "Desabilitado";
+    }
 }

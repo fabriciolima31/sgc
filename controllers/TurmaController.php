@@ -69,9 +69,6 @@ class TurmaController extends Controller
     {
         $model = $this->findModel($id);
 
-        //$model->data_inicio = $this->converterDatas_para_DD_MM_AAAA($model->data_inicio); 
-        //$model->data_fim = $this->converterDatas_para_DD_MM_AAAA($model->data_fim);
-
         return $this->render('view', [
             'model' => $model,
         ]);
@@ -88,20 +85,19 @@ class TurmaController extends Controller
         $model_ProfessorTurma = new ProfessorTurma();
 
         if ($model->load(Yii::$app->request->post())) {
-
-            //as duas linhas abaixo convertem as data de  DD-MM-AAAA para AAAA-MM-DD
-            //$model->data_inicio = $this->converterDatas_para_AAAA_MM_DD($model->data_inicio); 
-            //$model->data_fim = $this->converterDatas_para_AAAA_MM_DD($model->data_fim);
             
             if ($model->save()){
 
                 $model_ProfessorTurma->Turma_id = $model->id;
                 $model_ProfessorTurma->Usuarios_id = $model->Professor_id;
                 $model_ProfessorTurma->save();
-
-               return $this->redirect(['view', 'id' => $model->id]);
+                
+                Yii::$app->session->setFlash('success', "Turma criada com sucesso.");
+                
+                return $this->redirect(['view', 'id' => $model->id]);
             }
             else{
+                Yii::$app->session->setFlash('danger', "Ocorreu um erro ao criar turma. Verifique os campos abaixo.");
                 return $this->render('create', [
                     'model' => $model,
                 ]);                
@@ -127,6 +123,7 @@ class TurmaController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             if($model->save()){
+                Yii::$app->session->setFlash('success', "Turma '".$model->codigo."' alterada com sucesso.");
                return $this->redirect(['view', 'id' => $model->id]);
             }
 
@@ -146,6 +143,8 @@ class TurmaController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        
+        Yii::$app->session->setFlash('success', "Turma desabilitada com sucesso.");
 
         return $this->redirect(['index']);
     }
@@ -162,7 +161,7 @@ class TurmaController extends Controller
         if (($model = Turma::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('A página solicitada não existe.');
         }
     }
     

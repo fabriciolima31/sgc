@@ -51,4 +51,8 @@ class Disciplina extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Turma::className(), ['Disciplina_id' => 'id']);
     }
+    
+    public function getStatusDesc(){
+        return $this->status == 1 ? "Habilitado" : "Desabilitado";
+    }
 }

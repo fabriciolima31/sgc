@@ -96,7 +96,8 @@ class UsuarioPacienteController extends Controller
        
         if ($existe_usuario_paciente == 0 && $model->load(Yii::$app->request->post()) && $model->save()) {
             $paciente->setStatus("Alocar");
-            return $this->redirect(['paciente/index', 'status' => 'EC']);
+            Yii::$app->session->setFlash('success', "Paciente alocado com sucesso.");
+            return $this->redirect(["paciente/index", 'status' => 'EC']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -108,33 +109,27 @@ class UsuarioPacienteController extends Controller
     }
 
 
-    /**
-     * Deletes an existing UsuarioPaciente model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $Paciente_id
-     * @param integer $Usuario_id
-     * @param string $status
-     * @return mixed
-     */
-    public function actionDelete($Paciente_id, $Usuario_id, $status)
-    {
-        $this->findModel($Paciente_id, $Usuario_id, $status)->delete();
 
-        return $this->redirect(['index']);
-    }
+//    public function actionDelete($Paciente_id, $Usuario_id, $status)
+//    {
+//        $this->findModel($Paciente_id, $Usuario_id, $status)->delete();
+//
+//        return $this->redirect(['index']);
+//    }
 
     public function actionEncaminhar($id)
     {
         $paciente = $this->findPaciente($id);
         $paciente->status = "DV";
-
+        
         $model = UsuarioPaciente::find()->where(["Paciente_id" => $id ])->andWhere(["status" => "1"])->one();
         $model->status = '0';
         $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a justificativa(observação)
-        
+       
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $paciente->fecharSessoes();
             $paciente->save();
+            Yii::$app->session->setFlash('success', "Paciente encaminhado para Lista de Espera com sucesso.");
             return $this->redirect(['paciente/meus-pacientes', 'status' => 'EC']);
         }
         else{
@@ -151,19 +146,26 @@ class UsuarioPacienteController extends Controller
        
         $paciente = Paciente::find()->where(['id'=> $id])->One();
 
+        $historicoTerapeutasAnterioresAoPaciente = $model->listarHistoricoTerapeutasDoPaciente($id);
+        
         $model->Paciente_id = $id;
         $model->status = '1';
         $existente->status = '0';
        
+        $terapeutas = $model->gerarListaDeTerapeutas();
+        
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $paciente->fecharSessoes();
             $paciente->setStatus("Alocar");
             $existente->save();
-            return $this->redirect(['paciente/index', 'status' => 'EC']);
+            Yii::$app->session->setFlash('success', "Paciente encaminhado para o terapeuta '".$model->usuario->nome."'.");
+            return $this->redirect(["paciente/index", 'status' => 'EC']);
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'existe_usuario_paciente' => 0 ,
+                'terapeutas' => $terapeutas,
+                'historicoTerapeutasAnterioresAoPaciente' => $historicoTerapeutasAnterioresAoPaciente,
             ]);
         }
     }
