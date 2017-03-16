@@ -14,11 +14,11 @@ use app\models\User;
 ?>
 
 <div class="turma-form">
-
+    
     <?php $form = ActiveForm::begin(); ?>
 
     <?php 
-        $items = ArrayHelper::map(Disciplina::find()->all(), 'id', 'nome');
+        $items = ArrayHelper::map(Disciplina::find()->where(['status' => '1'])->all(), 'id', 'nome');
         echo $form->field($model, 'Disciplina_id')->dropDownList($items,['prompt' => "Selecione uma Disciplina"])
     ?>
 

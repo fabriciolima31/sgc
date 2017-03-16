@@ -249,7 +249,7 @@ class AgendaController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Agenda::find()->where(['id' => $id, 'Usuarios_id' => Yii::$app->user->id, 'status' => '1'])->one()) !== null) {
+        if (($model = Agenda::find()->where(['id' => $id, 'status' => '1'])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
