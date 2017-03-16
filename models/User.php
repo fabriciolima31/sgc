@@ -273,4 +273,15 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
         return $mistura;
         
     }
+
+    public function getConteudoEmailEsqueciSenha($nome_do_usuario_que_quer_trocar_a_senha, $senha){
+        $html = "<h3> Olá, ".$nome_do_usuario_que_quer_trocar_a_senha.".</h3>";
+        $html .= "Você Solicitou o Serviço <b>Esqueci minha Senha<b>!<br><br>";
+        $html .= "Portanto, geramos uma senha nova para você: <b>".$senha."</b>";
+        $html .= "<br><br>";
+        $html .= "-Sistema de Gerenciamento de Consultas - Universidade Federal do Amazonas.<br><br>";
+        $html .= "Obs.: Este e-mail foi gerado automaticamente, não o responda!";
+        return $html;
+
+    }
 }

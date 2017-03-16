@@ -66,7 +66,7 @@ $config = [
                  'host' => 'smtp.gmail.com',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
                  'username' => 'ufamsistemaconsulta@gmail.com',
                  'password' => 'icomp123',
-                 'port' => '25', // Port 25 is a very common port too
+                 'port' => '465', // Port 25 is a very common port too
                  'encryption' => 'ssl', // It is often used, check your provider or mail server specs
             ],
         ],

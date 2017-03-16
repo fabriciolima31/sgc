@@ -4,7 +4,6 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "48f5f335ccbae3b25b419956eb50f918",
     "content-hash": "85c3e6997a9f5458d4d12991ed4c9e7a",
     "packages": [
         {
@@ -553,7 +552,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2017-03-13 06:30:53"
+            "time": "2017-03-13T06:30:53+00:00"
         },
         {
             "name": "kartik-v/php-date-formatter",
@@ -1020,7 +1019,7 @@
                 "fpdi",
                 "pdf"
             ],
-            "time": "2015-11-30 10:53:14"
+            "time": "2015-11-30T10:53:14+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1124,7 +1123,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-02-12 07:10:46"
+            "time": "2016-02-12T07:10:46+00:00"
         },
         {
             "name": "yiibr/yii2-br-validator",
@@ -1691,7 +1690,7 @@
                 }
             ],
             "description": "BDD code blocks for PHPUnit and Codeception",
-            "time": "2016-10-21 09:42:00"
+            "time": "2016-10-21T09:42:00+00:00"
         },
         {
             "name": "codeception/verify",
@@ -1727,7 +1726,7 @@
                 }
             ],
             "description": "BDD assertion library for PHPUnit",
-            "time": "2017-01-09 10:58:51"
+            "time": "2017-01-09T10:58:51+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1831,7 +1830,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2017-03-15 16:09:27"
+            "time": "2017-03-15T16:09:27+00:00"
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1938,7 +1937,7 @@
                 "object",
                 "object graph"
             ],
-            "time": "2017-01-26 22:05:40"
+            "time": "2017-01-26T22:05:40+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -2037,7 +2036,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-09-30 07:12:33"
+            "time": "2016-09-30T07:12:33+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -2084,7 +2083,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-11-25 06:54:22"
+            "time": "2016-11-25T06:54:22+00:00"
         },
         {
             "name": "phpspec/php-diff",
@@ -2336,7 +2335,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2015-06-21 13:50:34"
+            "time": "2015-06-21T13:50:34+00:00"
         },
         {
             "name": "phpunit/php-timer",
@@ -2516,7 +2515,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-03-15 13:02:34"
+            "time": "2017-03-15T13:02:34+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -3242,7 +3241,7 @@
             ],
             "description": "Symfony BrowserKit Component",
             "homepage": "https://symfony.com",
-            "time": "2017-03-14 20:25:39"
+            "time": "2017-03-14T20:25:39+00:00"
         },
         {
             "name": "symfony/console",
@@ -3798,7 +3797,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2017-03-13 13:21:16"
+            "time": "2017-03-13T13:21:16+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -3898,7 +3897,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2017-03-14 10:11:13"
+            "time": "2017-03-14T10:11:13+00:00"
         }
     ],
     "aliases": [],

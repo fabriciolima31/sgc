@@ -226,27 +226,26 @@ class UserController extends Controller
     {
 
         $model = new User();
-        $model2 = new User();
 
         if ($model->load(Yii::$app->request->post())){ 
 
             $model = User::find()->where(["cpf" => $model->cpf])->one();
 
-            //$model->password = $model2->gerarSenhaParaEsqueciSenha();
-            $model->password = "1234567890";
- 
+            $model->password = $model->gerarSenhaParaEsqueciSenha();
+
+            $password_sem_criptografia = $model->password;
+
             if ($model->save()){
+
+                $conteudoDoEmail = $model->getConteudoEmailEsqueciSenha($model->nome,$password_sem_criptografia);
 
                 $x = Yii::$app->mailer->compose()
                 ->setFrom('ufamsistemaconsulta@gmail.com')
-                ->setTo('thiagoleitexd@gmail.com.com')
+                ->setTo($model->email)
                 ->setSubject('Message subject')
                 ->setTextBody('Plain text content')
-                ->setHtmlBody('<b>HTML content</b>')
+                ->setHtmlBody($conteudoDoEmail)
                 ->send();
-
-                var_dump($x);
-                die;
 
                 Yii::$app->session->setFlash('success', "Sua Senha foi encaminhada por seu E-mail");
                 return $this->redirect(['site/index']);
