@@ -11,9 +11,9 @@ use app\models\Turma;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+<div style="color:blue"> Digite o seu CPF para recuperar sua senha e clique em solicitar nova senha. </div>
+<br>
 <div class="user-form">
-
-
 
     <?php $form = ActiveForm::begin(); ?>
 

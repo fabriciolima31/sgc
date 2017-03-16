@@ -229,32 +229,41 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post())){ 
 
-            $model = User::find()->where(["cpf" => $model->cpf])->one();
+            $model2 = User::find()->where(["cpf" => $model->cpf])->one();
 
-            $model->password = $model->gerarSenhaParaEsqueciSenha();
+                if($model2 != null){
 
-            $password_sem_criptografia = $model->password;
+                    $model2->password = $model2->gerarSenhaParaEsqueciSenha();
 
-            if ($model->save()){
+                    $password_sem_criptografia = $model2->password;
 
-                $conteudoDoEmail = $model->getConteudoEmailEsqueciSenha($model->nome,$password_sem_criptografia);
+                    if ($model2->save()){
 
-                $x = Yii::$app->mailer->compose()
-                ->setFrom('ufamsistemaconsulta@gmail.com')
-                ->setTo($model->email)
-                ->setSubject('Message subject')
-                ->setTextBody('Plain text content')
-                ->setHtmlBody($conteudoDoEmail)
-                ->send();
+                        $conteudoDoEmail = $model2->getConteudoEmailEsqueciSenha($model2->nome,$password_sem_criptografia);
 
-                Yii::$app->session->setFlash('success', "Sua Senha foi encaminhada por seu E-mail");
-                return $this->redirect(['site/index']);
+                        $x = Yii::$app->mailer->compose()
+                        ->setFrom('ufamsistemaconsulta@gmail.com')
+                        ->setTo($model2->email)
+                        ->setSubject('Message subject')
+                        ->setTextBody('Plain text content')
+                        ->setHtmlBody($conteudoDoEmail)
+                        ->send();
 
-            }
+                        Yii::$app->session->setFlash('success', "Uma nova senha foi encaminhada para seu E-mail");
+                        return $this->redirect(['site/index']);
 
+                    }
 
+                    Yii::$app->session->setFlash('danger', "Não foi possível recuperar a senha. Tente mais tarde");
 
+                    return $this->render('esquecisenha', [
+                        'model' => $model2,
+                    ]);
 
+                }
+
+            $model->addError('cpf', "CPF não cadastrado");
+            
         }
 
         return $this->render('esquecisenha', [
