@@ -1,6 +1,19 @@
 <?php
 use yii\helpers\Html;
 
+
+if(!Yii::$app->user->isGuest){
+
+    $array_de_cargos = array(1 => "Professor", 2 => "Psicólogo", 3 => "Aluno Terapeuta", 4 => "Administrativo");
+    $usuario_logado = Yii::$app->user->identity;
+    $nome_do_usuario = $usuario_logado->nome;
+    $cargo = $usuario_logado->tipo;
+}
+else{
+    echo "Você não está logado!";
+    die;
+}
+
 /* @var $this \yii\web\View */
 /* @var $content string */
 ?>
@@ -230,20 +243,17 @@ use yii\helpers\Html;
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs"> <?= $nome_do_usuario ?>  </span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
-                        <li class="user-header">
-                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
-                                 alt="User Image"/>
-
+                        <li class="user-header" style="height: 80px">
                             <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                    <?= $nome_do_usuario?> <br>
+                                <small> <?= $array_de_cargos[$cargo] ?> </small>
                             </p>
                         </li>
-                        <!-- Menu Body -->
+                        <!-- Menu Body 
                         <li class="user-body">
                             <div class="col-xs-4 text-center">
                                 <a href="#">Followers</a>
@@ -255,10 +265,11 @@ use yii\helpers\Html;
                                 <a href="#">Friends</a>
                             </div>
                         </li>
+                        -->
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="#" class="btn btn-default btn-flat">Ver Perfil</a>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(

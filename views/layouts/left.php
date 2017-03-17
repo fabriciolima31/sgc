@@ -1,3 +1,21 @@
+<?php
+
+if(!Yii::$app->user->isGuest){
+
+    $array_de_cargos = array(1 => "Professor", 2 => "Psicólogo", 3 => "Aluno Terapeuta", 4 => "Administrativo");
+    $usuario_logado = Yii::$app->user->identity;
+    $nome_do_usuario = $usuario_logado->nome;
+    $cargo = $usuario_logado->tipo;
+}
+else{
+    echo "Você não está logado!";
+    die;
+}
+
+
+?>
+
+
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -8,23 +26,10 @@
                 <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <p><?= $nome_do_usuario ?></p>
+                <p><?= $array_de_cargos[$cargo] ?></p>
             </div>
         </div>
-
-        <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-              <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>
-        <!-- /.search form -->
 
         <?= dmstr\widgets\Menu::widget(
             [
