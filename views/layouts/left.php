@@ -35,36 +35,45 @@ else{
             [
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii']],
-                    ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug']],
-                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-                    [
-                        'label' => 'Same tools',
-                        'icon' => 'fa fa-share',
-                        'url' => '#',
+                    !Yii::$app->user->isGuest ? ['label' => 'Início', 'url' => ['/site/index']]: "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Disciplinas', 'url' => ['/disciplina/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Consultórios', 'url' => ['/consultorio/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Agendamento', 'url' => ['/agenda/index'], 'visible' => Yii::$app->user->identity->tipo != '4']: "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Turmas', 'url' => ['/turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Agendamento', 'url' => ['/agenda/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
+                    
+                    !Yii::$app->user->isGuest ? [
+                        'label' => 'Listas de Pacientes',
                         'items' => [
-                            ['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'fa fa-circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'fa fa-circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'fa fa-circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
+                            ['label' => 'Lista de Espera', 'url' => ["/paciente/index", "status" => 'LE'], 
+                                'visible' => Yii::$app->user->identity->tipo == '4'], 
+                            ['label' => 'Devolvidos', 'url' => ["/paciente/index", "status" => 'DV'], 
+                                'visible' => Yii::$app->user->identity->tipo == '4'], 
+                            ['label' => 'Entrar em Contato', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index": "/paciente/meus-pacientes", 
+                                "status" => 'EC']], 
+                            ['label' => 'Em Atendimento', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
+                                "status" => 'EA']],
+                            ['label' => 'Desistente', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
+                                "status" => 'DE']],
+                            ['label' => 'Abandono', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
+                                "status" => 'AB']],                            
+                            ['label' => 'Alta', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
+                                "status" => 'AL']], 
                             ],
-                        ],
-                    ],
+                        ]: "",
+                    
+                    !Yii::$app->user->isGuest ? [
+                        'label' => 'Usuários',
+                        'items' => [
+                            ['label' => 'Professores', 'url' => ["/user/index", "perfil" =>1]], 
+                            ['label' => 'Psicólogos', 'url' => ["/user/index", "perfil" =>2]], 
+                            ['label' => 'Terapeutas', 'url' => ["/user/index", "perfil" =>3]], 
+                            ['label' => 'Administradores', 'url' => ["/user/index", "perfil" =>4]], 
+                        ], 
+                        'visible' => Yii::$app->user->identity->tipo == '4',
+                        ] : "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Alocações de Pacientes', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Alocações de Alunos', 'url' => ['/aluno-turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",                
                 ],
             ]
         ) ?>
