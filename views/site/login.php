@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\widgets\MaskedInput;
+use kartik\alert\AlertBlock;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -20,6 +21,13 @@ $fieldOptions2 = [
 ];
 ?>
 
+<?php echo AlertBlock::widget([
+    'type' => AlertBlock::TYPE_ALERT,
+    'useSessionFlash' => true,
+    'delay' => 5000
+        ]);
+?>
+
 <div style="width: 100%;text-align: center; margin-top: 5%; font-size: 250%"> 
     <a href="#"> <b>Sistema de Gerenciamento de Consultas</b> </a>
     <br> 
@@ -27,13 +35,12 @@ $fieldOptions2 = [
 </div>
 
 <div class="login-box">
-    <div class="login-logo">
-        
+    <div class="login-logo">        
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Efetue o login com seu CPF e senha:</p>
-
+        
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
         <?= $form
