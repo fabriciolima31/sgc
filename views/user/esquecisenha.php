@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = 'Editar Senha';
 ?>
 <div class="user-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form_esqueci_senha', [
         'model' => $model,
     ]) ?>
