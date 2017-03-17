@@ -1,6 +1,6 @@
 <?php
 use yii\widgets\Breadcrumbs;
-use dmstr\widgets\Alert;
+use kartik\alert\AlertBlock;
 
 ?>
 <div class="content-wrapper">
@@ -28,7 +28,12 @@ use dmstr\widgets\Alert;
     </section>
 
     <section class="content">
-        <?= Alert::widget() ?>
+        <?php echo AlertBlock::widget([
+            'type' => AlertBlock::TYPE_ALERT,
+            'useSessionFlash' => true,
+            'delay' => 5000
+        ]);
+        ?>
         <?= $content ?>
     </section>
 </div>
