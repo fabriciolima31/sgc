@@ -246,7 +246,7 @@ else{
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                        
                         <span class="hidden-xs"> <?= $nome_do_usuario ?>  </span>
                     </a>
                     <ul class="dropdown-menu">
@@ -273,11 +273,14 @@ else{
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Ver Perfil</a>
+                                <?= Html::a(
+                                    'Perfil',
+                                    ['/user/view', 'id' => $usuario_logado->id],['class' => 'btn btn-default btn-flat']
+                                ) ?>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
-                                    'Sign out',
+                                    'Sair',
                                     ['/site/logout'],
                                     ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>
@@ -285,12 +288,6 @@ else{
                         </li>
                     </ul>
                 </li>
-
-                <!-- User Account: style can be found in dropdown.less -->
-                <li>
-                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li>
-            </ul>
         </div>
     </nav>
 </header>

@@ -10,9 +10,7 @@ use dmstr\widgets\Alert;
         <?php } else { ?>
             <h1>
                 <?php
-                if ($this->title !== null) {
-                    echo \yii\helpers\Html::encode($this->title);
-                } else {
+                if ($this->title === null) {
                     echo \yii\helpers\Inflector::camel2words(
                         \yii\helpers\Inflector::id2camel($this->context->module->id)
                     );

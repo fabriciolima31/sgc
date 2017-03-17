@@ -21,13 +21,10 @@ else{
     <section class="sidebar">
 
         <!-- Sidebar user panel -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
-            </div>
-            <div class="pull-left info">
+        <div class="user-panel"  style="height:60px">
+            <div class="info" style="left: 0px">
                 <p><?= $nome_do_usuario ?></p>
-                <p><?= $array_de_cargos[$cargo] ?></p>
+                <p>Perfil: <?= $array_de_cargos[$cargo] ?></p>
             </div>
         </div>
 
