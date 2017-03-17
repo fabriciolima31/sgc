@@ -78,8 +78,8 @@ class UserController extends Controller
         }
 
         $searchModel = new UserSearch();
-        $dataProvider = $searchModel->search($params);
-        
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $params);
+
         $perfil = User::getPerfil($params['perfil']);
         
         return $this->render('index', [

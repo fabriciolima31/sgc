@@ -39,15 +39,16 @@ class UserSearch extends User
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$params2)
     {
-        if ($params['perfil'] == 1) {
+
+        if ($params2['perfil'] == 1) {
             $query = User::find()->where(['status' => 1, 'tipo' => 1]);
-        } else if ($params['perfil'] == 2) {
+        } else if ($params2['perfil'] == 2) {
             $query = User::find()->where(['status' => 1, 'tipo' => 2]);
-        } else if ($params['perfil'] == 3) {
+        } else if ($params2['perfil'] == 3) {
             $query = User::find()->where(['status' => 1, 'tipo' => 3]);
-        } else if ($params['perfil'] == 4) {
+        } else if ($params2['perfil'] == 4) {
             $query = User::find()->where(['status' => 1, 'tipo' => 4]);
         } else {
             $query = User::find()->where(['status' => 1]);

@@ -44,26 +44,32 @@ use app\models\Turma;
   
     <?= $form->field($model, 'tipo')->dropDownList(['1' => 'Professor', '2' => 'Psicólogo', 
         '3' => 'Aluno Terapeuta', '4' => 'Estagiário Administrativo'], ['prompt'=>'Selecione um Perfil ']); ?>
+    <?php 
+            if($this->context->action->id == 'create'){
+    ?>
 
-    <div id="checkBoxDeTurmas" style="width: 30%; border: solid 1px lightgray; padding: 2px 1px 0px 4px; margin-bottom: 1%; display: none">
-        <?php 
-            $turmas = Turma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.*")->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")->all();
+                <div id="checkBoxDeTurmas" style="width: 30%; border: solid 1px lightgray; padding: 2px 1px 0px 4px; margin-bottom: 1%; display: none">
+                    <?php 
+                        $turmas = Turma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.*")->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")->all();
 
-            if ($turmas == null){
-                echo "<div style='color:red'> Obs.: Não há Turmas Cadastradas. </div>";
+                        if ($turmas == null){
+                            echo "<div style='color:red'> Obs.: Não há Turmas Cadastradas. </div>";
+                        }
+                        else{
+                        echo $form->field($model, 'turmasArray')
+                        ->checkboxList(ArrayHelper::map($turmas,'id',                      
+                            function($model, $defaultValue) {
+                                    return $model['nome_da_disciplina'].' - Turma: '.$model['codigo'];
+                            }
+
+                        )); 
+                        }
+
+                    ?>
+                </div>
+    <?php
             }
-            else{
-            echo $form->field($model, 'turmasArray')
-            ->checkboxList(ArrayHelper::map($turmas,'id',                      
-                function($model, $defaultValue) {
-                        return $model['nome_da_disciplina'].' - Turma: '.$model['codigo'];
-                }
-
-            )); 
-            }
-
-        ?>
-    </div>
+    ?>
   
 
     <div class="form-group">
