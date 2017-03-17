@@ -45,7 +45,7 @@ class UserController extends Controller
                         'allow' => true,
                         'roles' => ['@' ],
                         'matchCallback' => function ($rule, $action) {
-                            return Yii::$app->user->identity->tipo != '4';
+                            return Yii::$app->user->identity->tipo == '4';
                         }
                     ],
                     [
@@ -96,8 +96,10 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->tipoAcesso($id);
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -167,7 +169,7 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->tipoAcesso($id);
         $senha = $model->password;
         $model->password = "";
 
@@ -194,7 +196,7 @@ class UserController extends Controller
 
     public function actionUpdatesenha($id)
     {
-        $model = $this->findModel($id);
+        $model = $this->tipoAcesso($id);
         $senha = $model->password;
         $model->password = "";
 
@@ -300,10 +302,29 @@ class UserController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = User::find()->where(['id'=> $id,'status' => 1])->one()) !== null) {
+        if (($model = User::find()->where(['id'=> $id,'status' => '1'])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('A página solicitada não existe.');
         }
     }
+    
+    protected function findYourPerfil()
+    {
+        if (($model = User::find()->where(['status' => '1', 'id' => Yii::$app->user->id])->one()) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('A página solicitada não existe.');
+        }
+    }
+    
+    public function tipoAcesso($id){
+        if(Yii::$app->user->identity->tipo == 4){
+            $model = $this->findModel($id);
+        }else{
+            $model = $this->findYourPerfil();
+        }
+        return $model;
+    }
+        
 }
