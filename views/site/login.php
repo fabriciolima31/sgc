@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\widgets\MaskedInput;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -37,18 +38,16 @@ $fieldOptions2 = [
 
         <?= $form
             ->field($model, 'cpf', $fieldOptions1)
-            ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('cpf')]) ?>
+            ->label("CPF")
+            ->widget(MaskedInput::className(), ['mask' => '999.999.999-99',]);
+            //->textInput(['placeholder' => $model->getAttributeLabel('cpf')]) ?>
 
         <?= $form
             ->field($model, 'password', $fieldOptions2)
-            ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
+            ->label("Senha")
+            ->passwordInput() ?>
 
         <div class="row">
-            <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
-            </div>
             <!-- /.col -->
             <div class="col-xs-4">
                 <?= Html::submitButton('Entrar', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>

@@ -37,9 +37,13 @@ use dmstr\widgets\Alert;
     <div class="pull-right hidden-xs">
         <b>Version</b> 2.0
     </div>
+<<<<<<< HEAD
     <strong> Site desenvolvido pelo Instituto de Computação - IComp </strong> <br>
     <strong>Copyright &copy; 2014-2015 <a href="http://almsaeedstudio.com" target="_Blank">Almsaeed Studio</a>.</strong> All rights
     reserved.
+=======
+    <strong><a href="http://icomp.ufam.edu.br">Icomp - 2017</a></strong>
+>>>>>>> 11816d88fb6be64d9ee51d9e3ce86613f5d807bd
 </footer>
 
 <!-- Control Sidebar -->
