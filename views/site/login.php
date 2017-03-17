@@ -10,7 +10,7 @@ $this->title = 'Sign In';
 
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
+    'inputTemplate' => "{input}<span class='glyphicon glyphicon-user form-control-feedback'></span>"
 ];
 
 $fieldOptions2 = [
@@ -19,20 +19,26 @@ $fieldOptions2 = [
 ];
 ?>
 
+<div style="width: 100%;text-align: center; margin-top: 5%; font-size: 250%"> 
+    <a href="#"> <b>Sistema de Gerenciamento de Consultas</b> </a>
+    <br> 
+    <a href="#"> <b>Universidade Federal do Amazonas</b> </a> 
+</div>
+
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>Admin</b>LTE</a>
+        
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Efetue o login com seu CPF e senha:</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
         <?= $form
-            ->field($model, 'username', $fieldOptions1)
+            ->field($model, 'cpf', $fieldOptions1)
             ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
+            ->textInput(['placeholder' => $model->getAttributeLabel('cpf')]) ?>
 
         <?= $form
             ->field($model, 'password', $fieldOptions2)
@@ -45,7 +51,7 @@ $fieldOptions2 = [
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-                <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Entrar', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
             </div>
             <!-- /.col -->
         </div>
@@ -54,16 +60,17 @@ $fieldOptions2 = [
         <?php ActiveForm::end(); ?>
 
         <div class="social-auth-links text-center">
-            <p>- OR -</p>
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
-                using Facebook</a>
-            <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
-                in using Google+</a>
+            <!--
+                <p>- OR -</p>
+                <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
+                    using Facebook</a>
+                <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
+                    in using Google+</a>
+            -->
         </div>
         <!-- /.social-auth-links -->
 
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
+        <a href="index.php?r=user/esquecisenha">Eu Esqueci minha Senha!</a><br>
 
     </div>
     <!-- /.login-box-body -->
