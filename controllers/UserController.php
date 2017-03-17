@@ -143,7 +143,7 @@ class UserController extends Controller
                             }
                         
                     }
-                    Yii::$app->session->setFlash('success', "'".$model->perfil."' cadastrado com sucesso.");
+                    Yii::$app->session->setFlash('success', "'".$model->perfilDesc."' cadastrado com sucesso.");
                     return $this->redirect(['view', 'id' => $model->id]);
 
                 }else{

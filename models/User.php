@@ -229,6 +229,21 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
         }
     }
     
+    public function getPerfilDesc()
+    {
+        if ($this->status == '1') {
+            return "Professores";
+        } else if ($this->status == '2') {
+            return "Psicólogos";
+        } else if ($this->status == '3') {
+            return "Terapeutas";
+        } else if ($this->status == '4') {
+            return "Administradores";
+        } else {
+            return "Desconhecido";
+        }
+    }
+    
     
     /*
      * Verifica a existência de um usário ativo

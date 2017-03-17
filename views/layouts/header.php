@@ -19,8 +19,12 @@ else{
 ?>
 
 <header class="main-header">
-
-    <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <a href="index.php" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><img src="icomp-logo.png" width="88" /></span>
+    </a>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
