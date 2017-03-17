@@ -51,6 +51,16 @@ $config = [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+
+        'view' => [
+                 'theme' => [
+                     'pathMap' => [
+                        '@app/views' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
+                     ],
+                 ],
+            ],
+
+        
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@app/mail',
