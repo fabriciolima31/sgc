@@ -42,7 +42,7 @@ class Turma extends \yii\db\ActiveRecord
     {
         return [
             [['codigo', 'ano', 'semestre', 'data_inicio', 'data_fim', 'Disciplina_id', 'Professor_id'], 'required'],
-            [['data_inicio', 'data_fim'], 'safe'],
+            [['data_inicio', 'data_fim' , 'Professor_id'], 'safe'],
             [['Disciplina_id'], 'integer'],
             [['codigo', 'semestre'], 'string', 'max' => 10],
             [['ano'], 'string', 'max' => 4],

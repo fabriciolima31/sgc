@@ -12,6 +12,8 @@ use app\models\Turma;
  */
 class TurmaSearch extends Turma
 {
+
+    public $nome_do_usuario;
     /**
      * @inheritdoc
      */
@@ -19,7 +21,7 @@ class TurmaSearch extends Turma
     {
         return [
             [['id', 'Disciplina_id'], 'integer'],
-            [['codigo', 'ano', 'semestre', 'data_inicio', 'data_fim'], 'safe'],
+            [['codigo', 'ano', 'semestre', 'data_inicio', 'data_fim', 'Professor_id'], 'safe'],
         ];
     }
 
@@ -41,13 +43,20 @@ class TurmaSearch extends Turma
      */
     public function search($params)
     {
-        $query = Turma::find();
+        $query = Turma::find()->select("Turma.* , PT.*, U.nome as nome_do_usuario, U.id as Professor_id")
+        ->innerJoin("Professor_Turma as PT","PT.Turma_id = Turma.id")
+        ->innerJoin("Usuarios as U","U.id = PT.Usuarios_id");
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+     $dataProvider->sort->attributes['Professor_id'] = [
+        'asc' => ['nome_do_usuario' => SORT_ASC],
+        'desc' => ['nome_do_usuario' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -67,6 +76,7 @@ class TurmaSearch extends Turma
 
         $query->andFilterWhere(['like', 'codigo', $this->codigo])
             ->andFilterWhere(['like', 'ano', $this->ano])
+            ->andFilterWhere(['like', 'U.id', $this->Professor_id])
             ->andFilterWhere(['like', 'semestre', $this->semestre]);
 
         return $dataProvider;

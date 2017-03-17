@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use app\models\Disciplina;
+use app\models\User;
 use app\models\Turma;
 
 /* @var $this yii\web\View */
@@ -65,16 +66,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
              [  'label' => 'Professor',
-                //'filter'=> ArrayHelper::map(User::find()->where(['tipo' =>1])->all(), 'id', 'nome'),
-                'value' => function ($model) {
-
-                        $user = Turma::find()->select("Usuarios.nome as nome_do_usuario")
-                                             ->innerJoin('Professor_Turma','Turma.id = Professor_Turma.Turma_id')
-                                             ->innerJoin('Usuarios','Usuarios.id = Professor_Turma.Usuarios_id')
-                                             ->where(["Turma.id" => $model->id])->one();
+                'attribute' => 'Professor_id',
 
 
-                        return $user->nome_do_usuario;
+
+                'filter' => Html::activeDropDownList($searchModel, 'Professor_id', 
+                                    ArrayHelper::map(User::find()->select("Usuarios.nome, Usuarios.id")->where(["tipo" => 1])->orderBy("Usuarios.nome ASC")->all(), 'id', 'nome'),
+                        ['class'=>'form-control','prompt' => '']),
+                
+
+                    'value' => function ($model) {
+                        
+                        return $model->nome_do_usuario;
 
                 },
             ],

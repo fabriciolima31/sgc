@@ -88,10 +88,14 @@ class PacienteSearch extends Paciente
      *
      * @return ActiveDataProvider
      */
-    public function searchMeusPacientes($params)
+    public function searchMeusPacientes($params, $status)
     {
-        if ($params['status'] != "") {
-            $query = Paciente::find()->where(['Paciente.status' => $params['status']]);
+        if ($status != "") {
+            $query = Paciente::find()->where(['Paciente.status' => $status]);
+            $query->joinWith("usuario_Paciente")->andWhere(['Usuario_id' => Yii::$app->user->id, 'Usuario_Paciente.status' => '1']);
+        }
+        else{
+            $query = Paciente::find();
             $query->joinWith("usuario_Paciente")->andWhere(['Usuario_id' => Yii::$app->user->id, 'Usuario_Paciente.status' => '1']);
         }
 
@@ -116,7 +120,7 @@ class PacienteSearch extends Paciente
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'Paciente.status', $this->status])
             ->andFilterWhere(['like', 'sexo', $this->sexo])
             ->andFilterWhere(['like', 'telefone', $this->telefone])
             ->andFilterWhere(['like', 'endereco', $this->endereco])

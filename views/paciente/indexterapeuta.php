@@ -21,7 +21,34 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'nome',
-            'statusDesc',
+
+
+            [
+                'label' => 'Status',
+                'attribute' => 'status',
+                'filter' => Html::activeDropDownList($searchModel, 'status', ["EN"=> "Encaminhado", "LE" => "Lista de Espera", 'EC' => "Entrar em Contato", 
+                    "EA" => "Em Atendimento", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta"],
+                        ['class'=>'form-control','prompt' => '']),
+                'value' => function ($model) {
+                    return $model->statusDesc;
+                }
+            ],
+
+            [
+                'attribute' => 'telefone',
+                'filter' => '',
+            ]
+            ,
+
+            [
+                'attribute'=>'data_inscricao',
+                'label' => 'Data do Cadastro',
+                'filter' => '',
+                'value' => function ($model){
+                    
+                    return date("d/m/Y - H:i ", strtotime($model->data_inscricao));
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn',
               'template'=>'{view} {update} {sessao} {encaminhar}',

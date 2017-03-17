@@ -31,10 +31,14 @@ else{
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" title="Ocultar/Aparecer">
             <span class="sr-only">Toggle navigation</span>
         </a>
-
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">
+
+        <?php 
+        
+        if(false){
+        ?>
 
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
@@ -118,6 +122,7 @@ else{
                         <li class="footer"><a href="#">See All Messages</a></li>
                     </ul>
                 </li>
+
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
@@ -242,6 +247,10 @@ else{
                         </li>
                     </ul>
                 </li>
+
+        <?php 
+            }
+        ?>
                 <!-- User Account: style can be found in dropdown.less -->
 
                 <li class="dropdown user user-menu">

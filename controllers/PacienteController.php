@@ -87,7 +87,7 @@ class PacienteController extends Controller
         $params['status'] = $status;
 
         $searchModel = new PacienteSearch();
-        $dataProvider = $searchModel->searchMeusPacientes(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchMeusPacientes(Yii::$app->request->queryParams, $params['status']);
 
         $paciente = new Paciente();
                 

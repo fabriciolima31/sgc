@@ -56,6 +56,8 @@ else{
                                 "status" => 'AB']],                            
                             ['label' => 'Alta', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
                                 "status" => 'AL']], 
+                            ['label' => 'Todos', 'url' => [Yii::$app->user->identity->tipo == '4' ? "/paciente/index" : "/paciente/meus-pacientes",
+                                "status" => '']], 
                             ],
                         ]: "",
                     

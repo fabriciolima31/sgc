@@ -61,8 +61,7 @@ $config = [
                  ],
             ],
 
-
-        
+       
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'viewPath' => '@app/mail',
