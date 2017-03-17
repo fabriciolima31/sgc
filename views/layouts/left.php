@@ -21,10 +21,10 @@ else{
     <section class="sidebar">
 
         <!-- Sidebar user panel -->
-        <div class="user-panel"  style="height:60px">
-            <div class="info" style="left: 0px">
-                <p><?= $nome_do_usuario ?></p>
-                <p>Perfil: <?= $array_de_cargos[$cargo] ?></p>
+        <div class="user-panel"  style="height:60px; margin-bottom: 5%">
+            <div class="info" style="left: 5px;">
+                <p><b><?= $nome_do_usuario?></b></p>
+                <p style="color:red; text-align: left"><?= $array_de_cargos[$cargo] ?></p>
             </div>
         </div>
 

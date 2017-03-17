@@ -28,7 +28,7 @@ else{
 
     <nav class="navbar navbar-static-top" role="navigation">
 
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button" title="Ocultar/Aparecer">
             <span class="sr-only">Toggle navigation</span>
         </a>
 
@@ -253,7 +253,7 @@ else{
                         <!-- User image -->
                         <li class="user-header" style="height: 80px">
                             <p>
-                                    <?= $nome_do_usuario?> <br>
+                                   <b> <?= $nome_do_usuario?> </b> <br> 
                                 <small> <?= $array_de_cargos[$cargo] ?> </small>
                             </p>
                         </li>
