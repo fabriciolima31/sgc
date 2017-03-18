@@ -66,13 +66,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
              [  'label' => 'Professor',
-                'attribute' => 'Professor_id',
+                'attribute' => 'nome_do_usuario',
 
 
+                /*
+                //isso insere um combox, porem de mudar o atributo de nome_do_usuario para Professor_id e fazer OUTRAS MUDANÇAS
 
-                'filter' => Html::activeDropDownList($searchModel, 'Professor_id', 
+                'filter' => Html::activeDropDownList($searchModel, 'nome_do_usuario', 
                                     ArrayHelper::map(User::find()->select("Usuarios.nome, Usuarios.id")->where(["tipo" => 1])->orderBy("Usuarios.nome ASC")->all(), 'id', 'nome'),
                         ['class'=>'form-control','prompt' => '']),
+                        
+                */
                 
 
                     'value' => function ($model) {

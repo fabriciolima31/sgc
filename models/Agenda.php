@@ -31,6 +31,8 @@ class Agenda extends \yii\db\ActiveRecord
     public $dadosConflituosos;
 
     public $nome_da_disciplina;
+    public $nome_de_quem_agenda;
+    public $nome_do_consultorio;
 
 
     /**
@@ -202,6 +204,16 @@ class Agenda extends \yii\db\ActiveRecord
         return $ano."-".$mes."-".$dia;
       
 
+    }
+
+        /*Conversão de Data*/
+    public function converterDatas_para_DD_MM_AAAA_com_Retorno($data) {
+
+        $ano = substr($data,0,4); //pega os 4 ultimos caracteres, a contar do índice 4
+        $mes = substr($data,5,2); //pega os 2 caracteres, a contar do índice 2
+        $dia = substr($data,8,2); //pega os 2 caracteres, a contar do índice 0
+        return $dia."-".$mes."-".$ano;
+      
     }
 
 

@@ -42,8 +42,10 @@ class PacienteSearch extends Paciente
      */
     public function search($params)
     {
+
         if ($params['status'] != "") {
-            $query = Paciente::find()->where(['status' => $params['status']]);
+            $query = Paciente::find()
+                ->select("nome,status,prioridade,complexidade,turno_atendimento, data_inscricao")->where(['status' => $params['status']]);
         }else{
             $query = Paciente::find();
         }
@@ -63,6 +65,11 @@ class PacienteSearch extends Paciente
             return $dataProvider;
         }
 
+        $model = new Agenda();
+        if($this->data_inscricao != ""){
+            $this->data_inscricao = $model->converterDatas_para_AAAA_MM_DD_com_Retorno($this->data_inscricao);
+        }
+
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'status', $this->status])
 //            ->andFilterWhere(['like', 'sexo', $this->sexo])
@@ -76,7 +83,12 @@ class PacienteSearch extends Paciente
 //            ->andFilterWhere(['like', 'servico', $this->servico])
 //            ->andFilterWhere(['like', 'observacao', $this->observacao])
             ->andFilterWhere(['like', 'complexidade', $this->complexidade])
+            ->andFilterWhere(['like', 'data_inscricao', $this->data_inscricao])
             ->andFilterWhere(['like', 'prioridade', $this->prioridade]);
+
+        if($this->data_inscricao != ""){
+            $this->data_inscricao = $model->converterDatas_para_DD_MM_AAAA_com_Retorno($this->data_inscricao);
+        }
 
         return $dataProvider;
     }
@@ -90,6 +102,8 @@ class PacienteSearch extends Paciente
      */
     public function searchMeusPacientes($params, $status)
     {
+
+
         if ($status != "") {
             $query = Paciente::find()->where(['Paciente.status' => $status]);
             $query->joinWith("usuario_Paciente")->andWhere(['Usuario_id' => Yii::$app->user->id, 'Usuario_Paciente.status' => '1']);

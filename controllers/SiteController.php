@@ -67,7 +67,7 @@ class SiteController extends Controller
         }
         
         $searchPacienteContato = new PacienteSearch();
-        $dataPacienteContato = $searchPacienteContato->searchMeusPacientes(['status' => 'EC']);
+        $dataPacienteContato = $searchPacienteContato->searchMeusPacientes(Yii::$app->request->queryParams,'EC');
         
         $searchMSessoesEE = new SessaoSearch();
         $dataSessoesEE = $searchMSessoesEE->searchSessoesEE(['status' => 'EE']);

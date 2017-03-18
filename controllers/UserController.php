@@ -246,7 +246,7 @@ class UserController extends Controller
                         $x = Yii::$app->mailer->compose()
                         ->setFrom('ufamsistemaconsulta@gmail.com')
                         ->setTo($model2->email)
-                        ->setSubject('Message subject')
+                        ->setSubject('Sistema Gerenciamento de Consultas - UFAM - Solicitação de Nova Senha')
                         ->setTextBody('Plain text content')
                         ->setHtmlBody($conteudoDoEmail)
                         ->send();

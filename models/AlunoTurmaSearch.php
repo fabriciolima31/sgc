@@ -19,6 +19,7 @@ class AlunoTurmaSearch extends AlunoTurma
     {
         return [
             [['Turma_id', 'Usuarios_id'], 'integer'],
+            [['nome_do_aluno'], 'safe'],
         ];
     }
 
@@ -31,16 +32,24 @@ class AlunoTurmaSearch extends AlunoTurma
         return Model::scenarios();
     }
 
-    public function searchAlunos($params)
+    public function searchAlunos($params,$params2)
     {
-        $query = AlunoTurma::find()->where(['Turma_id' => $params['Turma_id']]);
-        $query->joinWith('usuario', 'Usuarios.id');
+        $query = AlunoTurma::find()
+        ->select("Aluno_Turma.*, U.nome as nome_do_aluno")
+        ->innerJoin('Usuarios as U', 'U.id = Aluno_Turma.Usuarios_id')
+        ->where(['Turma_id' => $params2]);
+
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['nome_do_aluno'] = [
+        'asc' => ['nome_do_aluno' => SORT_ASC],
+        'desc' => ['nome_do_aluno' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -55,6 +64,8 @@ class AlunoTurmaSearch extends AlunoTurma
             'Turma_id' => $this->Turma_id,
             'Usuarios_id' => $this->Usuarios_id,
         ]);
+
+        $query->andFilterWhere(['like', 'U.nome', $this->nome_do_aluno]);
 
         return $dataProvider;
     }

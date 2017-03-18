@@ -21,39 +21,39 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
             [
-            'attribute'=>'consultorio.nome',
+            'attribute'=>'nome_do_consultorio',
             'label' => 'Local',
             ],
             'data_inicio',
             //'data_fim',
             [
                 'attribute'=>'diaSemana',
+                'filter'=> array
+                    (1 => 'Segunda-Feira', 2 => 'Terça-Feira', 3 => 'Quarta-Feira', 
+                        4 => 'Quinta-Feira',  5 => 'Sexta-Feira', 6 => 'Sábado', 0 => 'Domingo', 
+                    ),
+
                 'value' => function ($model){
                         $arraySemana = array([
-                            0 => 'Domingo',
                             1 => 'Segunda-Feira',
                             2 => 'Terça-Feira',
                             3 => 'Quarta-Feira',
                             4 => 'Quinta-Feira',
                             5 => 'Sexta-Feira',
                             6 => 'Sábado',
+                            0 => 'Domingo',
                             ]);
                         return $arraySemana[0][$model->diaSemana];
                 }
             ],
             'horaInicio',
-            ['attribute' => 'Usuarios_id',
+            ['attribute' => 'nome_de_quem_agenda',
             'label' => 'Aluno Terapeuta',
-            'value' => function ($model){
-                    $usuario = User::find()->select("Usuarios.nome")->where(["id"=>$model->Usuarios_id])->one();
-                    return $usuario->nome;
-
-            }
             ],
 
             ['class' => 'yii\grid\ActionColumn',

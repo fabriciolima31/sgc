@@ -23,6 +23,8 @@ class AlunoTurma extends \yii\db\ActiveRecord
     public $ano;
     public $semestre;
 
+    public $nome_do_aluno;
+
 
 
     /**
@@ -41,6 +43,7 @@ class AlunoTurma extends \yii\db\ActiveRecord
         return [
             [['Turma_id', 'Usuarios_id'], 'required'],
             [['Turma_id', 'Usuarios_id'], 'integer'],
+            [['nome_da_disciplina'], 'safe'],
             [['Turma_id'], 'exist', 'skipOnError' => true, 'targetClass' => Turma::className(), 'targetAttribute' => ['Turma_id' => 'id']],
             [['Usuarios_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['Usuarios_id' => 'id']],
         ];

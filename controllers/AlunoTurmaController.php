@@ -69,7 +69,7 @@ class AlunoTurmaController extends Controller
     public function actionIndexAlunos($id)
     {
         $searchModel = new AlunoTurmaSearch();
-        $dataProvider = $searchModel->searchAlunos(['Turma_id' => $id]);
+        $dataProvider = $searchModel->searchAlunos( Yii::$app->request->queryParams , $id);
 
         return $this->render('indexAlunos', [
             'searchModel' => $searchModel,

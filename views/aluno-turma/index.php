@@ -17,15 +17,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             [
                 'label' => 'Turma',
-                'attribute' => 'Disciplina_id',
+                'attribute' => 'codigo',
                 'value' => function($model){
-                    return $model->disciplina->nome." - Turma".$model->codigo;
+                    return $model->codigo;
+                }
+            ],
+
+            [
+                'label' => 'Disciplina',
+                'attribute' => 'nome_da_disciplina',
+                'value' => function($model){
+
+
+
+                    return $model->nome_da_disciplina;
                 }
             ],
             [

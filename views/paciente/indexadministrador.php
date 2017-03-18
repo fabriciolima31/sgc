@@ -62,6 +62,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
 
+            ['attribute' => 'data_inscricao',
+            'label' => 'Data Inscrição',
+            'value' => function ($model){
+
+                return date("d-m-Y",strtotime($model->data_inscricao));
+
+            }
+            ],
+
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
