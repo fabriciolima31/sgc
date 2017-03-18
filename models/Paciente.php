@@ -166,7 +166,7 @@ class Paciente extends \yii\db\ActiveRecord
     public function beforeSave($insert) {
         if ($insert) {
             $this->status = "LE";
-            $this->data_inscricao = date('d-m-y H:i:s', time());
+            $this->data_inscricao = date('Y-m-d', time());
         }
         
         $this->converterDatas_para_AAAA_MM_DD();

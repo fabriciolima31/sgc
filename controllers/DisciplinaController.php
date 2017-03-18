@@ -28,7 +28,7 @@ class DisciplinaController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'all', 'update','view', 'delete'],
+                'only' => ['index', 'update','view', 'delete', 'create'],
                 'rules' => [
                     [
                         'allow' => true,
@@ -125,7 +125,7 @@ class DisciplinaController extends Controller
         if (($model = Disciplina::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('A Página solicitada não existe.');
         }
     }
 }
