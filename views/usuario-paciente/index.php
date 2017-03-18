@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'paciente.nome',
             ],
             [
-                'label' => 'Terapeura',
+                'label' => 'Terapeuta',
                 'value' => 'usuario.nome',
             ],
             [

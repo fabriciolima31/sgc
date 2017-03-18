@@ -22,7 +22,7 @@ class SessaoSearch extends Sessao
     {
         return [
             [['id', 'Paciente_id', 'Usuarios_id', 'Consultorio_id'], 'integer'],
-            [['data','nome_do_paciente', 'hora_inicio_consulta','data_inicio_consulta'], 'safe'],
+            [['data','nome_do_paciente', 'hora_inicio_consulta','data_inicio_consulta','status'], 'safe'],
         ];
     }
 
@@ -42,9 +42,13 @@ class SessaoSearch extends Sessao
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$params2)
     {
-        $query = Sessao::find()->where(['Usuarios_id' => Yii::$app->user->id, 'Paciente_id' => $params['Paciente_id']]);
+        $query = Sessao::find()
+        ->select("Sessao.*, P.nome as nome_do_paciente, A.horaInicio as hora_inicio_consulta, A.data_inicio as data_inicio_consulta")
+        ->innerJoin("Paciente as P","P.id = Sessao.Paciente_id")
+        ->innerJoin("Agenda as A","A.id = Sessao.Agenda_id")
+        ->where(['Sessao.Usuarios_id' => Yii::$app->user->id, 'Sessao.Paciente_id' => $params2]);
 
         // add conditions that should always apply here
 
@@ -52,7 +56,20 @@ class SessaoSearch extends Sessao
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['hora_inicio_consulta'] = [
+            'asc' => ['hora_inicio_consulta' => SORT_ASC],
+            'desc' => ['hora_inicio_consulta' => SORT_DESC],
+
+        ];
+        $dataProvider->sort->attributes['data_inicio_consulta'] = [
+            'asc' => ['data_inicio_consulta' => SORT_ASC],
+            'desc' => ['data_inicio_consulta' => SORT_DESC],
+
+        ];
+
         $this->load($params);
+
+
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -60,16 +77,29 @@ class SessaoSearch extends Sessao
             return $dataProvider;
         }
 
+
+        $model = new Agenda();
+
+        if($this->data_inicio_consulta !=  ""){
+            $this->data_inicio_consulta = $model->converterDatas_para_AAAA_MM_DD_com_Retorno($this->data_inicio_consulta);
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'Paciente_id' => $this->Paciente_id,
             'Usuarios_id' => $this->Usuarios_id,
+            'Sessao.status' => $this->status,
             'Consultorio_id' => $this->Consultorio_id,
             'data' => $this->data,
         ]);
 
-        //$query->andFilterWhere(['like', 'horario', $this->horario]);
+        $query->andFilterWhere(['like', 'A.horaInicio', $this->hora_inicio_consulta])
+              ->andFilterWhere(['like', 'A.data_inicio', $this->data_inicio_consulta]);
+
+        if($this->data_inicio_consulta !=  ""){
+            $this->data_inicio_consulta = $model->converterDatas_para_DD_MM_AAAA_com_Retorno($this->data_inicio_consulta);
+        }
 
         return $dataProvider;
     }

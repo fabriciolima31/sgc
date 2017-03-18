@@ -30,27 +30,19 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
             [
                 'label' => 'Data ',
-                'value' => function ($model){
-
-                    $agenda = Agenda::find()->where(['id' => $model->Agenda_id])->one();
-
-                   return $agenda->data_inicio;
-                }
+                'attribute' => 'data_inicio_consulta',
+                'format' => ['date', 'php:d-m-Y'],
             ],
             [
                 'label' => 'Hora Inicial',
-                'value' => function ($model){
+                'attribute'=> 'hora_inicio_consulta',
 
-                    $agenda = Agenda::find()->where(['id' => $model->Agenda_id])->one();
-
-                   return $agenda->horaInicio;
-                }
             ],
             [
                 'label' => 'Status',

@@ -57,7 +57,7 @@ class SessaoController extends Controller
         $paciente = Paciente::find()->where(['id' => $id])->One();
         
         $searchModel = new SessaoSearch();
-        $dataProvider = $searchModel->search(['Paciente_id' => $id]);
+        $dataProvider = $searchModel->search( Yii::$app->request->queryParams, $id);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
