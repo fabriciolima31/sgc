@@ -36,7 +36,7 @@ class AgendaController extends Controller
                         'roles' => ['@' ],
                     ],
                     [
-                        'actions' => ['create'],
+                        'actions' => ['create', 'altera-status'],
                         'allow' => true,
                         'roles' => ['@' ],
                         'matchCallback' => function ($rule, $action) {
@@ -195,22 +195,20 @@ class AgendaController extends Controller
 //        }
 //    }
 
-    /**
-     * Deletes an existing Agenda model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
+
     public function actionAlteraStatus($id)
     {
-        $model = $this->findModel($id);
-        
+        if (Yii::$app->user->identity->tipo == '4') {
+            $model = $this->findModel($id);
+        } else {
+            $model = $this->findYourAgenda($id);
+        }
+
         $model->status = '2';
         $model->save(false);
 
         return $this->redirect(['index']);
     }
-
 
     public function actionTurmas($id_terapeuta)
     {
@@ -250,6 +248,15 @@ class AgendaController extends Controller
     protected function findModel($id)
     {
         if (($model = Agenda::find()->where(['id' => $id, 'status' => '1'])->one()) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    protected function findYourAgenda($id)
+    {
+        if (($model = Agenda::find()->where(['id' => $id, 'status' => '1', 'id' => Yii::$app->user->id])->one()) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

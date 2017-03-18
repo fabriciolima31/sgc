@@ -17,13 +17,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Remover este Agendamento', ['altera-status', 'id' => $model->id], [
+        <?= $model->checarAgendamento() ? Html::a('Remover este Agendamento', ['altera-status', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Você tem certeza que deseja apagar este agendamento?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ]) : "" ?>
     </p>
 
     <?= DetailView::widget([
