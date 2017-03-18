@@ -106,7 +106,7 @@ class AlunoTurma extends \yii\db\ActiveRecord
         ->count();
 
         if($usuarioJaEstaNessaDisciplina > 0){
-            $this->addError("Usuarios_id", "Este aluno já está alocado nessa disciplina, porém em outra turma");
+            $this->addError("Usuarios_id", "Este aluno já está alocado nessa disciplina, porém em outra turma. Não é possivel o aluno ser alocado  mais de uma vez na mesma disciplina de mesmo ano e semestre letivo.");
             return 1;
         }
         return 0;
