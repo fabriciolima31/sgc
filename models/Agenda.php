@@ -266,6 +266,14 @@ class Agenda extends \yii\db\ActiveRecord
 
     }
 
-
+    /*
+     * Indica de quem está logado é o dono do agendamento
+     */
+    public function checarAgendamento(){
+        if(Yii::$app->user->identity->tipo == '4')
+            return true;
+        else
+            return $this->Usuarios_id == Yii::$app->user->id;
+    }
 
 }

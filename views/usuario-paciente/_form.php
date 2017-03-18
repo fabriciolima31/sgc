@@ -2,8 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper;
-use app\models\UsuarioPaciente;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\UsuarioPaciente */
@@ -23,8 +22,20 @@ if ($existe_usuario_paciente > 0){
 
     <?php $form = ActiveForm::begin(); ?>
     
-    <?php 
+<!--    <?php 
         echo $form->field($model, 'Usuario_id')->dropDownList($terapeutas, ['prompt' => 'Selecione um Terapeuta'])
+    ?>
+    -->
+    
+    <?=
+    $form->field($model, 'Usuario_id')->widget(Select2::classname(), [
+        'data' => $terapeutas,
+        'language' => 'pt',
+        'options' => ['placeholder' => 'Selecione um Terapeuta'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
     ?>
 
     <div class="form-group">
