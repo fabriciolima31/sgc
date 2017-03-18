@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use app\models\Turma;
 use app\models\User;
 use yii\helpers\ArrayHelper;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\AlunoTurma */
@@ -25,9 +26,17 @@ $usuarios = ArrayHelper::map(User::find()->where(['tipo' => '3', 'status' => '1'
     <?= $form->field($model, 'Turma_id')->dropDownList(ArrayHelper::map($turmas,'id',function($model, $defaultValue) {
                         return $model['nome_da_disciplina'].' - Turma: '.$model['codigo'];
                 }),['prompt'=>'Escolha uma Disciplina e Turma'])->label("<font color='#FF0000'>*</font> <b>Turma:</b>") 
-        ?>
-
-    <?= $form->field($model, 'Usuarios_id')->dropDownList($usuarios,['prompt'=>'Selecione um Aluno'])->label("<font color='#FF0000'>*</font> <b>Aluno:</b>") ?>
+        ?>   
+    <?=
+        $form->field($model, 'Usuarios_id')->widget(Select2::classname(), [
+            'data' => $usuarios,
+            'language' => 'pt',
+            'options' => ['placeholder' => 'Selecione um Aluno'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ])->label("<font color='#FF0000'>*</font> <b>Aluno:</b>");
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Alocar' : 'Alocar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

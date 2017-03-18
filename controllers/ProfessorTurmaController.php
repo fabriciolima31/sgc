@@ -28,11 +28,14 @@ class ProfessorTurmaController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'view', 'update', 'delete'],
+                'only' => ['index', 'view', 'create', 'update', 'delete'],
                 'rules' => [
                     [
                         'allow' => true,
                         'roles' => ['@' ],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo != '4';
+                        }
                     ],
                 ],
             ],
