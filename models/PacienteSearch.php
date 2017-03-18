@@ -133,6 +133,8 @@ class PacienteSearch extends Paciente
         $query->andFilterWhere([
             'id' => $this->id,
             'data_nascimento' => $this->data_nascimento,
+            'prioridade' => $this->prioridade,
+            'complexidade' => $this->complexidade,
         ]);
         
         $model = new Agenda();

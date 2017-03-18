@@ -15,11 +15,14 @@ class SessaoSearch extends Sessao
     /**
      * @inheritdoc
      */
+
+    //public $nome_do_paciente;
+
     public function rules()
     {
         return [
             [['id', 'Paciente_id', 'Usuarios_id', 'Consultorio_id'], 'integer'],
-            [['data'], 'safe'],
+            [['data','nome_do_paciente', 'hora_inicio_consulta','data_inicio_consulta'], 'safe'],
         ];
     }
 
@@ -80,13 +83,24 @@ class SessaoSearch extends Sessao
      */
     public function searchSessoesEE($params)
     {
-        $query = Sessao::find()->where(['Usuarios_id' => Yii::$app->user->id, 'status' => 'EE']);
+        $query = Sessao::find()
+        ->select("Sessao.*, P.nome as nome_do_paciente, A.horaInicio as hora_inicio_consulta, A.data_inicio as data_inicio_consulta")
+        ->innerJoin("Paciente as P","P.id = Sessao.Paciente_id")
+        ->innerJoin("Agenda as A","A.id = Sessao.Agenda_id")
+        ->where(['Sessao.Usuarios_id' => Yii::$app->user->id, 'Sessao.status' => 'EE']);
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [ 'pageSize' => 5 ],
         ]);
+
+        $dataProvider->sort->attributes['nome_do_paciente'] = [
+            'asc' => ['nome_do_paciente' => SORT_ASC],
+            'desc' => ['nome_do_paciente' => SORT_DESC],
+
+        ];
 
         $this->load($params);
 
@@ -99,13 +113,13 @@ class SessaoSearch extends Sessao
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'Paciente_id' => $this->Paciente_id,
-            'Usuarios_id' => $this->Usuarios_id,
             'Consultorio_id' => $this->Consultorio_id,
             'data' => $this->data,
         ]);
 
-        //$query->andFilterWhere(['like', 'horario', $this->horario]);
+        $query->andFilterWhere(['like', 'P.nome', $this->nome_do_paciente])
+              ->andFilterWhere(['like', 'A.horaInicio', $this->hora_inicio_consulta])
+              ->andFilterWhere(['like', 'A.data_inicio', $this->data_inicio_consulta]);
 
         return $dataProvider;
     }

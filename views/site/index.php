@@ -23,31 +23,17 @@ $this->title = 'Principal';
             ['class' => 'yii\grid\SerialColumn'],
             
             [
-            'attribute' => 'Paciente_id',
+            'attribute' => 'nome_do_paciente',
                 'label' => "Paciente",
-                'value' => function ($model){
-                    $paciente = Paciente::find()->where(['id' => $model->Paciente_id])->one();
-                    return $paciente->nome;
-                }
 
             ],
             [
                 'label' => 'Data ',
-                'value' => function ($model){
-
-                    $agenda = Agenda::find()->where(['id' => $model->Agenda_id])->one();
-
-                   return $agenda->data_inicio;
-                }
+                'attribute'=> 'data_inicio_consulta',
             ],
             [
                 'label' => 'Hora Inicial',
-                'value' => function ($model){
-
-                    $agenda = Agenda::find()->where(['id' => $model->Agenda_id])->one();
-
-                   return $agenda->horaInicio;
-                }
+                'attribute' => 'hora_inicio_consulta',
             ],
             [
                 'label' => 'Status',
@@ -99,7 +85,7 @@ $this->title = 'Principal';
                 'filter' => Html::activeDropDownList($searchPacienteContato, 'complexidade', ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'],
                         ['class'=>'form-control','prompt' => '']),
                 'value' => function ($model) {
-                    return $model->prioridadeDesc;
+                    return $model->complexidadeDesc;
                 }
             ],
             [

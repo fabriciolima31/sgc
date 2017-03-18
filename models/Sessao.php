@@ -26,6 +26,9 @@ class Sessao extends \yii\db\ActiveRecord
     public $statusNODescArray = ['PCJ' => 'Paciente Ausente COM justificativa', 'PSJ' => 'Paciente Ausente SEM justificativa', 'TA' => 'Terapeuta Ausente', 'OI' => 'Outro Impedimento'];
 
     public $contagem_pacientes;
+    public $nome_do_paciente;
+    public $data_inicio_consulta;
+    public $hora_inicio_consulta;
     
     /**
      * @inheritdoc
