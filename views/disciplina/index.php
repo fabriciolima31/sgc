@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::activeDropDownList($searchModel, 'status', ['1' => 'Habilitado', '0' => 'Desabilitado'],
                         ['class'=>'form-control','prompt' => 'Selecione um Status']),
                 'value' => function ($model) {
-                    return $model->status == '1' ? 'Hablitado' : 'Desabilitado';
+                    return $model->status == '1' ? 'Habilitado' : 'Desabilitado';
                 }
             ],
             ['class' => 'yii\grid\ActionColumn',

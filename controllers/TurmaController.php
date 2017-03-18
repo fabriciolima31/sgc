@@ -9,6 +9,7 @@ use app\models\TurmaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use \app\models\AlunoTurma;
 
 /**
  * TurmaController implements the CRUD actions for Turma model.
@@ -97,7 +98,7 @@ class TurmaController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
             }
             else{
-                Yii::$app->session->setFlash('danger', "Ocorreu um erro ao criar turma. Verifique os campos abaixo.");
+                Yii::$app->session->setFlash('error', "Ocorreu um erro ao criar turma. Verifique os campos abaixo.");
                 return $this->render('create', [
                     'model' => $model,
                 ]);                
@@ -141,10 +142,19 @@ class TurmaController extends Controller
      * @return mixed
      */
     public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+    {        
+        $qteAlunos = AlunoTurma::find()->where(['Turma_id' => $id])->count();
+        $professorTurma = ProfessorTurma::find()->where(['Turma_id' => $id, 'status' => '1'])->one();
+        $model = $this->findModel($id);
         
-        Yii::$app->session->setFlash('success', "Turma desabilitada com sucesso.");
+        if($qteAlunos > 0){
+            Yii::$app->session->setFlash('error', "Existem alunos alocados para a turma '".$model->codigo.
+                    "'. Desaloque-os dessa turma e tente novamente.");
+        }else{
+            $professorTurma->delete();
+            $model->delete();
+            Yii::$app->session->setFlash('success', "Turma removida com sucesso.");
+        }
 
         return $this->redirect(['index']);
     }

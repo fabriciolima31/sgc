@@ -106,7 +106,7 @@ class SessaoController extends Controller
                 return $this->redirect(['sessao/all', 'id' => $model->Paciente_id]);
             }
             else{
-                Yii::$app->session->setFlash('danger', "Ocorreu um erro ao adicionar a sessão.");
+                Yii::$app->session->setFlash('error', "Ocorreu um erro ao adicionar a sessão.");
                 return $this->render('create', [
                     'model' => $model,
                 ]);

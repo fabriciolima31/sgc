@@ -173,7 +173,7 @@ class PacienteController extends Controller
                 return $this->redirect(['paciente/meus-pacientes', 'status' => $status]);
             }
         }else{
-            Yii::$app->session->setFlash('danger', "Ocorreu um erro ao alterar status do paciente.");
+            Yii::$app->session->setFlash('error', "Ocorreu um erro ao alterar status do paciente.");
         }
         if (Yii::$app->user->identity->tipo == '4') {
             return $this->redirect(['paciente/index', 'status' => 'LE']);
