@@ -101,6 +101,16 @@ class SessaoSearch extends Sessao
             'desc' => ['nome_do_paciente' => SORT_DESC],
 
         ];
+        $dataProvider->sort->attributes['hora_inicio_consulta'] = [
+            'asc' => ['hora_inicio_consulta' => SORT_ASC],
+            'desc' => ['hora_inicio_consulta' => SORT_DESC],
+
+        ];
+        $dataProvider->sort->attributes['data_inicio_consulta'] = [
+            'asc' => ['data_inicio_consulta' => SORT_ASC],
+            'desc' => ['data_inicio_consulta' => SORT_DESC],
+
+        ];
 
         $this->load($params);
 
@@ -117,9 +127,19 @@ class SessaoSearch extends Sessao
             'data' => $this->data,
         ]);
 
+        $model = new Agenda();
+
+        if($this->data_inicio_consulta !=  ""){
+            $this->data_inicio_consulta = $model->converterDatas_para_AAAA_MM_DD_com_Retorno($this->data_inicio_consulta);
+        }
+
         $query->andFilterWhere(['like', 'P.nome', $this->nome_do_paciente])
               ->andFilterWhere(['like', 'A.horaInicio', $this->hora_inicio_consulta])
               ->andFilterWhere(['like', 'A.data_inicio', $this->data_inicio_consulta]);
+
+        if($this->data_inicio_consulta !=  ""){
+            $this->data_inicio_consulta = $model->converterDatas_para_DD_MM_AAAA_com_Retorno($this->data_inicio_consulta);
+        }
 
         return $dataProvider;
     }

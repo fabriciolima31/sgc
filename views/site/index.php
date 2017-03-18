@@ -30,6 +30,8 @@ $this->title = 'Principal';
             [
                 'label' => 'Data ',
                 'attribute'=> 'data_inicio_consulta',
+                'format' => ['date', 'php:d-m-Y'],
+
             ],
             [
                 'label' => 'Hora Inicial',
