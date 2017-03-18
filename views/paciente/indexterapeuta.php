@@ -36,17 +36,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'attribute' => 'telefone',
-                'filter' => '',
             ]
             ,
 
             [
                 'attribute'=>'data_inscricao',
                 'label' => 'Data do Cadastro',
-                'filter' => '',
                 'value' => function ($model){
                     
-                    return date("d/m/Y - H:i ", strtotime($model->data_inscricao));
+                    return date("d-m-Y - H:i ", strtotime($model->data_inscricao));
+                    //return $model->data_inscricao;
                 }
             ],
 

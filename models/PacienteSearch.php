@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Paciente;
+use app\models\Agenda;
 
 /**
  * PacienteSearch represents the model behind the search form about `app\models\Paciente`.
@@ -132,11 +133,18 @@ class PacienteSearch extends Paciente
             'id' => $this->id,
             'data_nascimento' => $this->data_nascimento,
         ]);
+        
+        $model = new Agenda();
+
+        if($this->data_inscricao != ""){
+            $this->data_inscricao = $model->converterDatas_para_AAAA_MM_DD_com_Retorno($this->data_inscricao);
+        }
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'Paciente.status', $this->status])
             ->andFilterWhere(['like', 'sexo', $this->sexo])
             ->andFilterWhere(['like', 'telefone', $this->telefone])
+            ->andFilterWhere(['like', 'data_inscricao', $this->data_inscricao])
             ->andFilterWhere(['like', 'endereco', $this->endereco])
             ->andFilterWhere(['like', 'moradia', $this->moradia])
             ->andFilterWhere(['like', 'turno_atendimento', $this->turno_atendimento])
@@ -145,6 +153,10 @@ class PacienteSearch extends Paciente
             ->andFilterWhere(['like', 'motivo_psicoterapia', $this->motivo_psicoterapia])
             ->andFilterWhere(['like', 'servico', $this->servico])
             ->andFilterWhere(['like', 'observacao', $this->observacao]);
+
+        if($this->data_inscricao != ""){
+            $this->data_inscricao = $model->converterDatas_para_DD_MM_AAAA_com_Retorno($this->data_inscricao);
+        }
 
         return $dataProvider;
     }
