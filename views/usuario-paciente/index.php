@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\models\Paciente;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UsuarioPacienteSearch */
@@ -9,6 +10,7 @@ use yii\grid\GridView;
 
 $this->title = 'Paciente Alocados';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="usuario-paciente-index">
 
@@ -23,15 +25,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'label' => 'Paciente',
-                'value' => 'paciente.nome',
+                'attribute' => 'nome_do_paciente',
             ],
             [
-                'label' => 'Terapeuta',
-                'value' => 'usuario.nome',
+                'label' => 'Paciente',
+                'attribute' => 'nome_terapeuta',
             ],
             [
                 'label' => 'Paciente Status',
-                'value' => 'paciente.statusDesc',
+                'attribute' => 'status_do_paciente',
+                'filter' => Html::activeDropDownList($searchModel, 'status', ["EN"=> "Encaminhado", "LE" => "Lista de Espera", 'EC' => "Entrar em Contato", "EA" => "Em Atendimento", "DE" => "Desistente", "AB" => "Abandono", "AL" => "Alta", "DV" => "Devolvido"],
+                        ['class'=>'form-control','prompt' => '']),
+                'value' => function ($model){
+
+                    $paciente = new Paciente();
+
+                    return $paciente->statusDescs[$model->status_do_paciente];
+                }
+
             ],
 
             ['class' => 'yii\grid\ActionColumn',

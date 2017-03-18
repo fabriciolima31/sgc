@@ -17,6 +17,10 @@ use yii\helpers\ArrayHelper;
  */
 class UsuarioPaciente extends \yii\db\ActiveRecord
 {
+
+    public $nome_do_paciente;
+    public $status_do_paciente;
+    public $nome_terapeuta;
     /**
      * @inheritdoc
      */
@@ -50,6 +54,7 @@ class UsuarioPaciente extends \yii\db\ActiveRecord
             'Paciente_id' => 'Paciente',
             'Usuario_id' => 'Terapeuta',
             'status' => 'Status',
+            'nome_terapeuta' => "Terapeuta",
         ];
     }
 

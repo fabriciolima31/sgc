@@ -19,7 +19,7 @@ class UsuarioPacienteSearch extends UsuarioPaciente
     {
         return [
             [['Paciente_id', 'Usuario_id'], 'integer'],
-            [['status'], 'safe'],
+            [['status', 'nome_do_paciente', 'status_do_paciente', 'nome_terapeuta' ], 'safe'],
         ];
     }
 
@@ -41,13 +41,34 @@ class UsuarioPacienteSearch extends UsuarioPaciente
      */
     public function search($params)
     {
-        $query = UsuarioPaciente::find()->where(['status' => '1']);
+        $query = UsuarioPaciente::find()
+        ->select("Usuario_Paciente.* , P.nome as nome_do_paciente, 
+            P.status as status_do_paciente, U.nome as nome_terapeuta")
+        ->innerJoin("Paciente as P","P.id = Usuario_Paciente.Paciente_id")
+        ->innerJoin("Usuarios as U","U.id = Usuario_Paciente.Usuario_id")
+        ->where(['Usuario_Paciente.status' => '1']);
 
-        // add conditions that should always apply here
+
+       // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+     $dataProvider->sort->attributes['nome_do_paciente'] = [
+        'asc' => ['nome_do_paciente' => SORT_ASC],
+        'desc' => ['nome_do_paciente' => SORT_DESC],
+        ];
+
+     $dataProvider->sort->attributes['nome_terapeuta'] = [
+        'asc' => ['nome_terapeuta' => SORT_ASC],
+        'desc' => ['nome_terapeuta' => SORT_DESC],
+        ];
+
+     $dataProvider->sort->attributes['status_do_paciente'] = [
+        'asc' => ['status_do_paciente' => SORT_ASC],
+        'desc' => ['status_do_paciente' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -57,13 +78,19 @@ class UsuarioPacienteSearch extends UsuarioPaciente
             return $dataProvider;
         }
 
+
         // grid filtering conditions
         $query->andFilterWhere([
             'Paciente_id' => $this->Paciente_id,
             'Usuario_id' => $this->Usuario_id,
+            'P.status' => $this->status,
         ]);
 
-        $query->andFilterWhere(['like', 'status', $this->status]);
+       
+        $query->andFilterWhere(['like', 'P.nome', $this->nome_do_paciente])
+            ->andFilterWhere(['like', 'U.nome', $this->nome_terapeuta]);
+
+        
 
         return $dataProvider;
     }
