@@ -28,11 +28,14 @@ class ConsultorioController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'view', 'update', 'delete'],
+                'only' => ['index', 'update','view', 'delete', 'create'],
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@' ],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo == '4';
+                        }
                     ],
                 ],
             ],
@@ -123,7 +126,7 @@ class ConsultorioController extends Controller
         if (($model = Consultorio::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('A Paǵina solicitada não existe.');
         }
     }
 }

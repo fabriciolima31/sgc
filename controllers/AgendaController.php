@@ -31,12 +31,12 @@ class AgendaController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'update', 'delete','turmas'],
+                        'actions' => ['index', 'view'],
                         'allow' => true,
                         'roles' => ['@' ],
                     ],
                     [
-                        'actions' => ['create', 'altera-status'],
+                        'actions' => ['create', 'altera-status', 'delete', 'turmas'],
                         'allow' => true,
                         'roles' => ['@' ],
                         'matchCallback' => function ($rule, $action) {
@@ -163,9 +163,6 @@ class AgendaController extends Controller
 
 
         } else {
-
-
-
             echo $model->diaSemanaArray;
 
             return $this->render('create', [
@@ -175,26 +172,6 @@ class AgendaController extends Controller
 
         }
     }
-
-    /**
-     * Updates an existing Agenda model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     */
-//    public function actionUpdate($id)
-//    {
-//        $model = $this->findModel($id);
-//
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(['view', 'id' => $model->id]);
-//        } else {
-//            return $this->render('update', [
-//                'model' => $model,
-//            ]);
-//        }
-//    }
-
 
     public function actionAlteraStatus($id)
     {
