@@ -28,11 +28,10 @@ class UsuarioPacienteController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-           /* 'access' => [
+            'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index','update','view', 'delete'],
+                'only' => ['index', 'create', 'encaminhar-terapeuta'],
                 'rules' => [
-                    // allow authenticated users
                     [
                         'allow' => true,
                         'roles' => ['@'],
@@ -40,9 +39,8 @@ class UsuarioPacienteController extends Controller
                             return Yii::$app->user->identity->tipo == '4';
                         }
                     ],
-                    // everything else is denied
                 ],
-            ],*/
+            ],
         ];
     }
 
@@ -58,20 +56,6 @@ class UsuarioPacienteController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single UsuarioPaciente model.
-     * @param string $Paciente_id
-     * @param integer $Usuario_id
-     * @param string $status
-     * @return mixed
-     */
-    public function actionView($Paciente_id, $Usuario_id, $status)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($Paciente_id, $Usuario_id, $status),
         ]);
     }
 
@@ -108,15 +92,8 @@ class UsuarioPacienteController extends Controller
         }
     }
 
-
-
-//    public function actionDelete($Paciente_id, $Usuario_id, $status)
-//    {
-//        $this->findModel($Paciente_id, $Usuario_id, $status)->delete();
-//
-//        return $this->redirect(['index']);
-//    }
-
+    
+    /*ACESSO COMPARTILHADO*/
     public function actionEncaminhar($id)
     {
         $paciente = $this->findPaciente($id);

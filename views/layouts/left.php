@@ -72,7 +72,7 @@ else{
                         'visible' => Yii::$app->user->identity->tipo == '4',
                         ] : "",
                     !Yii::$app->user->isGuest ? ['label' => 'Alocações de Pacientes', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Alocações de Alunos', 'url' => ['/aluno-turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",                
+                    !Yii::$app->user->isGuest ? ['label' => 'Alocações de Alunos', 'url' => ['/aluno-turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",                                    
                 ],
             ]
         ) ?>
