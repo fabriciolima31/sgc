@@ -46,7 +46,7 @@ class PacienteSearch extends Paciente
 
         if ($params['status'] != "") {
             $query = Paciente::find()
-                ->select("nome,status,prioridade,complexidade,turno_atendimento, data_inscricao")->where(['status' => $params['status']]);
+                ->select("id, nome,status,prioridade,complexidade,turno_atendimento, data_inscricao")->where(['status' => $params['status']]);
         }else{
             $query = Paciente::find();
         }
@@ -118,6 +118,7 @@ class PacienteSearch extends Paciente
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [ 'pageSize' => 5 ],
         ]);
 
         $this->load($params);

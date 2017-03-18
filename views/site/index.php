@@ -18,7 +18,7 @@ $this->title = 'Principal';
     
     <?= GridView::widget([
         'dataProvider' => $dataSessoesEE,
-        //'filterModel' => $searchMSessoesEE,
+        'filterModel' => $searchMSessoesEE,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
@@ -78,7 +78,7 @@ $this->title = 'Principal';
     
     <?= GridView::widget([
         'dataProvider' => $dataPacienteContato,
-        //'filterModel' => $searchPacienteContato,
+        'filterModel' => $searchPacienteContato,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             

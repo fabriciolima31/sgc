@@ -70,7 +70,7 @@ class SiteController extends Controller
         $dataPacienteContato = $searchPacienteContato->searchMeusPacientes(Yii::$app->request->queryParams,'EC');
         
         $searchMSessoesEE = new SessaoSearch();
-        $dataSessoesEE = $searchMSessoesEE->searchSessoesEE(['status' => 'EE']);
+        $dataSessoesEE = $searchMSessoesEE->searchSessoesEE(Yii::$app->request->queryParams);
         
         
         return $this->render('index', [
