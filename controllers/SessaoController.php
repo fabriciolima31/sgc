@@ -71,6 +71,11 @@ class SessaoController extends Controller
      */
     public function actionCreate($id)
     {
+        //verifica se há agendamentos vagos para o aluno terapeuta
+        $model_sessao = new Sessao ();
+        $quantidadeAgendamentosVagos = $model_sessao->verificaSeHaAgendamentoVago();
+        //fim da verificação
+
         $this->checaPaciente($id);
         
         $model = new Sessao();
@@ -112,6 +117,7 @@ class SessaoController extends Controller
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'quantidadeAgendamentosVagos' => $quantidadeAgendamentosVagos,
             ]);
         }
     }
@@ -170,11 +176,13 @@ class SessaoController extends Controller
     
     public function actionDatas($consultorio)
     {
+
         $countPosts = Agenda::find()
                 ->select("D.nome as nome_da_disciplina, T.*, Agenda.*")
-                ->where(['Consultorio_id' => $consultorio ])
                 ->innerJoin("Turma as T","T.id = Agenda.Turma_id")
                 ->innerJoin("Disciplina as D","D.id = T.Disciplina_id")
+                ->where(['Consultorio_id' => $consultorio ])
+                ->andWhere(["Agenda.Usuarios_id" => Yii::$app->user->identity->id])
                 ->andWhere(['Agenda.status' => 1])
                 ->andWhere("Agenda.data_inicio > CURDATE()")
                 ->orWhere("Agenda.data_inicio = CURDATE() AND horaInicio >= CURTIME()")
@@ -185,6 +193,7 @@ class SessaoController extends Controller
                 ->innerJoin("Turma as T","T.id = Agenda.Turma_id")
                 ->innerJoin("Disciplina as D","D.id = T.Disciplina_id")
                 ->where(['Consultorio_id' => $consultorio])
+                ->andWhere(["Agenda.Usuarios_id" => Yii::$app->user->identity->id])
                 ->andWhere(['Agenda.status' => 1])
                 ->andWhere("Agenda.data_inicio >= CURDATE()")
                 ->orWhere("Agenda.data_inicio = CURDATE() AND horaInicio >= CURTIME()")

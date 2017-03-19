@@ -132,4 +132,27 @@ class Sessao extends \yii\db\ActiveRecord
         $this->data = $dia."-".$mes."-".$ano;
     }
 
+    public function verificaSeHaAgendamentoVago (){
+
+        if(Yii::$app->user->isGuest) {
+            return $this->goHome();
+           }
+        
+       $user_logado = Yii::$app->user->identity->id;
+
+        $countPosts = Agenda::find()
+                ->select("D.nome as nome_da_disciplina, T.*, Agenda.*")
+                ->innerJoin("Turma as T","T.id = Agenda.Turma_id")
+                ->innerJoin("Disciplina as D","D.id = T.Disciplina_id")
+                ->where(["Agenda.Usuarios_id" => $user_logado])
+                ->andWhere(['Agenda.status' => 1])
+                ->andWhere("Agenda.data_inicio > CURDATE()")
+                ->orWhere("Agenda.data_inicio = CURDATE() AND horaInicio >= CURTIME()")
+                ->count();
+
+        return $countPosts;
+
+
+    }
+
 }

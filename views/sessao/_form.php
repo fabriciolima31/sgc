@@ -14,32 +14,43 @@ use yii\helpers\Url;
 ?>
 
 <div class="sessao-form">
-
-    <?php $form = ActiveForm::begin(); ?>
     
     <?php 
 
-    $dataCategory=ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
-        echo $form->field($model, 'Consultorio_id')->dropDownList($dataCategory, 
-             ['prompt'=>'Selecione um Consultório',
-              'onchange'=>'
-                $.post( "'.Url::to('index.php?r=sessao/datas&consultorio=').'"+$(this).val(), function( data ) {
-                  $( "select#data_inicio" ).html( data );
-                });
-            ']);
+    if($quantidadeAgendamentosVagos == 0){
+        echo '<div class="alert alert-danger" style="text-align: center">
+            Atenção: <strong> Você não possui agendamentos, não será possível, portanto, criar uma Sessão. <br> Solicite ao administrador a criação de um agendamento. </strong>
+        </div>';
+    }
+    else{
 
-    $dataPost=ArrayHelper::map(Agenda::find()->where('id = -999')->all(), 'id', 'data_inicio');
-        echo $form->field($model, 'data')
-            ->dropDownList(
-                $dataPost,           
-                ['prompt'=>'Selecione um Dia', 'id'=>'data_inicio',]
-        );
+        $form = ActiveForm::begin();
+
+            $dataCategory=ArrayHelper::map(Consultorio::find()->all(), 'id', 'nome');
+                echo $form->field($model, 'Consultorio_id')->dropDownList($dataCategory, 
+                     ['prompt'=>'Selecione um Consultório',
+                      'onchange'=>'
+                        $.post( "'.Url::to('index.php?r=sessao/datas&consultorio=').'"+$(this).val(), function( data ) {
+                          $( "select#data_inicio" ).html( data );
+                        });
+                    ']);
+
+            $dataPost=ArrayHelper::map(Agenda::find()->where('id = -999')->all(), 'id', 'data_inicio');
+                echo $form->field($model, 'data')
+                    ->dropDownList(
+                        $dataPost,           
+                        ['prompt'=>'Selecione um Dia', 'id'=>'data_inicio',]
+                );
+            ?>
+
+            <div class="form-group">
+                <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary', 'disabled' => $quantidadeAgendamentosVagos == 0]) ?>
+            </div>
+
+        <?php ActiveForm::end(); 
+
+    }
+
     ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Criar' : 'Salvar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
 
 </div>
