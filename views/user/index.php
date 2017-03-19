@@ -25,7 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'cpf',
             'nome',
             'email',
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+              'template'=>'{view} {update}',
+            ]
         ],
     ]); ?>
 </div>

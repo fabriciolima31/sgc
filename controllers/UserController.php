@@ -225,7 +225,7 @@ class UserController extends Controller
 
         if ($model->load(Yii::$app->request->post())){ 
 
-            $model2 = User::find()->where(["cpf" => $model->cpf])->one();
+            $model2 = User::find()->where(["cpf" => $model->cpf, "status" => "1"])->one();
 
                 if($model2 != null){
 
@@ -273,19 +273,19 @@ class UserController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $model = $this->findModel($id);
-        $model->status = '0';
-        
-        if (!$model->save(false)) {
-            Yii::$app->session->setFlash('error', "Erro ao remover Usuário.");
-        }
-        
-        Yii::$app->session->setFlash('success', "Usuario removido com sucesso.");
-
-        return $this->redirect(['index']);
-    }
+//    public function actionDelete($id)
+//    {
+//        $model = $this->findModel($id);
+//        $model->status = '0';
+//        
+//        if (!$model->save(false)) {
+//            Yii::$app->session->setFlash('error', "Erro ao remover Usuário.");
+//        }
+//        
+//        Yii::$app->session->setFlash('success', "Usuario removido com sucesso.");
+//
+//        return $this->redirect(['index']);
+//    }
 
     /**
      * Finds the User model based on its primary key value.

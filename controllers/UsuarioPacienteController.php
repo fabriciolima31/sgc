@@ -160,7 +160,7 @@ class UsuarioPacienteController extends Controller
         if (($model = UsuarioPaciente::findOne(['Paciente_id' => $Paciente_id, 'Usuario_id' => $Usuario_id, 'status' => $status])) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('Página solicitada não existe.');
         }
     }
     
@@ -176,9 +176,9 @@ class UsuarioPacienteController extends Controller
     protected function findAlocacao($id)
     {
         if(Yii::$app->user->identity->tipo == '4'){
-            $model = UsuarioPaciente::find()->where(["id" => $id])->andWhere('status = \'1\'')->one();
+            $model = UsuarioPaciente::find()->where(["paciente_id" => $id])->andWhere('status = \'1\'')->one();
         }else{
-            $model = UsuarioPaciente::find()->where(["id" => $id, 'Usuario_id' => Yii::$app->user->id])->andWhere('status = \'1\'')->one();
+            $model = UsuarioPaciente::find()->where(["paciente_id" => $id, 'Usuario_id' => Yii::$app->user->id])->andWhere('status = \'1\'')->one();
         }
         
         if ($model !== null) {
