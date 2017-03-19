@@ -54,20 +54,26 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             ['class' => 'yii\grid\ActionColumn',
-              'template'=>'{ocorreu} {naoocorreu}',
+              'template'=>'{ocorreu} {naoocorreu}  {deletar}',
                 'buttons'=>[
                     'ocorreu' => function ($url, $model) {
                         return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-ok-sign"></span>', ['sessao/altera-status','status' => 'OS',
-                        'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id], [
+                        'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id , 'idAgenda' => $model->Agenda_id], [
                             'title' => Yii::t('yii', 'Regitrar Consulta Ocorrida'),
                     ]) : "" ;
                   },
                     'naoocorreu' => function ($url, $model) {
                         return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-remove-sign"></span>', ['sessao/altera-status', 'status' => 'NO', 
-                            'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id], [
+                            'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id , 'idAgenda' => $model->Agenda_id], [
                             'title' => Yii::t('yii', 'Registrar consulta não ocorrida'),
                     ]) : "";   
-                  }
+                  },
+                'deletar' => function ($url, $model) {
+                        return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-remove"></span>', ['sessao/altera-status', 'status' => 'DL', 
+                            'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id , 'idAgenda' => $model->Agenda_id], [
+                            'title' => Yii::t('yii', 'Remover esta Sessão'),
+                    ]) : "";   
+                  },
                 ]
             ],
         ],

@@ -40,9 +40,8 @@ $this->title = 'Principal';
             [
                 'label' => 'Status',
                 'attribute' => 'status',
-                'filter' => Html::activeDropDownList($searchMSessoesEE, 'status', ['EE' => 'Em Espera', 'NO' => 'Não Ocorrida', 
-                    'OS' => 'Ocorrida', 'FE' => 'Fechada'],
-                        ['class'=>'form-control','prompt' => 'Selecione um Status']),
+                'filter' => Html::activeDropDownList($searchMSessoesEE, 'status', ['EE' => 'Em Espera', 'NO' => 'Não Ocorrida', 'OS' => 'Ocorrida', 'FE' => 'Fechada'], ['class'=>'form-control','prompt' => 'Selecione um Status']),
+                //'filter' => '',
                 'value' => function ($model) {
                     return $model->statusDesc;
                 }

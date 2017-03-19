@@ -48,7 +48,8 @@ class SessaoSearch extends Sessao
         ->select("Sessao.*, P.nome as nome_do_paciente, A.horaInicio as hora_inicio_consulta, A.data_inicio as data_inicio_consulta")
         ->innerJoin("Paciente as P","P.id = Sessao.Paciente_id")
         ->innerJoin("Agenda as A","A.id = Sessao.Agenda_id")
-        ->where(['Sessao.Usuarios_id' => Yii::$app->user->id, 'Sessao.Paciente_id' => $params2]);
+        ->where(['Sessao.Usuarios_id' => Yii::$app->user->id, 'Sessao.Paciente_id' => $params2])
+        ->andWhere(["!=","Sessao.status","DL"]);
 
         // add conditions that should always apply here
 
@@ -155,6 +156,7 @@ class SessaoSearch extends Sessao
             'id' => $this->id,
             'Consultorio_id' => $this->Consultorio_id,
             'data' => $this->data,
+            'Sessao.status' => $this->status,
         ]);
 
         $model = new Agenda();

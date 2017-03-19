@@ -118,13 +118,15 @@ class SessaoController extends Controller
         }
     }
 
-    public function actionAlteraStatus($status, $idPaciente, $idSessao){
+    public function actionAlteraStatus($status, $idPaciente, $idSessao, $idAgenda){
         
         $modelPacienteFalta = PacienteFalta::find()->where(['Paciente_id' => $idPaciente])->one();
         
         $model = Sessao::findOne(['id' => $idSessao]);
         $model->status = $status;
         $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a justificativa(observação)
+
+
 
         if($status == 'OS'){
                 $modelPacienteFalta->FaltaNaoJustificadaSeguida = 0;
@@ -133,6 +135,21 @@ class SessaoController extends Controller
                 Yii::$app->session->setFlash('success', "Registro de sessão como 'Ocorrida' efetuado com sucesso.");
                 return $this->redirect(['sessao/all', 'id' => $idPaciente]);
         }
+
+        if($status == 'DL'){
+
+                $agenda = Agenda::find()->where(["id" => $idAgenda])->one();
+                $agenda->status = "1";
+                $agenda->save(false);
+
+                $modelPacienteFalta->FaltaNaoJustificadaSeguida = 0;
+                $model->observacao = "Sessão Removida";
+                $model->save();
+                Yii::$app->session->setFlash('success', "Registro de Sessão foi removida com sucesso");
+                return $this->redirect(['sessao/all', 'id' => $idPaciente]);
+        }
+
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if($model->pacienteFalta == 'PSJ'){
