@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'nome_do_paciente',
             ],
             [
-                'label' => 'Paciente',
+                'label' => 'Terapeuta',
                 'attribute' => 'nome_terapeuta',
             ],
             [

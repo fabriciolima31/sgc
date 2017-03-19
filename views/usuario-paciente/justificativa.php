@@ -6,8 +6,10 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\UsuarioPaciente */
 
-$this->title = "Ecaminhamento para Lista de Espera";
+$this->title = "Encaminhamento para Lista de Espera";
+$this->params['breadcrumbs'][] = ['label' => 'Pacientes Alocados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="usuario-paciente-view">
 
