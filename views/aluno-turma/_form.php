@@ -15,7 +15,10 @@ $turmas = Turma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.*"
         ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
         ->where("data_fim >= CURDATE()")
         ->all();
-$usuarios = ArrayHelper::map(User::find()->where(['tipo' => '3', 'status' => '1'])->orderBy('nome')->all(), 'id', 'nome');
+
+$usuarios = ArrayHelper::map(User::find()->where(['tipo' => '3', 'status' => '1'])
+        ->andWhere('Usuarios.id not in (SELECT `Usuarios_id` FROM `Usuarios` as U JOIN `Aluno_Turma` as A ON U.id = A.Usuarios_id WHERE A.Turma_id = 2)')
+        ->orderBy('nome')->all(), 'id', 'nome');
 
 ?>
 
