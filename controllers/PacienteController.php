@@ -30,7 +30,6 @@ class PacienteController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                //'only' => ['index'],
                 'rules' => [
                     [
                         'actions' => ['index', 'create'],
@@ -201,7 +200,7 @@ class PacienteController extends Controller
         if ($model !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('A página solicitada não existe.');
         }
     }
 }

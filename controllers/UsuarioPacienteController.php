@@ -92,14 +92,13 @@ class UsuarioPacienteController extends Controller
         }
     }
 
-    
-    /*ACESSO COMPARTILHADO*/
     public function actionEncaminhar($id)
     {
+        $model = $this->findAlocacao($id);
+        
         $paciente = $this->findPaciente($id);
         $paciente->status = "DV";
-        
-        $model = UsuarioPaciente::find()->where(["Paciente_id" => $id ])->andWhere(["status" => "1"])->one();
+                
         $model->status = '0';
         $model->scenario = $this->action->id; //cenário criado para deixar como obrigatório a justificativa(observação)
        
@@ -176,7 +175,13 @@ class UsuarioPacienteController extends Controller
     
     protected function findAlocacao($id)
     {
-        if (($model = UsuarioPaciente::find()->where(["id" => $id])->andWhere('status = \'1\'')->one()) !== null) {
+        if(Yii::$app->user->identity->tipo == '4'){
+            $model = UsuarioPaciente::find()->where(["id" => $id])->andWhere('status = \'1\'')->one();
+        }else{
+            $model = UsuarioPaciente::find()->where(["id" => $id, 'Usuario_id' => Yii::$app->user->id])->andWhere('status = \'1\'')->one();
+        }
+        
+        if ($model !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('Página solicitada não existe.');

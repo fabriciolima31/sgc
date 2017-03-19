@@ -13,10 +13,6 @@ use app\models\Turma;
 
 ?>
 
-
-
-
-
 <div class="user-form">
 
 
@@ -42,8 +38,12 @@ use app\models\Turma;
         }
     ?>
   
-    <?= $form->field($model, 'tipo')->dropDownList(['1' => 'Professor', '2' => 'Psicólogo', 
-        '3' => 'Aluno Terapeuta', '4' => 'Estagiário Administrativo'], ['prompt'=>'Selecione um Perfil ']); ?>
+    <?php 
+        if(Yii::$app->user->identity->tipo == '4'){
+            echo $form->field($model, 'tipo')->dropDownList(['1' => 'Professor', '2' => 'Psicólogo', 
+            '3' => 'Aluno Terapeuta', '4' => 'Estagiário Administrativo'], ['prompt'=>'Selecione um Perfil ']); 
+        }
+    ?>
     <?php 
             if($this->context->action->id == 'create'){
     ?>
