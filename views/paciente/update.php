@@ -2,11 +2,14 @@
 
 use yii\helpers\Html;
 
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Paciente */
 
 $this->title = 'Editar: ' . $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Pacientes', 'url' => ['index']];
+if (Yii::$app->user->identity->tipo == '4'){
+	$this->params['breadcrumbs'][] = ['label' => 'Pacientes', 'url' => ['index', 'status' => '']];
+}
 $this->params['breadcrumbs'][] = ['label' => $model->nome, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
