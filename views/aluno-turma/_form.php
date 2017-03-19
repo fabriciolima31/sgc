@@ -4,8 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\models\Turma;
 use app\models\User;
-use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\AlunoTurma */
@@ -18,7 +18,7 @@ $turmas = Turma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.*"
         ->all();
 
 $usuarios = ArrayHelper::map(User::find()->where(['tipo' => '3', 'status' => '1'])
-        ->andWhere('Usuarios.id not in (SELECT `Usuarios_id` FROM `Usuarios` as U JOIN `Aluno_Turma` as A ON U.id = A.Usuarios_id WHERE A.Turma_id = 2)')
+        ->andWhere('Usuarios.id not in (SELECT `Usuarios_id` FROM `Usuarios` as U JOIN `Aluno_Turma` as A ON U.id = A.Usuarios_id WHERE A.Turma_id = '.$model->Turma_id.')')
         ->orderBy('nome')->all(), 'id', 'nome');
 ?>
 

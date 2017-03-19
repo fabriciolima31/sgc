@@ -49,7 +49,7 @@ class Agenda extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Consultorio_id', 'Usuarios_id', 'horaInicio', 'horaFim','diaSemanaArray', 'Turma_id'], 'required'],
+            [['Consultorio_id', 'Usuarios_id', 'horaInicio', 'horaFim','diaSemanaArray', 'Turma_id', 'data_inicio', 'data_fim'], 'required'],
             [['diaSemana','Consultorio_id', 'Usuarios_id' ,'Turma_id'], 'integer'],
             [['diaSemanaArray','horaInicio', 'horaFim', 'data_inicio', 'data_fim'], 'safe'],
             [['horaInicio'], 'validateHoraIni'],
@@ -69,12 +69,12 @@ class Agenda extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'Consultorio_id' => 'Consultorio',
-            'Usuarios_id' => 'Usuário',
-            'horaInicio' => 'Hora Inicio',
+            'Consultorio_id' => 'Consultório',
+            'Usuarios_id' => 'Terapeuta',
+            'horaInicio' => 'Hora Início',
             'horaFim' => 'Hora Fim',
             'status' => 'Status',
-            'data_inicio' => 'Data Inicio',
+            'data_inicio' => 'Data Início',
             'data_fim' => 'Data Fim',
             'diaSemanaArray' => 'Dia da Semana',
             'Turma_id' => 'Disciplina/Turma',
@@ -270,10 +270,25 @@ class Agenda extends \yii\db\ActiveRecord
      * Indica de quem está logado é o dono do agendamento
      */
     public function checarAgendamento(){
-        if(Yii::$app->user->identity->tipo == '4')
+        if (Yii::$app->user->identity->tipo == '4') {
             return true;
-        else
+        } else {
             return $this->Usuarios_id == Yii::$app->user->id;
+        }
+    }
+    
+    public function dependenciasAgendamento(){
+        $consultorio = Consultorio::find()->where(['status' => '1'])->count();
+        $terapeutas = User::find()->where(['tipo' => 3])->count();
+        $tumasTerapeutas = AlunoTurma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.codigo as codigo_da_turma, Turma.id as id_da_turma")
+                ->innerJoin("Turma","Turma.id = Aluno_Turma.Turma_id")
+                ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
+                ->where(['Usuarios_id' => $id_terapeuta ])
+                ->andWhere("Turma.data_fim > CURDATE()")
+                ->count();
+        
+        
+        
     }
 
 }

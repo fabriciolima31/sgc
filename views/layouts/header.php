@@ -23,7 +23,7 @@ else{
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img src="icomp-logo.png" width="88" /></span>
+      <span class="logo-lg"><img src="imagens/icomp-logo.png" width="88" /></span>
     </a>
 
     <nav class="navbar navbar-static-top" role="navigation">
