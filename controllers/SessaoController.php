@@ -31,9 +31,8 @@ class SessaoController extends Controller
             ],
             'access' => [
                 'class' => \yii\filters\AccessControl::className(),
-                'only' => ['index', 'all', 'update','view', 'delete', 'altera-status', 'datas'],
+                'only' => ['all', 'view', 'delete', 'altera-status', 'datas'],
                 'rules' => [
-                    // allow authenticated users
                     [
                         'allow' => true,
                         'roles' => ['@'],
@@ -41,7 +40,6 @@ class SessaoController extends Controller
                             return Yii::$app->user->identity->tipo == '3';
                         }
                     ],
-                    // everything else is denied
                 ],
             ],
         ];
@@ -218,7 +216,7 @@ class SessaoController extends Controller
         if (($model = Sessao::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException('A página solicitada não existe.');
         }
     }
     

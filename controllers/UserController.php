@@ -33,14 +33,6 @@ class UserController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
-                        'allow' => true,
-                        'roles' => ['@' ],
-                        'matchCallback' => function ($rule, $action) {
-                            return Yii::$app->user->identity->tipo == '4';
-                        }
-                    ],
-                    [
                         'actions' => ['index', 'delete'],
                         'allow' => true,
                         'roles' => ['@' ],
@@ -57,7 +49,7 @@ class UserController extends Controller
                     [
                         'actions' => ['create','esquecisenha'],
                         'allow' => true,
-                        'roles' => ['@' , '?'],
+                        'roles' => ['?'],
                     ],
                             
                 ],
@@ -174,7 +166,9 @@ class UserController extends Controller
         $model->password = "";
 
         if ($model->load(Yii::$app->request->post())){
-
+            if(Yii::$app->user->identity->tipo == '3'){
+                $model->tipo = '3';
+            }
             $atributos = $model->attributes();
             $atributos = array_diff($atributos, ["password","cpf"]);
 
@@ -196,7 +190,7 @@ class UserController extends Controller
 
     public function actionUpdatesenha($id)
     {
-        $model = $this->tipoAcesso($id);
+        $model = $this->findYourPerfil();
         $senha = $model->password;
         $model->password = "";
 

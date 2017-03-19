@@ -2,13 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-use app\models\Relatorio;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\User */
 
 $this->title = $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Usuários', 'url' => ['index']];
+$this->params['breadcrumbs'][] = Yii::$app->user->identity->tipo == '4' ? ['label' => 'Usuários', 'url' => ['index']] : "";
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
@@ -16,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Editar Dados', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Editar Senha', ['updatesenha', 'id' => $model->id], ['class' => 'btn btn-info']) ?>
+        <?= Yii::$app->user->id == $model->id ? Html::a('Editar Dados', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
+        <?= Yii::$app->user->id == $model->id ?  Html::a('Editar Senha', ['updatesenha', 'id' => $model->id], ['class' => 'btn btn-info']) : "" ?>
         <?= Html::a('Remover', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
@@ -43,12 +42,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]) ?>
-
-    <?php
-    
-
-
-
-    ?>
 
 </div>
