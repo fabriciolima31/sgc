@@ -60,18 +60,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-ok-sign"></span>', ['sessao/altera-status','status' => 'OS',
                         'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id , 'idAgenda' => $model->Agenda_id], [
                             'title' => Yii::t('yii', 'Regitrar Consulta Ocorrida'),
+                            'data-confirm' => Yii::t('yii', 'Você tem certeza que deseja marcar esta Sessão como OCORRIDA?'),
+                            'data-method'=>'POST',
                     ]) : "" ;
                   },
                     'naoocorreu' => function ($url, $model) {
                         return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-remove-sign"></span>', ['sessao/altera-status', 'status' => 'NO', 
                             'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id , 'idAgenda' => $model->Agenda_id], [
                             'title' => Yii::t('yii', 'Registrar consulta não ocorrida'),
+                            'data-confirm' => Yii::t('yii', 'Você tem certeza que deseja marcar esta Sessão como NÃO ocorrida?'),
+                            'data-method'=>'POST',
                     ]) : "";   
                   },
                 'deletar' => function ($url, $model) {
-                        return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-remove"></span>', ['sessao/altera-status', 'status' => 'DL', 
+                        return $model->status == 'EE' ? Html::a('<span class="glyphicon glyphicon-trash"></span>', ['sessao/altera-status', 'status' => 'DL', 
                             'idPaciente' => $model->Paciente_id, 'idSessao' => $model->id , 'idAgenda' => $model->Agenda_id], [
                             'title' => Yii::t('yii', 'Remover esta Sessão'),
+                            'data-confirm' => Yii::t('yii', 'Você tem certeza que deseja remover esta Sessão?'),
+                            'data-method'=>'POST',
                     ]) : "";   
                   },
                 ]
