@@ -103,7 +103,7 @@ class Relatorio extends \yii\db\ActiveRecord
 
 //O aluno x atendeu 20 pacientes da disciplina Y cujo professor é o Z
 
-        $html ="<hr><h1 style='text-align:left'> Informações Estatísticas sobre Atendimentos </h1>";
+        $html ="<legend><hr><h2 style='text-align:left'> Informações Estatísticas sobre Atendimentos </h2></legend>";
 
         $html = $html. "<table class='table'>";
             $html = $html . "<tr>";   

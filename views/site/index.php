@@ -14,7 +14,7 @@ $this->title = 'Principal';
 ?>
 <div class="sessao-index">
 
-    <legend><h1>Sessões Agendadas</h1></legend>
+    <legend><h2>Sessões Agendadas</h2></legend>
     
     <?= GridView::widget([
         'dataProvider' => $dataSessoesEE,
@@ -61,7 +61,7 @@ $this->title = 'Principal';
     ]); ?>
 
     
-    <legend><h1>Pacientes Pendentes de Contato</h1></legend>
+    <legend><h2>Pacientes Pendentes de Contato</h2></legend>
     
     <?= GridView::widget([
         'dataProvider' => $dataPacienteContato,
