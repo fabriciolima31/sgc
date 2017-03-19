@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use app\models\Agenda;
-use app\models\Paciente;
 use app\models\Relatorio;
 
 /* @var $this yii\web\View */
@@ -13,8 +11,13 @@ use app\models\Relatorio;
 $this->title = 'Principal';
 ?>
 <div class="sessao-index">
+    
+   <!-- <?= Html::img('imagens/ufam.png', ['alt'=>'ufam', 'width' => '5%'])?> -->
+    
+    <h2 align='center'> ***** - CSPA</h2>
+    <p class="lead" align="center">Seja Bem Vindo ao Sistema de Gerencimento de Consultas</p>
 
-    <legend><h1>Sessões Agendadas</h1></legend>
+    <legend><h2>Sessões Agendadas</h2></legend>
     
     <?= GridView::widget([
         'dataProvider' => $dataSessoesEE,
@@ -41,7 +44,6 @@ $this->title = 'Principal';
                 'label' => 'Status',
                 'attribute' => 'status',
                 'filter' => Html::activeDropDownList($searchMSessoesEE, 'status', ['EE' => 'Em Espera', 'NO' => 'Não Ocorrida', 'OS' => 'Ocorrida', 'FE' => 'Fechada'], ['class'=>'form-control','prompt' => 'Selecione um Status']),
-                //'filter' => '',
                 'value' => function ($model) {
                     return $model->statusDesc;
                 }
@@ -61,7 +63,7 @@ $this->title = 'Principal';
     ]); ?>
 
     
-    <legend><h1>Pacientes Pendentes de Contato</h1></legend>
+    <legend><h2>Pacientes Pendentes de Contato</h2></legend>
     
     <?= GridView::widget([
         'dataProvider' => $dataPacienteContato,

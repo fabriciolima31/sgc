@@ -32,15 +32,16 @@ else{
             [
                 'options' => ['class' => 'sidebar-menu'],
                 'items' => [
-                    !Yii::$app->user->isGuest ? ['label' => 'Início', 'url' => ['/site/index']]: "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Disciplinas', 'url' => ['/disciplina/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Consultórios', 'url' => ['/consultorio/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Agendamento', 'url' => ['/agenda/index'], 'visible' => Yii::$app->user->identity->tipo != '4']: "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Turmas', 'url' => ['/turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Agendamento', 'url' => ['/agenda/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Início', 'icon' => 'fa fa-home', 'url' => ['/site/index']]: "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Disciplinas', 'icon' => 'fa fa-book' ,'url' => ['/disciplina/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Consultórios', 'icon' => 'fa fa-bank' ,'url' => ['/consultorio/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Agendamento', 'icon' => 'fa fa-calendar' ,'url' => ['/agenda/index'], 'visible' => Yii::$app->user->identity->tipo != '4']: "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Turmas', 'icon' => 'fa fa-graduation-cap' ,'url' => ['/turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Agendamento', 'icon' => 'fa fa-calendar' ,'url' => ['/agenda/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
                     
                     !Yii::$app->user->isGuest ? [
                         'label' => 'Listas de Pacientes',
+                        'icon' => 'fa fa-users',
                         'items' => [
                             ['label' => 'Lista de Espera', 'url' => ["/paciente/index", "status" => 'LE'], 
                                 'visible' => Yii::$app->user->identity->tipo == '4'], 
@@ -63,6 +64,7 @@ else{
                     
                     !Yii::$app->user->isGuest ? [
                         'label' => 'Usuários',
+                        'icon' => 'fa fa-users',
                         'items' => [
                             ['label' => 'Professores', 'url' => ["/user/index", "perfil" =>1]], 
                             ['label' => 'Psicólogos', 'url' => ["/user/index", "perfil" =>2]], 
@@ -71,8 +73,8 @@ else{
                         ], 
                         'visible' => Yii::$app->user->identity->tipo == '4',
                         ] : "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Alocações de Pacientes', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Alocações de Alunos', 'url' => ['/aluno-turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",                                    
+                    !Yii::$app->user->isGuest ? ['label' => 'Alocações de Pacientes', 'icon' => 'fa fa-street-view', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Alocações de Alunos', 'icon' => 'fa fa-street-view', 'url' => ['/aluno-turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",                                    
                 ],
             ]
         ) ?>

@@ -194,12 +194,14 @@ class AgendaController extends Controller
                 ->innerJoin("Turma","Turma.id = Aluno_Turma.Turma_id")
                 ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
                 ->where(['Usuarios_id' => $id_terapeuta ])
+                ->andWhere("Turma.data_fim > CURDATE()")
                 ->count();
  
         $posts = AlunoTurma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.codigo as codigo_da_turma, Turma.id as id_da_turma")
                 ->innerJoin("Turma","Turma.id = Aluno_Turma.Turma_id")
                 ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
                 ->where(['Usuarios_id' => $id_terapeuta ])
+                ->andWhere("Turma.data_fim > CURDATE()")
                 ->all();
  
         if($countPosts>0){
