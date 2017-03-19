@@ -10,7 +10,10 @@ use kartik\datecontrol\DateControl;
 use dosamigos\datepicker\DatePicker;
 use yii\helpers\Url;
 use kartik\select2\Select2;
+use app\models\Agenda;
 
+$agenda = new Agenda();
+$agendaDependencias = $agenda->dependenciasAgendamento();
 
 
 /* @var $this yii\web\View */
@@ -74,6 +77,12 @@ use kartik\select2\Select2;
 
 <div class="agenda-form">
 
+    <?php if ($agendaDependencias != []){ ?>
+        <div class="alert alert-danger" style="text-align: center">
+            Atenção: <strong> Requisitos insuficientes para criar agendamento. Cadastre ou ative os seguintes itens: <?= implode(', ', $agendaDependencias) ?>. </strong>
+        </div>
+    <?php }else{ ?>
+    
     <?php $form = ActiveForm::begin(); ?>
 
 <?php 
@@ -84,7 +93,7 @@ use kartik\select2\Select2;
 
 <?php
 
-    $usuarios=ArrayHelper::map(User::find()->where(['tipo' => 3])->all(), 'id', 'nome');
+    $usuarios=ArrayHelper::map(User::find()->where(['tipo' => 3, 'status' => '1'])->all(), 'id', 'nome');
         echo
         $form->field($model, 'Usuarios_id')->widget(Select2::classname(), [
             'data' => $usuarios,
@@ -166,7 +175,7 @@ use kartik\select2\Select2;
     <?php ActiveForm::end(); ?>
 
 </div>
-
+    <?php } ?>
 <head>  
 
 <script type="text/javascript">

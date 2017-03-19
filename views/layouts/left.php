@@ -12,10 +12,7 @@ else{
     die;
 }
 
-
 ?>
-
-
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -36,9 +33,15 @@ else{
                     !Yii::$app->user->isGuest ? ['label' => 'Disciplinas', 'icon' => 'fa fa-book' ,'url' => ['/disciplina/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
                     !Yii::$app->user->isGuest ? ['label' => 'Consultórios', 'icon' => 'fa fa-bank' ,'url' => ['/consultorio/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",
                     !Yii::$app->user->isGuest ? ['label' => 'Agendamento', 'icon' => 'fa fa-calendar' ,'url' => ['/agenda/index'], 'visible' => Yii::$app->user->identity->tipo != '4']: "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Turmas', 'icon' => 'fa fa-graduation-cap' ,'url' => ['/turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
+                    !Yii::$app->user->isGuest ? [
+                        'label' => 'Turmas',
+                        'icon' => 'fa fa-graduation-cap',
+                        'items' => [
+                            ['label' => 'Lista de Turmas', 'icon' => 'fa fa-list', 'url' => ['/turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4'],
+                            ['label' => 'Alunos Alocados', 'icon' => 'fa fa-street-view', 'url' => ['/aluno-turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4'],
+                            ],
+                        ] : "",                       
                     !Yii::$app->user->isGuest ? ['label' => 'Agendamento', 'icon' => 'fa fa-calendar' ,'url' => ['/agenda/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
-                    
                     !Yii::$app->user->isGuest ? [
                         'label' => 'Listas de Pacientes',
                         'icon' => 'fa fa-users',
@@ -74,7 +77,6 @@ else{
                         'visible' => Yii::$app->user->identity->tipo == '4',
                         ] : "",
                     !Yii::$app->user->isGuest ? ['label' => 'Alocações de Pacientes', 'icon' => 'fa fa-street-view', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
-                    !Yii::$app->user->isGuest ? ['label' => 'Alocações de Alunos', 'icon' => 'fa fa-street-view', 'url' => ['/aluno-turma/index'], 'visible' => Yii::$app->user->identity->tipo == '4']: "",                                    
                 ],
             ]
         ) ?>

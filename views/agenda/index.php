@@ -2,11 +2,22 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use app\models\User;
+use app\models\Agenda;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\AgendaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+$agenda = new Agenda();
+$agendaDependencias = $agenda->dependenciasAgendamento();
+
+    if ($agendaDependencias != []){ ?>
+        <div class="alert alert-danger" style="text-align: center">
+            Atenção: <strong> Requisitos insuficientes para criar agendamento. Cadastre ou ative os seguintes itens: <?= implode(', ', $agendaDependencias) ?>. </strong>
+        </div>
+    <?php }
+
+
 
 $this->title = 'Agendamento';
 $this->params['breadcrumbs'][] = $this->title;

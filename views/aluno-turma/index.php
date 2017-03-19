@@ -7,13 +7,13 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AlunoTurmaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Alocações de Alunos em Turmas - Turmas';
+$this->title = 'Turmas - Alunos Alocados';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aluno-turma-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <p>Selecione um turma para vizualizar os alunos alocados</p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

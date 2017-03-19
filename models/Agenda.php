@@ -278,17 +278,27 @@ class Agenda extends \yii\db\ActiveRecord
     }
     
     public function dependenciasAgendamento(){
+        
+        $arrayDependencias = array();
+        
         $consultorio = Consultorio::find()->where(['status' => '1'])->count();
-        $terapeutas = User::find()->where(['tipo' => 3])->count();
-        $tumasTerapeutas = AlunoTurma::find()->select("Disciplina.nome as nome_da_disciplina, Turma.codigo as codigo_da_turma, Turma.id as id_da_turma")
-                ->innerJoin("Turma","Turma.id = Aluno_Turma.Turma_id")
-                ->innerJoin("Disciplina","Disciplina.id = Turma.Disciplina_id")
-                ->where(['Usuarios_id' => $id_terapeuta ])
-                ->andWhere("Turma.data_fim > CURDATE()")
-                ->count();
+        $terapeutas = User::find()->where(['tipo' => 3, 'status' => '1'])->count();
+        $turmas = Turma::find()->where("Turma.data_fim > CURDATE()")->count();
+        
+        if ($consultorio < 1) {
+            array_push($arrayDependencias, "Consultórios");
+        }
+        
+        if ($terapeutas < 1) {
+            array_push($arrayDependencias, "Terapeutas");
+        }
+        
+        if ($turmas < 1) {
+            array_push($arrayDependencias, "Turmas");
+        }
         
         
-        
+        return $arrayDependencias;
     }
 
 }
