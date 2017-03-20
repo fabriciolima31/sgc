@@ -7,8 +7,8 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\AlunoTurmaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Alocações de Alunos em Turmas - Alunos';
-$this->params['breadcrumbs'][] = ['label' => 'Alocações de Alunos em Turmas - Turmas', 'url' => ['index']];
+$this->title = 'Turmas - Alunos Alocados em '.$turma->disciplina->nome." - ".$turma->codigo;
+$this->params['breadcrumbs'][] = ['label' => 'Turmas - Alunos Alocados', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aluno-turma-index">

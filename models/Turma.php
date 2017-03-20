@@ -126,4 +126,24 @@ class Turma extends \yii\db\ActiveRecord
         $dia = substr($this->data_fim,8,2); //pega os 2 caracteres, a contar do índice 0
         $this->data_fim = $dia."-".$mes."-".$ano;
     }
+    
+        public function dependenciasTurma(){
+        
+        $arrayDependencias = array();
+        
+        $professor = User::find()->where(['tipo' => '1', 'status' => '1'])->count();
+        $disciplina = Disciplina::find()->where(['status' => '1'])->count();
+        
+       
+        if ($professor < 1) {
+            array_push($arrayDependencias, "Professores");
+        }
+        
+        if ($disciplina < 1) {
+            array_push($arrayDependencias, "Disciplinas");
+        }
+        
+        
+        return $arrayDependencias;
+    }
 }

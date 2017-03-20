@@ -4,8 +4,11 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Disciplina;
+use app\models\Turma;
 use app\models\User;
 
+$disciplina = new Turma();
+$disciplinaDependencias = $disciplina->dependenciasTurma();
 
 
 /* @var $this yii\web\View */
@@ -14,6 +17,12 @@ use app\models\User;
 ?>
 
 <div class="turma-form">
+    
+     <?php if ($disciplinaDependencias != []){ ?>
+        <div class="alert alert-danger" style="text-align: center">
+            Atenção: <strong> Requisitos insuficientes para criar uma turma. Cadastre ou ative os seguintes itens: <?= implode(', ', $disciplinaDependencias) ?>. </strong>
+        </div>
+    <?php }else{ ?>
     
     <?php $form = ActiveForm::begin(); ?>
 
@@ -60,3 +69,4 @@ use app\models\User;
     <?php ActiveForm::end(); ?>
 
 </div>
+    <?php } ?>

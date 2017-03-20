@@ -6,8 +6,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\AlunoTurma */
 
-$this->title = 'Alocar Aluno à Turma';
-$this->params['breadcrumbs'][] = ['label' => 'Alocações de Alunos em Turmas - Alunos', 'url' => ['index']];
+$this->title = 'Alocar Aluno à Turma: '. $model->turma->disciplina->nome.' - '.$model->turma->codigo;
+$this->params['breadcrumbs'][] = ['label' => 'Turmas - Alunos Alocados', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Alunos - Alunos Alocados', 'url' => ['index-alunos', 'id' => $model->Turma_id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="aluno-turma-create">

@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\AlunoTurma;
+use app\models\Turma;
 use app\models\AlunoTurmaSearch;
 use app\models\TurmaSearch;
 use yii\web\Controller;
@@ -69,11 +70,14 @@ class AlunoTurmaController extends Controller
     {
         $searchModel = new AlunoTurmaSearch();
         $dataProvider = $searchModel->searchAlunos( Yii::$app->request->queryParams , $id);
+        
+        $turma = Turma::find()->where(['id' => $id])->one();
 
         return $this->render('indexAlunos', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'id' => $id,
+            'turma' => $turma,
         ]);
     }
 
