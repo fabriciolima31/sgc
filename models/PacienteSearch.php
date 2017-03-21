@@ -20,7 +20,7 @@ class PacienteSearch extends Paciente
     {
         return [
             [['id'], 'integer'],
-            [['nome', 'status', 'sexo', 'data_nascimento', 'telefone', 'endereco', 'moradia', 'turno_atendimento', 'local_encaminhamento', 'local_terapia', 'motivo_psicoterapia', 'servico', 'observacao', 'data_inscricao'], 'safe'],
+            [['nome', 'status', 'sexo', 'data_nascimento', 'telefone', 'endereco', 'moradia', 'turno_atendimento', 'local_encaminhamento', 'local_terapia', 'motivo_psicoterapia', 'servico', 'observacao', 'data_inscricao', 'nome_do_terapeuta'], 'safe'],
             [['prioridade', 'complexidade'], 'safe'],
         ];
     }
@@ -46,9 +46,15 @@ class PacienteSearch extends Paciente
 
         if ($params['status'] != "") {
             $query = Paciente::find()
-                ->select("id, nome,status,prioridade,complexidade,turno_atendimento, data_inscricao")->where(['status' => $params['status']]);
+                ->select("Paciente.id, Paciente.nome, Paciente.status, Paciente.prioridade, Paciente.complexidade,Paciente.turno_atendimento, Paciente.data_inscricao, U.nome as nome_do_terapeuta")
+                ->leftJoin("Usuario_Paciente as UP", "UP.Paciente_id = Paciente.id")
+                ->leftJoin("Usuarios as U", "UP.Usuario_id = U.id")
+                ->where(['Paciente.status' => $params['status']]);
         }else{
-            $query = Paciente::find();
+            $query = Paciente::find()
+                ->select("Paciente.id, Paciente.nome, Paciente.status, Paciente.prioridade, Paciente.complexidade,Paciente.turno_atendimento, Paciente.data_inscricao, U.nome as nome_do_terapeuta")
+                ->leftJoin("Usuario_Paciente as UP", "UP.Paciente_id = Paciente.id")
+                ->leftJoin("Usuarios as U", "UP.Usuario_id = U.id");
         }
 
 
@@ -57,6 +63,11 @@ class PacienteSearch extends Paciente
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+     $dataProvider->sort->attributes['nome_do_terapeuta'] = [
+        'asc' => ['nome_do_terapeuta' => SORT_ASC],
+        'desc' => ['nome_do_terapeuta' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -85,6 +96,7 @@ class PacienteSearch extends Paciente
 //            ->andFilterWhere(['like', 'observacao', $this->observacao])
             ->andFilterWhere(['like', 'complexidade', $this->complexidade])
             ->andFilterWhere(['like', 'data_inscricao', $this->data_inscricao])
+            ->andFilterWhere(['like', 'U.nome', $this->nome_do_terapeuta])
             ->andFilterWhere(['like', 'prioridade', $this->prioridade]);
 
         if($this->data_inscricao != ""){

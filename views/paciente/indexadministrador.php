@@ -9,6 +9,10 @@ use yii\grid\GridView;
 
 $this->title = 'Pacientes - '.$statusDescricao;
 $this->params['breadcrumbs'][] = $this->title;
+
+//var_dump($dataProvider->getModels());die;
+
+
 ?>
 <div class="paciente-index">
 
@@ -20,10 +24,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        /*'rowOptions'=>function($model){
+            if($model->nome_do_terapeuta == null){
+                return ['class' => 'warning'];
+            }
+        },
+        */
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'nome',            
+            'nome',
+            [
+            'attribute'=>'nome_do_terapeuta',
+            'format' => 'raw',
+            'value' => function ($model){
+                if($model->nome_do_terapeuta == null){
+                    return "<div style='color:red'> <b>Não foi alocado</b> </div>";
+                }
+                return $model->nome_do_terapeuta;
+
+            },
+            ],
             [
                 'label' => 'Status',
                 'attribute' => 'status',

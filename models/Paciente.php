@@ -38,6 +38,8 @@ class Paciente extends \yii\db\ActiveRecord
     public $complexidadeArray = ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'];
     
     public $turno_atendimentoArray = ['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite'];
+
+    public $nome_do_terapeuta;
         
     /**
      * @inheritdoc
