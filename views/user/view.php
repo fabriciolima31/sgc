@@ -17,13 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Yii::$app->user->id == $model->id ? Html::a('Editar Dados', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) : "" ?>
         <?= Yii::$app->user->id == $model->id ?  Html::a('Editar Senha', ['updatesenha', 'id' => $model->id], ['class' => 'btn btn-info']) : "" ?>
-        <?= Html::a('Remover', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Você tem certeza que deseja REMOVER este usuário: \''.$model->nome.'\'?',
-                'method' => 'post',
-            ],
-        ]) ?>
     </p>
 
     <?= DetailView::widget([

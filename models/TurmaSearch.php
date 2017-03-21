@@ -45,7 +45,7 @@ class TurmaSearch extends Turma
     {
         $query = Turma::find()->select("Turma.* , PT.*, Usuarios.nome as nome_do_usuario, Usuarios.id as Professor_id")
         ->innerJoin("Professor_Turma as PT","PT.Turma_id = Turma.id")
-        ->innerJoin("Usuarios","Usuarios.id = PT.Usuarios_id");
+        ->innerJoin("Usuarios","Usuarios.id = PT.Usuarios_id")->orderBy('data_fim');
 
         // add conditions that should always apply here
 
