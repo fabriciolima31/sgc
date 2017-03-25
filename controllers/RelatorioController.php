@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use kartik\mpdf\Pdf;
 use app\models\Relatorio;
+use app\models\RelatorioSearch;
 
 
 /**
@@ -50,6 +51,35 @@ class RelatorioController extends Controller
 
 
     return $pdf->render();
+
+    }
+
+
+    function actionIndex(){
+
+        $searchModel = new RelatorioSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $relatorio = new Relatorio();
+
+        if (Yii::$app->user->identity->tipo == '3'){
+            $id = Yii::$app->user->identity->id;
+            $relatorio = $relatorio->getDadosParaRelatorioAluno($id);
+        }
+        else{
+            $id = Yii::$app->user->identity->id;
+            $relatorio = $relatorio->getDadosParaRelatorioProfessor($id);
+        }
+
+
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'relatorio' => $relatorio,
+
+        ]);
+
 
     }
 

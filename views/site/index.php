@@ -137,6 +137,8 @@ $this->title = 'Principal';
 
 
     <?php
+
+        /*
     
         if(Yii::$app->user->identity->tipo == '3' || Yii::$app->user->identity->tipo == '2'){
             
@@ -147,6 +149,8 @@ $this->title = 'Principal';
             $html = $model->getDadosParaRelatorio($id);
             echo $html;
         }
+
+        */
 
 
     ?>
