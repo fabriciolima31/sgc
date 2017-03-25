@@ -10,6 +10,9 @@ use yii\grid\GridView;
 $this->title = 'Alunos';
 $this->params['breadcrumbs'][] = ['label' => 'Turmas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+
+
 ?>
 <div class="user-index">
 
@@ -21,8 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'nome',
             [
-            'label' => 'Nº Atendimentos',
+            'attribute' => 'quantidade_atendimentos',
             ],
+
             ['class' => 'yii\grid\ActionColumn',
               'template'=>'',
             ]

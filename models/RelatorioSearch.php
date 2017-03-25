@@ -10,6 +10,9 @@ use app\models\Relatorio;
 
 class RelatorioSearch extends Relatorio
 {
+
+    public $quantidade_atendimentos;
+
     /**
      * @inheritdoc
      */
@@ -18,6 +21,7 @@ class RelatorioSearch extends Relatorio
         return [
             //[['id'], 'integer'],
             //[['cpf', 'password', 'nome', 'tipo', 'email'], 'safe'],
+            //[['quantidade_atendimentos', 'nome'], 'safe'],
         ];
     }
 
@@ -116,10 +120,29 @@ class RelatorioSearch extends Relatorio
 
             $query = User::find()
             ->alias("U")
-            ->select("U.nome")
-            ->innerJoin("Aluno_Turma as AT","AT.Usuarios_id = U.id")
+            ->select("U.nome, COUNT(S.id) as quantidade_atendimentos")
+            ->leftJoin("Aluno_Turma as AT","AT.Usuarios_id = U.id")
+            ->leftJoin("Sessao as S","S.Usuarios_id = U.id")
             ->where(["AT.Turma_id" => $id_da_turma])
-            ->andWhere("U.tipo = 3");
+            ->andWhere("U.tipo = 3")
+            ->andWhere(["S.status" => "OS" ])
+            ->groupBy("U.nome")
+            ->having("quantidade_atendimentos > 0")
+            ;
+
+            $query2 = User::find()
+            ->alias("U")
+            ->select("U.nome, COUNT(S.id) as quantidade_atendimentos")
+            ->leftJoin("Aluno_Turma as AT","AT.Usuarios_id = U.id")
+            ->leftJoin("Sessao as S","S.Usuarios_id = U.id")
+            ->where(["AT.Turma_id" => $id_da_turma])
+            ->andWhere("U.tipo = 3")
+            ->groupBy("U.nome")
+            ->having("quantidade_atendimentos = 0")
+            ;            
+
+            $query->union($query2,false);
+
 /*
             $query = $query->asArray()->all();
 

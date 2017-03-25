@@ -28,8 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'nome',
             'codigo_turma',
-            'data_inicio',
-            'data_fim',
+            [
+                'attribute'=>'data_inicio',
+                'format' => ['date', 'php:d-m-Y'],
+            ],
+            [
+                'attribute'=>'data_fim',
+                'format' => ['date', 'php:d-m-Y'],
+            ],
 
             ['class' => 'yii\grid\ActionColumn',
               'template'=>'{view}',

@@ -8,6 +8,12 @@ use Yii;
 class Relatorio extends \yii\db\ActiveRecord
 {
 
+    public static function tableName()
+    {
+        return 'Usuarios';
+    }
+
+
     public function getHtmlParaRelatorioPdf(){
 
         $id_usuario_logado = Yii::$app->user->identity->id;

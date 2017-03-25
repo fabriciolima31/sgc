@@ -18,7 +18,10 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
 {
     public $password_repeat;
     public $turmasArray;
-    /**
+
+    public $quantidade_atendimentos;
+
+   /**
      * @inheritdoc
      */
     public static function tableName()
