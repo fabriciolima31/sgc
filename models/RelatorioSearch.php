@@ -71,4 +71,81 @@ class RelatorioSearch extends Relatorio
 
         return $dataProvider;
     }
+
+    public function searchDisciplina($params)
+    {
+            $id_usuario_logado = Yii::$app->user->identity->id;
+
+            $query = Disciplina::find()
+            ->alias("D")
+            ->select("D.nome , T.codigo as codigo_turma, T.data_inicio, T.data_fim, T.id")
+            ->leftJoin("Turma as T","T.Disciplina_id = D.id")
+            ->leftJoin("Professor_Turma as PT","PT.Turma_id = T.id")
+            ->where(["PT.Usuarios_id" => $id_usuario_logado])
+            ->andWhere("D.status = 1")
+            ;
+
+            /*$query = $query->asArray()->all();
+
+            for ($i=0; $i<count($query); $i++){
+                print_r($query[$i]);
+                echo "<br><br>";
+            }
+            die;
+            */
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        return $dataProvider;
+    }
+
+
+
+    public function searchAlunos($params, $id_da_turma)
+    {
+
+            $query = User::find()
+            ->alias("U")
+            ->select("U.nome")
+            ->innerJoin("Aluno_Turma as AT","AT.Usuarios_id = U.id")
+            ->where(["AT.Turma_id" => $id_da_turma])
+            ->andWhere("U.tipo = 3");
+/*
+            $query = $query->asArray()->all();
+
+            for ($i=0; $i<count($query); $i++){
+                print_r($query[$i]);
+                echo "<br><br>";
+            }
+            die;
+*/
+            
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
+
+        return $dataProvider;
+    }
+
+
+
 }

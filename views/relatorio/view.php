@@ -7,36 +7,25 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-
-
-$this->title = 'Disciplinas';
+$this->title = 'Alunos';
+$this->params['breadcrumbs'][] = ['label' => 'Turmas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-
-    <?php //echo $relatorio ?>
-
-
-    <?php 
-
-        echo GridView::widget([
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             'nome',
-            'codigo_turma',
-            'data_inicio',
-            'data_fim',
-
+            [
+            'label' => 'Nº Atendimentos',
+            ],
             ['class' => 'yii\grid\ActionColumn',
-              'template'=>'{view}',
+              'template'=>'',
             ]
         ],
-    ]); 
-
-
-    ?>
+    ]); ?>
 </div>

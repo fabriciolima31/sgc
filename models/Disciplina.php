@@ -14,6 +14,11 @@ use Yii;
  */
 class Disciplina extends \yii\db\ActiveRecord
 {
+
+    public $codigo_turma;
+    public $data_inicio;
+    public $data_fim;
+
     /**
      * @inheritdoc
      */

@@ -55,12 +55,13 @@ class RelatorioController extends Controller
     }
 
 
-    function actionIndex(){
+    public function actionIndex(){
 
         $searchModel = new RelatorioSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $relatorio = new Relatorio();
+        $dataProvider = $searchModel->searchDisciplina(Yii::$app->request->queryParams);
+
+/*        $relatorio = new Relatorio();
 
         if (Yii::$app->user->identity->tipo == '3'){
             $id = Yii::$app->user->identity->id;
@@ -70,18 +71,28 @@ class RelatorioController extends Controller
             $id = Yii::$app->user->identity->id;
             $relatorio = $relatorio->getDadosParaRelatorioProfessor($id);
         }
-
-
+*/
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'relatorio' => $relatorio,
+            //'relatorio' => $relatorio,
 
         ]);
 
-
     }
 
+
+    public function actionView($id){
+
+        $searchModel = new RelatorioSearch();
+        $dataProvider = $searchModel->searchAlunos(Yii::$app->request->queryParams, $id );
+
+        return $this->render('view', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+    }
 
 }
