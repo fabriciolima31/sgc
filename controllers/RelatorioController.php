@@ -25,7 +25,7 @@ class RelatorioController extends Controller
                         'allow' => true,
                         'roles' => ['@' ],
                         'matchCallback' => function ($rule, $action) {
-                            return Yii::$app->user->identity->tipo == '4' || Yii::$app->user->identity->tipo == '1';
+                            return Yii::$app->user->identity->tipo != '3';
                         }
                     ],
                     [
@@ -81,7 +81,7 @@ class RelatorioController extends Controller
 
         
         $searchModel = new RelatorioSearch();
-        if(Yii::$app->user->identity->tipo == "4" || Yii::$app->user->identity->tipo == "1"){
+        if(Yii::$app->user->identity->tipo != "3"){
             
             $dataProvider = $searchModel->searchDisciplina(Yii::$app->request->queryParams);
             

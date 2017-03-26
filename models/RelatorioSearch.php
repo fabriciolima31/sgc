@@ -85,7 +85,7 @@ class RelatorioSearch extends Relatorio
     {
         $id_usuario_logado = Yii::$app->user->identity->id;
 
-        if(Yii::$app->user->identity->tipo == "4"){
+        if(Yii::$app->user->identity->tipo == "4" || Yii::$app->user->identity->tipo == "2" ){
             $query = Disciplina::find()
             ->alias("D")
             ->select("D.nome , T.codigo as codigo_turma, T.data_inicio, T.data_fim, T.id")
