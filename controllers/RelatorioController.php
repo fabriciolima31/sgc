@@ -21,12 +21,17 @@ class RelatorioController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view'],
+                        'actions' => ['view'],
                         'allow' => true,
                         'roles' => ['@' ],
                         'matchCallback' => function ($rule, $action) {
                             return Yii::$app->user->identity->tipo == '4' || Yii::$app->user->identity->tipo == '1';
                         }
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@' ],
                     ],
                 ],
             ],
@@ -72,24 +77,12 @@ class RelatorioController extends Controller
 
     }
 
-
     public function actionIndex(){
 
         
         $searchModel = new RelatorioSearch();
-
-        if (Yii::$app->user->identity->tipo == '3'){
-//            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//            
-//            return $this->render('indexAluno', [
-//                'dataProvider' => $dataProvider,
-//                'searchModel' => $searchModel,
-//
-//            ]);
+        if(Yii::$app->user->identity->tipo == "4" || Yii::$app->user->identity->tipo == "1"){
             
-            return "AINDA NÃO IMPLEMENTADO";
-                        
-        }else if(Yii::$app->user->identity->tipo == '1'){
             $dataProvider = $searchModel->searchDisciplina(Yii::$app->request->queryParams);
             
             return $this->render('indexProfessor', [
@@ -98,16 +91,16 @@ class RelatorioController extends Controller
 
             ]);
             
-        }else if(Yii::$app->user->identity->tipo == '4'){
-            $dataProvider = $searchModel->searchDisciplina(Yii::$app->request->queryParams);
-            return $this->render('indexProfessor', [
+        }else{
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            
+            return $this->render('indexAluno', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
 
             ]);
         }
     }
-
 
     public function actionView($id){
 
