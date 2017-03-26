@@ -46,7 +46,7 @@ class RelatorioSearch extends Relatorio
 
             $query = User::find()
             ->alias("U1")
-            ->select("U1.* , AT.*")
+            ->select("U1.* , AT.*, T.codigo as codigo_turma, T.data_inicio, T.data_fim, T.id")
             ->innerJoin("Aluno_Turma as AT","AT.Usuarios_id = U1.id")
             ->innerJoin("Turma as T","T.id = AT.Turma_id")
             //->innerJoin("Professor_Turma as PT", "PT.Usuarios_id = U2.id")
@@ -122,36 +122,23 @@ class RelatorioSearch extends Relatorio
 
         return $dataProvider;
     }
-
-
-
-    public function searchAlunos($params, $id_da_turma)
+    
+        public function searchAlunos($params, $id_da_turma)
     {
 
             $query = User::find()
             ->alias("U")
-            ->select("U.nome, COUNT(S.id) as quantidade_atendimentos")
-            ->leftJoin("Aluno_Turma as AT","AT.Usuarios_id = U.id")
-            ->leftJoin("Sessao as S","S.Usuarios_id = U.id")
-            ->where(["AT.Turma_id" => $id_da_turma])
-            ->andWhere("U.tipo = 3")
-            ->andWhere(["S.status" => "OS" ])
-            ->groupBy("U.nome")
-            ->having("quantidade_atendimentos > 0")
+            ->select("U.nome, (SELECT
+                                COUNT(S.id)
+                               FROM
+                                Sessao as S JOIN Agenda AS A ON S.Agenda_id = A.id
+                               WHERE
+                                S.Usuarios_id = U.id
+                                AND S.status = 'OS'
+                                AND A.Turma_id = AT1.Turma_id) as quantidade_atendimentos")
+            ->innerJoin("Aluno_Turma as AT1","AT1.Usuarios_id = U.id")
+            ->where(["AT1.Turma_id" => $id_da_turma])
             ;
-
-            $query2 = User::find()
-            ->alias("U")
-            ->select("U.nome, COUNT(S.id) as quantidade_atendimentos")
-            ->leftJoin("Aluno_Turma as AT","AT.Usuarios_id = U.id")
-            ->leftJoin("Sessao as S","S.Usuarios_id = U.id")
-            ->where(["AT.Turma_id" => $id_da_turma])
-            ->andWhere("U.tipo = 3")
-            ->groupBy("U.nome")
-            ->having("quantidade_atendimentos = 0")
-            ;            
-
-            $query->union($query2,false);
 
 /*
             $query = $query->asArray()->all();

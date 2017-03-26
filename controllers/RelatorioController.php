@@ -57,29 +57,32 @@ class RelatorioController extends Controller
 
     public function actionIndex(){
 
+        
         $searchModel = new RelatorioSearch();
 
-        $dataProvider = $searchModel->searchDisciplina(Yii::$app->request->queryParams);
-
-/*        $relatorio = new Relatorio();
-
         if (Yii::$app->user->identity->tipo == '3'){
-            $id = Yii::$app->user->identity->id;
-            $relatorio = $relatorio->getDadosParaRelatorioAluno($id);
+//            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//            
+//            return $this->render('indexAluno', [
+//                'dataProvider' => $dataProvider,
+//                'searchModel' => $searchModel,
+//
+//            ]);
+            
+            return "AINDA NÃO IMPLEMENTADO";
+                        
+        }else if(Yii::$app->user->identity->tipo == '1'){
+            $dataProvider = $searchModel->searchDisciplina(Yii::$app->request->queryParams);
+            
+            return $this->render('indexProfessor', [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+                //'relatorio' => $relatorio,
+
+            ]);
+        }else{
+            return "AINDA NÃO IMPLEMENTADO";
         }
-        else{
-            $id = Yii::$app->user->identity->id;
-            $relatorio = $relatorio->getDadosParaRelatorioProfessor($id);
-        }
-*/
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            //'relatorio' => $relatorio,
-
-        ]);
-
     }
 
 
