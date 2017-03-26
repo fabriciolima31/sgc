@@ -9,15 +9,12 @@ use yii\grid\GridView;
 
 
 
-$this->title = 'Disciplinas';
+$this->title = 'Turmas - Dados Estatíticos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
-
-    <?php //echo $relatorio ?>
 
 
     <?php 
@@ -26,8 +23,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            'nome',
-            'codigo_turma',
+            [
+                'label' => 'Disciplina',
+                'attribute' => 'nome',
+            ],
+            [
+                'label' => 'Código da Turma',
+                'attribute' => 'codigo_turma',
+            ],
             [
                 'attribute'=>'data_inicio',
                 'format' => ['date', 'php:d-m-Y'],

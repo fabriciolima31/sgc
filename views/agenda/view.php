@@ -9,7 +9,7 @@ use app\models\Disciplina;
 /* @var $model app\models\Agenda */
 
 $this->title = $model->consultorio->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Agendas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Reservas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="agenda-view">
@@ -17,10 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= $model->checarAgendamento() ? Html::a('Remover este Agendamento', ['altera-status', 'id' => $model->id], [
+        <?= $model->checarAgendamento() ? Html::a('Remover Reserva', ['altera-status', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Você tem certeza que deseja apagar este agendamento?',
+                'confirm' => 'Você tem certeza que deseja apagar essa reserva?',
                 'method' => 'post',
             ],
         ]) : "" ?>
@@ -37,7 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'data_inicio',
                 'label' => 'Data',
             ],
-            //'data_fim',
             [
             'attribute' => 'diaSemana',
             'label' => 'Dia da Semana',

@@ -9,7 +9,7 @@ use yii\grid\GridView;
 
 
 
-$this->title = 'Disciplinas';
+$this->title = 'Alunos - Relatório';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">

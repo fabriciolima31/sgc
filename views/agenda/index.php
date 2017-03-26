@@ -19,16 +19,15 @@ $agendaDependencias = $agenda->dependenciasAgendamento();
 
 
 
-$this->title = 'Agendamento';
+$this->title = 'Reserva de Consultório';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="agenda-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Yii::$app->user->identity->tipo == '4' ? Html::a('Criar Agendamento', ['create'], ['class' => 'btn btn-success']) : "" ?>
+        <?= Yii::$app->user->identity->tipo == '4' ? Html::a('Criar Reserva', ['create'], ['class' => 'btn btn-success']) : "" ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

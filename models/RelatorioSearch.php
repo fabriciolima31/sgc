@@ -78,18 +78,14 @@ class RelatorioSearch extends Relatorio
 
     public function searchDisciplina($params)
     {
-            $id_usuario_logado = Yii::$app->user->identity->id;
+        $id_usuario_logado = Yii::$app->user->identity->id;
 
-            if(Yii::$app->user->identity->tipo == "4"){
+        if(Yii::$app->user->identity->tipo == "4"){
             $query = Disciplina::find()
             ->alias("D")
             ->select("D.nome , T.codigo as codigo_turma, T.data_inicio, T.data_fim, T.id")
-            ->leftJoin("Turma as T","T.Disciplina_id = D.id")
-            ->leftJoin("Professor_Turma as PT","PT.Turma_id = T.id")
-            ->where("D.status = 1");
-            }
-            else{
-
+            ->innerJoin("Turma as T","T.Disciplina_id = D.id");
+        }else{
             $query = Disciplina::find()
             ->alias("D")
             ->select("D.nome , T.codigo as codigo_turma, T.data_inicio, T.data_fim, T.id")
@@ -97,16 +93,7 @@ class RelatorioSearch extends Relatorio
             ->leftJoin("Professor_Turma as PT","PT.Turma_id = T.id")
             ->where(["PT.Usuarios_id" => $id_usuario_logado])
             ->andWhere("D.status = 1");
-        }   
-
-            /*$query = $query->asArray()->all();
-
-            for ($i=0; $i<count($query); $i++){
-                print_r($query[$i]);
-                echo "<br><br>";
-            }
-            die;
-            */
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -123,33 +110,22 @@ class RelatorioSearch extends Relatorio
         return $dataProvider;
     }
     
-        public function searchAlunos($params, $id_da_turma)
+    public function searchAlunos($params, $id_da_turma)
     {
 
-            $query = User::find()
-            ->alias("U")
-            ->select("U.nome, (SELECT
-                                COUNT(S.id)
-                               FROM
-                                Sessao as S JOIN Agenda AS A ON S.Agenda_id = A.id
-                               WHERE
-                                S.Usuarios_id = U.id
-                                AND S.status = 'OS'
-                                AND A.Turma_id = AT1.Turma_id) as quantidade_atendimentos")
-            ->innerJoin("Aluno_Turma as AT1","AT1.Usuarios_id = U.id")
-            ->where(["AT1.Turma_id" => $id_da_turma])
-            ;
-
-/*
-            $query = $query->asArray()->all();
-
-            for ($i=0; $i<count($query); $i++){
-                print_r($query[$i]);
-                echo "<br><br>";
-            }
-            die;
-*/
-            
+        $query = User::find()
+        ->alias("U")
+        ->select("U.nome, (SELECT
+                            COUNT(S.id)
+                           FROM
+                            Sessao as S JOIN Agenda AS A ON S.Agenda_id = A.id
+                           WHERE
+                            S.Usuarios_id = U.id
+                            AND S.status = 'OS'
+                            AND A.Turma_id = AT1.Turma_id) as quantidade_atendimentos")
+        ->innerJoin("Aluno_Turma as AT1","AT1.Usuarios_id = U.id")
+        ->where(["AT1.Turma_id" => $id_da_turma])
+        ;            
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -14,6 +14,24 @@ use app\models\RelatorioSearch;
  */
 class RelatorioController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view'],
+                        'allow' => true,
+                        'roles' => ['@' ],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->tipo == '4' || Yii::$app->user->identity->tipo == '1';
+                        }
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionReport()
     {
@@ -77,11 +95,16 @@ class RelatorioController extends Controller
             return $this->render('indexProfessor', [
                 'dataProvider' => $dataProvider,
                 'searchModel' => $searchModel,
-                //'relatorio' => $relatorio,
 
             ]);
-        }else{
-            return "AINDA NÃO IMPLEMENTADO";
+            
+        }else if(Yii::$app->user->identity->tipo == '4'){
+            $dataProvider = $searchModel->searchDisciplina(Yii::$app->request->queryParams);
+            return $this->render('indexProfessor', [
+                'dataProvider' => $dataProvider,
+                'searchModel' => $searchModel,
+
+            ]);
         }
     }
 
