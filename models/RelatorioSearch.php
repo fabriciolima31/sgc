@@ -80,14 +80,24 @@ class RelatorioSearch extends Relatorio
     {
             $id_usuario_logado = Yii::$app->user->identity->id;
 
+            if(Yii::$app->user->identity->tipo == "4"){
+            $query = Disciplina::find()
+            ->alias("D")
+            ->select("D.nome , T.codigo as codigo_turma, T.data_inicio, T.data_fim, T.id")
+            ->leftJoin("Turma as T","T.Disciplina_id = D.id")
+            ->leftJoin("Professor_Turma as PT","PT.Turma_id = T.id")
+            ->where("D.status = 1");
+            }
+            else{
+
             $query = Disciplina::find()
             ->alias("D")
             ->select("D.nome , T.codigo as codigo_turma, T.data_inicio, T.data_fim, T.id")
             ->leftJoin("Turma as T","T.Disciplina_id = D.id")
             ->leftJoin("Professor_Turma as PT","PT.Turma_id = T.id")
             ->where(["PT.Usuarios_id" => $id_usuario_logado])
-            ->andWhere("D.status = 1")
-            ;
+            ->andWhere("D.status = 1");
+        }   
 
             /*$query = $query->asArray()->all();
 
