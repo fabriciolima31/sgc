@@ -78,6 +78,7 @@ else{
                         ] : "",
                     !Yii::$app->user->isGuest ? ['label' => 'Alocações de Pacientes', 'icon' => 'fa fa-street-view', 'url' => ['/usuario-paciente/index'], 'visible' => Yii::$app->user->identity->tipo == '4'] : "",
                     !Yii::$app->user->isGuest ? ['label' => 'Dados Estatísticos', 'icon' => 'fa fa-book', 'url' => ['/relatorio/index'], 'visible' => Yii::$app->user->identity->tipo != '0'] : "",
+                    !Yii::$app->user->isGuest ? ['label' => 'Sobre', 'icon' => 'fa fa-steam', 'url' => ['/site/about'], 'visible' => Yii::$app->user->identity->tipo != '0'] : "",
                 ],
             ]
         ) ?>
