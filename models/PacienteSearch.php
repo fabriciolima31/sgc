@@ -82,20 +82,20 @@ class PacienteSearch extends Paciente
             $this->data_inscricao = $model->converterDatas_para_AAAA_MM_DD_com_Retorno($this->data_inscricao);
         }
 
-        $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'status', $this->status])
+        $query->andFilterWhere(['like', 'Paciente.nome', $this->nome])
+            ->andFilterWhere(['like', 'Paciente.status', $this->status])
 //            ->andFilterWhere(['like', 'sexo', $this->sexo])
 //            ->andFilterWhere(['like', 'telefone', $this->telefone])
 //            ->andFilterWhere(['like', 'endereco', $this->endereco])
 //            ->andFilterWhere(['like', 'moradia', $this->moradia])
-            ->andFilterWhere(['like', 'turno_atendimento', $this->turno_atendimento])
+            ->andFilterWhere(['like', 'Paciente.turno_atendimento', $this->turno_atendimento])
 //            ->andFilterWhere(['like', 'local_encaminhamento', $this->local_encaminhamento])
 //            ->andFilterWhere(['like', 'local_terapia', $this->local_terapia])
 //            ->andFilterWhere(['like', 'motivo_psicoterapia', $this->motivo_psicoterapia])
 //            ->andFilterWhere(['like', 'servico', $this->servico])
 //            ->andFilterWhere(['like', 'observacao', $this->observacao])
-            ->andFilterWhere(['like', 'complexidade', $this->complexidade])
-            ->andFilterWhere(['like', 'data_inscricao', $this->data_inscricao])
+            ->andFilterWhere(['like', 'Paciente.complexidade', $this->complexidade])
+            ->andFilterWhere(['like', 'Paciente.data_inscricao', $this->data_inscricao])
             ->andFilterWhere(['like', 'U.nome', $this->nome_do_terapeuta])
             ->andFilterWhere(['like', 'prioridade', $this->prioridade]);
 
