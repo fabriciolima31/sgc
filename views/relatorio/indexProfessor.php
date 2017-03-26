@@ -9,19 +9,21 @@ use yii\grid\GridView;
 
 
 
-$this->title = 'Turmas - Dados Estatíticos';
+$this->title = 'Turmas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <br>
 
-
+    <h4 style="text-align: center; font-weight: bold; color: blue"> Escolha uma Turma para Visualizar a Quantidade de Atendimentos de cada Aluno </h4>
+    <br>
     <?php 
 
         echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             [
                 'label' => 'Disciplina',

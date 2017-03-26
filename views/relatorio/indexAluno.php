@@ -20,11 +20,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
         echo GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             [
                 'label' => 'Disciplina',
                 'attribute' => 'nome',
+            ],
+            [
+                'attribute'=>'data_inicio',
+                'format' => ['date', 'php:d-m-Y'],
+            ],
+            [
+                'attribute'=>'data_fim',
+                'format' => ['date', 'php:d-m-Y'],
             ],
             'quantidade_atendimentos',
         ],

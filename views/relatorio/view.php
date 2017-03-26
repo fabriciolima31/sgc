@@ -7,11 +7,9 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Alunos - Dados Estatíticos';
+$this->title = 'Alunos - Nº de Atendimentos';
 $this->params['breadcrumbs'][] = ['label' => 'Turmas - Dados Estatíticos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
-
 
 ?>
 <div class="user-index">
@@ -20,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
             'nome',
             [

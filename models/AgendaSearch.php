@@ -62,7 +62,6 @@ class AgendaSearch extends Agenda
     $dataProvider->sort->attributes['nome_do_consultorio'] = [
         'asc' => ['nome_do_consultorio' => SORT_ASC],
         'desc' => ['nome_do_consultorio' => SORT_DESC],
-
     ];
 
         $this->load($params);

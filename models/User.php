@@ -20,6 +20,8 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
     public $turmasArray;
 
     public $quantidade_atendimentos;
+    public $data_inicio;
+    public $data_fim;
 
    /**
      * @inheritdoc

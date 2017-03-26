@@ -59,16 +59,25 @@ class RelatorioSearch extends Relatorio
         ->innerJoin("Disciplina as D","T.Disciplina_id = D.id")
         ->where(['U1.id' => Yii::$app->user->identity->id]);
 
-
-        //1- tem de pegar o usuário LOGADO.
-        //2- tem de VERIFICAR SE O PERFIL É DE PROFESSOR OU ALUNO !
-        //3- tem de pegar as disciplinas do professor
-        //4- tem de pegar os alunos desse professor
-
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+
+        $dataProvider->sort->attributes['quantidade_atendimentos'] = [
+            'asc' => ['quantidade_atendimentos' => SORT_ASC],
+            'desc' => ['quantidade_atendimentos' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['data_inicio'] = [
+            'asc' => ['data_inicio' => SORT_ASC],
+            'desc' => ['data_inicio' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['data_fim'] = [
+            'asc' => ['data_fim' => SORT_ASC],
+            'desc' => ['data_fim' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -103,6 +112,21 @@ class RelatorioSearch extends Relatorio
             'query' => $query,
         ]);
 
+        $dataProvider->sort->attributes['data_inicio'] = [
+            'asc' => ['data_inicio' => SORT_ASC],
+            'desc' => ['data_inicio' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['data_fim'] = [
+            'asc' => ['data_fim' => SORT_ASC],
+            'desc' => ['data_fim' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['codigo_turma'] = [
+            'asc' => ['codigo_turma' => SORT_ASC],
+            'desc' => ['codigo_turma' => SORT_DESC],
+        ];
+
         $this->load($params);
 
         if (!$this->validate()) {
@@ -133,6 +157,12 @@ class RelatorioSearch extends Relatorio
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+
+        $dataProvider->sort->attributes['quantidade_atendimentos'] = [
+            'asc' => ['quantidade_atendimentos' => SORT_ASC],
+            'desc' => ['quantidade_atendimentos' => SORT_DESC],
+        ];
 
         $this->load($params);
 
