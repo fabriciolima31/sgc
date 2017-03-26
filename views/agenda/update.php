@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Agenda */
 
-$this->title = 'Editar Agenda: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Agendas', 'url' => ['index']];
+$this->title = 'Editar Reserva: ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Reservas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

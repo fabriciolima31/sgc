@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Agenda */
 
-$this->title = 'Criar Novo Agendamento';
-$this->params['breadcrumbs'][] = ['label' => 'Agendas', 'url' => ['index']];
+$this->title = 'Criar Reserva';
+$this->params['breadcrumbs'][] = ['label' => 'Reservas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="agenda-create">

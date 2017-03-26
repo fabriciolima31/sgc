@@ -47,11 +47,15 @@ class UserController extends Controller
                         'roles' => ['@' ],
                     ],
                     [
-                        'actions' => ['create','esquecisenha'],
+                        'actions' => ['create'],
+                        'allow' => true,
+                        'roles' => ['?', '@'],
+                    ],
+                    [
+                        'actions' => ['esquecisenha'],
                         'allow' => true,
                         'roles' => ['?'],
-                    ],
-                            
+                    ],          
                 ],
             ],
         ];

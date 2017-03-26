@@ -24,24 +24,25 @@ use app\models\Turma;
         }
     ?>
 
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nome')->textInput(['maxlength' => true])->label("<font color='#FF0000'>*</font> <b>Nome:</b>") ?>
 
-    <?= $form->field($model, 'email')->textInput() ?>
+    <?= $form->field($model, 'email')->textInput()->label("<font color='#FF0000'>*</font> <b>E-mail:</b>"); ?>
 
     <?php 
         // quando a ACTION for create, vai aparecer os dois formulários abaixo. No caso do update, estes dois campos ficam ocultos.
         if($this->context->action->id == 'create'){
             echo $form->field($model, 'cpf')->widget(MaskedInput::className(), [
-            'mask' => '999.999.999-99',]);
-            echo $form->field($model, 'password')->passwordInput(['maxlength' => true]);
-            echo $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true]);
+            'mask' => '999.999.999-99',])->label("<font color='#FF0000'>*</font> <b>CPF:</b>");
+            echo $form->field($model, 'password')->passwordInput(['maxlength' => true])->label("<font color='#FF0000'>*</font> <b>Senha:</b>");;
+            echo $form->field($model, 'password_repeat')->passwordInput(['maxlength' => true])->label("<font color='#FF0000'>*</font> <b>Repetir Senha:</b>");;
         }
     ?>
   
     <?php 
         if(Yii::$app->user->identity->tipo == '4'){
             echo $form->field($model, 'tipo')->dropDownList(['1' => 'Professor', '2' => 'Psicólogo', 
-            '3' => 'Aluno Terapeuta', '4' => 'Estagiário Administrativo'], ['prompt'=>'Selecione um Perfil ']); 
+            '3' => 'Aluno Terapeuta', '4' => 'Estagiário Administrativo'], ['prompt'=>'Selecione um Perfil '])
+                    ->label("<font color='#FF0000'>*</font> <b>Perfil:</b>");
         }
     ?>
     <?php 
@@ -62,7 +63,7 @@ use app\models\Turma;
                                     return $model['nome_da_disciplina'].' - Turma: '.$model['codigo'];
                             }
 
-                        )); 
+                        ))->label("<font color='#FF0000'>*</font> <b>Disciplina - Turma:</b>");; 
                         }
 
                     ?>

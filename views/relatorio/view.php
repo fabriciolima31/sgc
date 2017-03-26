@@ -7,8 +7,8 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Alunos';
-$this->params['breadcrumbs'][] = ['label' => 'Turmas', 'url' => ['index']];
+$this->title = 'Alunos - Dados Estatíticos';
+$this->params['breadcrumbs'][] = ['label' => 'Turmas - Dados Estatíticos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 

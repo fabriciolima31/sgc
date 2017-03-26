@@ -63,7 +63,7 @@ class User extends \yii\db\ActiveRecord  implements IdentityInterface
             'tipo' => 'Perfil',
             'status' => 'Status',
             'password_repeat' => 'Repetir Senha',
-            'email' => 'Email',
+            'email' => 'E-mail',
             'turmasArray' => 'Disciplina - Turma'
         ];
     }

@@ -14,7 +14,7 @@ $this->title = 'Principal';
     
    <!-- <?= Html::img('imagens/ufam.png', ['alt'=>'ufam', 'width' => '5%'])?> -->
     
-    <h2 align='center'> ***** - CSPA</h2>
+    <h2 align='center'> Centro de Serviços de Psicologia Aplicada - CSPA</h2>
     <p class="lead" align="center">Seja Bem Vindo ao Sistema de Gerencimento de Consultas</p>
 
     <legend><h2>Sessões Agendadas</h2></legend>

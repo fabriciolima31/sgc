@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-use app\models\Agenda;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SessaoSearch */
@@ -19,7 +18,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= $paciente->statusFinal() ? Html::a('Adicionar Sessão', ['create', 'id'=> Yii::$app->request->get('id') ], ['class' => 'btn btn-success']) : "" ?>
-        <?php //echo $paciente->statusFinal() ? Html::a('Ir para Agendamento', ['agenda/create'], ['class' => 'btn btn-primary']) : "" ?>
         <?= $paciente->statusFinal() && Yii::$app->user->identity->tipo == '3' ?  Html::a('Dar Alta ao Paciente', ['paciente/alterar-status', 'id' => $paciente->id, 'status' => 'AL'], [
             'class' => 'btn btn-warning',
             'data' => [
