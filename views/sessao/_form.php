@@ -30,7 +30,7 @@ use yii\helpers\Url;
                 echo $form->field($model, 'Consultorio_id')->dropDownList($dataCategory, 
                      ['prompt'=>'Selecione um Consultório',
                       'onchange'=>'
-                        $.post( "'.Url::to('index.php?r=sessao/datas&consultorio=').'"+$(this).val(), function( data ) {
+                        $.post( "'.Url::to('/web/sessao/datas?consultorio=').'"+$(this).val(), function( data ) {
                           $( "select#data_inicio" ).html( data );
                         });
                     ']);

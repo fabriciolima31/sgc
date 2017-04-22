@@ -100,7 +100,7 @@ $agendaDependencias = $agenda->dependenciasAgendamento();
             'language' => 'pt',
             'options' => ['placeholder' => 'Selecione um Aluno', 
                 'onchange'=>'
-                $.post( "'.Url::to('index.php?r=agenda/turmas&id_terapeuta=').'"+$(this).val(), function( data ) {
+                $.post( "'.Url::to('/web/agenda/turmas?id_terapeuta=').'"+$(this).val(), function( data ) {
                   $( "select#agenda-turma_id" ).html( data );
                 });'],
             'pluginOptions' => [
@@ -119,7 +119,7 @@ $agendaDependencias = $agenda->dependenciasAgendamento();
 
         ),['prompt'=>'Escolha uma Disciplina e Turma',
             'onMouseOver'=>'
-            $.post( "'.Url::to('index.php?r=agenda/turmas&id_terapeuta=').'"+$("select#agenda-usuarios_id").val(), function( data ) {
+            $.post( "'.Url::to('/web/agenda/turmas?id_terapeuta=').'"+$("select#agenda-usuarios_id").val(), function( data ) {
                var x = $( "select#agenda-turma_id").val();
                 if(x == null || x == ""){
                  $( "select#agenda-turma_id" ).html( data );

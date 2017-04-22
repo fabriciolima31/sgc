@@ -76,7 +76,7 @@ $fieldOptions2 = [
         </div>
         <!-- /.social-auth-links -->
 
-        <a href="index.php?r=user/esquecisenha">Eu Esqueci minha Senha!</a><br>
+        <a href="/web/user/esquecisenha">Eu Esqueci minha Senha!</a><br>
 
     </div>
     <!-- /.login-box-body -->
