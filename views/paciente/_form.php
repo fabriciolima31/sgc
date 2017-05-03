@@ -21,7 +21,10 @@ use yii\widgets\MaskedInput;
     'mask' => '99/99/9999',])->label("<font color='#FF0000'>*</font> <b>Data de Nascimento:</b>"); ?>
     
     <?= $form->field($model, 'telefone')->widget(MaskedInput::className(), [
-    'mask' => '99999-9999',])->label("<font color='#FF0000'>*</font> <b>Telefone:</b>"); ?>
+    'mask' => '99999-9999',])->label("<font color='#FF0000'>*</font> <b>Telefone 1:</b>"); ?>
+    
+    <?= $form->field($model, 'telefone2')->widget(MaskedInput::className(), [
+    'mask' => '99999-9999',])->label("<font color='#FF0000'>*</font> <b>Telefone 2:</b>"); ?>
 
     <?= $form->field($model, 'endereco')->textInput(['maxlength' => true])->label("<font color='#FF0000'>*</font> <b>Endereço:</b>"); ?>
 

@@ -53,6 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'data_nascimento',
             'telefone',
+            'telefone2',
             'endereco',
             'moradia:ntext',
             ['label' =>'Turno de Atendimento',

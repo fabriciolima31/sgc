@@ -2,8 +2,8 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=banco.ufam.edu.br;dbname=dom_cspa',
-    'username' => 'dom_cspa',
-    'password' => 'LnYKwUmpB3',
+    'dsn' => 'mysql:host=localhost;dbname=SGC',
+    'username' => 'root',
+    'password' => '',
     'charset' => 'utf8',
 ];
