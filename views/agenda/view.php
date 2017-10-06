@@ -14,8 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="agenda-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= $model->checarAgendamento() ? Html::a('Remover Reserva', ['altera-status', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -74,6 +72,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     ->where(["T.id"=>$model->Turma_id])->one();
                     return $disciplina->nome;
 
+            }
+            ],
+            ['attribute' => 'data_solicitacao',
+            'value' => function ($model){
+                    return date('d-m-Y H:i', strtotime($model->data_solicitacao));
             }
             ],
 

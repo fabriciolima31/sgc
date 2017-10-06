@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Yii::$app->user->identity->tipo == '4' ? Html::a('Criar Reserva', ['create'], ['class' => 'btn btn-success']) : "" ?>
+        <?= Yii::$app->user->identity->tipo == '4' ? Html::a('Adicionar Reserva', ['create'], ['class' => 'btn btn-success']) : "" ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

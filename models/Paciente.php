@@ -37,7 +37,7 @@ class Paciente extends \yii\db\ActiveRecord
 
     public $complexidadeArray = ['A' => 'Alta', 'M' => 'Média', 'N' => 'Normal', 'B' => 'Baixa'];
     
-    public $turno_atendimentoArray = ['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite'];
+    public $turno_atendimentoArray = ['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite', 'Q' => 'Qualquer'];
 
     public $nome_do_terapeuta;
         
@@ -62,9 +62,9 @@ class Paciente extends \yii\db\ActiveRecord
             [['moradia', 'local_encaminhamento', 'local_terapia', 'servico'], 'string'],
             [['nome', 'endereco'], 'string', 'max' => 200],
             [['status', 'sexo', 'turno_atendimento'], 'string', 'max' => 21],
-            [['telefone', 'telefone2'], 'string', 'max' => 10],
-            [['motivo_psicoterapia'], 'string', 'max' => 120],
-            [['observacao'], 'string',  'max' => 120],
+            [['telefone', 'telefone2'], 'string', 'max' => 14],
+            [['motivo_psicoterapia'], 'string', 'max' => 500],
+            [['observacao'], 'string',  'max' => 500],
             [['prioridade', 'complexidade'], 'string'],
         ];
     }
@@ -77,8 +77,8 @@ class Paciente extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'status' => 'Status',
-            'statusDesc' => 'Status',
+            'status' => 'Situação',
+            'statusDesc' => 'Situação',
             'sexo' => 'Sexo',
             'data_nascimento' => 'Data de Nascimento',
             'telefone' => 'Telefone 1',

@@ -21,26 +21,26 @@ use yii\widgets\MaskedInput;
     'mask' => '99/99/9999',])->label("<font color='#FF0000'>*</font> <b>Data de Nascimento:</b>"); ?>
     
     <?= $form->field($model, 'telefone')->widget(MaskedInput::className(), [
-    'mask' => '99999-9999',])->label("<font color='#FF0000'>*</font> <b>Telefone 1:</b>"); ?>
+    'mask' => '(99)99999-9999',])->label("<font color='#FF0000'>*</font> <b>Telefone 1:</b>"); ?>
     
     <?= $form->field($model, 'telefone2')->widget(MaskedInput::className(), [
-    'mask' => '99999-9999',])->label("<font color='#FF0000'>*</font> <b>Telefone 2:</b>"); ?>
+    'mask' => '(99)99999-9999',]); ?>
 
     <?= $form->field($model, 'endereco')->textInput(['maxlength' => true])->label("<font color='#FF0000'>*</font> <b>Endereço:</b>"); ?>
 
     <?= $form->field($model, 'moradia')->textInput()->label("<font color='#FF0000'>*</font> <b>Com que mora?</b>"); ?>
 
-    <?= $form->field($model, 'turno_atendimento')->dropDownList(['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite'],['prompt'=>'Selecione uma Opção'])->label("<font color='#FF0000'>*</font> <b>Turno para Atendimento:</b>"); ?>
+    <?= $form->field($model, 'turno_atendimento')->dropDownList(['M' => 'Manhã', 'T' => 'Tarde', 'N' => 'Noite', 'Q' => 'Qualquer'],['prompt'=>'Selecione uma Opção'])->label("<font color='#FF0000'>*</font> <b>Turno para Atendimento:</b>"); ?>
 
     <?= $form->field($model, 'local_encaminhamento')->textInput()->label("<b>De onde veio encaminhado?</b>"); ?>
 
     <?= $form->field($model, 'local_terapia')->textInput()->label("<b>Qual o local onde já realizou terapia?</b>"); ?>
 
-    <?= $form->field($model, 'motivo_psicoterapia')->textarea(['rows' => 6])->label("<font color='#FF0000'>*</font> <b>Por que gostaria de fazer psicoterapia?</b>"); ?>
+    <?= $form->field($model, 'motivo_psicoterapia')->textarea(['rows' => 6, 'maxlength' => '500'])->label("<font color='#FF0000'>*</font> <b>Por que gostaria de fazer psicoterapia?</b>"); ?>
 
     <?= $form->field($model, 'servico')->textInput()->label("<font color='#FF0000'>*</font> <b>Como soube do serviço?</b>"); ?>
 
-    <?= $form->field($model, 'observacao')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'observacao')->textarea(['rows' => 6, 'maxlength' => '500']) ?>
     
     <?= $form->field($model, 'prioridade')->dropDownList($model->prioridadeArray,['prompt'=>'Selecione uma Opção'])
             ->label("<b>Prioridade:</b>"); ?>

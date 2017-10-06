@@ -43,6 +43,7 @@ class Turma extends \yii\db\ActiveRecord
         return [
             [['codigo', 'ano', 'semestre', 'data_inicio', 'data_fim', 'Disciplina_id', 'Professor_id'], 'required'],
             [['data_inicio', 'data_fim' , 'Professor_id'], 'safe'],
+            [['data_fim'], 'validateDateFim'],
             [['Disciplina_id'], 'integer'],
             [['codigo', 'semestre'], 'string', 'max' => 10],
             [['ano'], 'string', 'max' => 4],
@@ -65,6 +66,17 @@ class Turma extends \yii\db\ActiveRecord
             'Disciplina_id' => 'Disciplina',
             'Professor_id' => "Professor(a)",
         ];
+    }
+    
+
+    public function validateDateFim($attribute, $params){
+        if (!$this->hasErrors()) {
+            $this->converterDatas_para_AAAA_MM_DD();
+            if ($this->data_fim < $this->data_inicio) {
+                $this->addError($attribute, 'Informe uma data igual ou posterior a '.date("d-m-Y", strtotime($this->data_inicio)));
+            }
+            $this->converterDatas_para_DD_MM_AAAA();
+        }
     }
 
     /**

@@ -41,7 +41,6 @@ class AgendaSearch extends Agenda
      */
     public function search($params)
     {
-        //$query = Agenda::find()->where(['status' => '1'])->orderBy('data_inicio, horaInicio');
         $query = Agenda::find()
         ->select("Agenda.*, U.nome as nome_de_quem_agenda, C.nome as nome_do_consultorio" )
         ->innerJoin("Usuarios as U", "U.id = Agenda.Usuarios_id")
@@ -101,5 +100,16 @@ class AgendaSearch extends Agenda
         
 
         return $dataProvider;
+    }
+    
+    public function searchAllModels($params){
+         
+         $reservas = Agenda::find()
+        ->select("Agenda.*, U.nome as nome_de_quem_agenda, C.nome as nome_do_consultorio" )
+        ->innerJoin("Usuarios as U", "U.id = Agenda.Usuarios_id")
+        ->innerJoin("Consultorio as C", "C.id = Agenda.Consultorio_id")
+        ->where(['Agenda.status' => '1', 'Consultorio_id' => $params['idConsultorio']]);
+        
+        return $reservas;
     }
 }

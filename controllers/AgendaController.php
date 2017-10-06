@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Agenda;
+use app\models\Consultorio;
 use app\models\AlunoTurma;
 use app\models\AgendaSearch;
 use yii\web\Controller;
@@ -36,7 +37,7 @@ class AgendaController extends Controller
                         'roles' => ['@' ],
                     ],
                     [
-                        'actions' => ['create', 'altera-status', 'delete', 'turmas'],
+                        'actions' => ['create', 'altera-status', 'delete', 'turmas', 'index-calendario'],
                         'allow' => true,
                         'roles' => ['@' ],
                         'matchCallback' => function ($rule, $action) {
@@ -62,6 +63,38 @@ class AgendaController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    
+    
+    /*Geração das reservas dos consultórios*/
+    
+    public function actionIndexCalendario($idConsultorio)
+    {
+        
+        $searchModel = new AgendaSearch();
+        $dataProvider = $searchModel->searchAllModels(Yii::$app->request->queryParams);
+        
+        $modelConsultorio = Consultorio::findAll(['status' => '1']);
+    
+        $reservas = array();
+        
+        foreach($dataProvider->all() as $reserva){
+            $Reservas = new \yii2fullcalendar\models\Event();
+            $Reservas->id = $reserva->id;
+            $Reservas->title = $reserva->user->nome;
+            $Reservas->start = Agenda::converterDatas_para_AAAA_MM_DD_com_Retorno($reserva->data_inicio)."T".$reserva->horaInicio;
+            $Reservas->end = Agenda::converterDatas_para_AAAA_MM_DD_com_Retorno($reserva->data_fim)."T".$reserva->horaFim;
+            $reservas[] = $Reservas;
+        }
+        
+        return $this->render('indexcalendario', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'reservas' => $reservas,
+            'modelConsultorio' => $modelConsultorio
+        ]);
+    }
+    
+    
 
     /**
      * Displays a single Agenda model.
@@ -70,7 +103,7 @@ class AgendaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        return $this->renderPartial('view', [
             'model' => $this->findModel($id),
         ]);
     }

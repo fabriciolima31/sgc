@@ -51,7 +51,7 @@ class Agenda extends \yii\db\ActiveRecord
         return [
             [['Consultorio_id', 'Usuarios_id', 'horaInicio', 'horaFim','diaSemanaArray', 'Turma_id', 'data_inicio', 'data_fim'], 'required'],
             [['diaSemana','Consultorio_id', 'Usuarios_id' ,'Turma_id'], 'integer'],
-            [['diaSemanaArray','horaInicio', 'horaFim', 'data_inicio', 'data_fim'], 'safe'],
+            [['diaSemanaArray','horaInicio', 'horaFim', 'data_inicio', 'data_fim', 'data_solicitacao'], 'safe'],
             [['horaInicio'], 'validateHoraIni'],
             [['horaFim'], 'validateHoraFim'],
             [['data_inicio'], 'validateDateIni'],
@@ -78,6 +78,7 @@ class Agenda extends \yii\db\ActiveRecord
             'data_fim' => 'Data Fim',
             'diaSemanaArray' => 'Dia da Semana',
             'Turma_id' => 'Disciplina/Turma',
+            'data_solicitacao' => 'Data da Solicitação'
         ];
     }
     

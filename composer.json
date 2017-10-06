@@ -29,7 +29,9 @@
         "kartik-v/yii2-mpdf": "dev-master",
         "kartik-v/yii2-widget-alert": "*",
         "dmstr/yii2-adminlte-asset": "2.*",
-        "kartik-v/yii2-widget-select2": "@dev"
+        "kartik-v/yii2-widget-select2": "@dev",
+        "philippfrenzel/yii2fullcalendar": "*",
+        "xj/yii2-bootbox-widget":"*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

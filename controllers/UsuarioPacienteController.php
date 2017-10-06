@@ -105,8 +105,11 @@ class UsuarioPacienteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $paciente->fecharSessoes();
             $paciente->save();
-            Yii::$app->session->setFlash('success', "Paciente encaminhado para Lista de Espera com sucesso.");
-            return $this->redirect(['paciente/meus-pacientes', 'status' => 'EC']);
+            Yii::$app->session->setFlash('success', "Paciente encaminhado para Lista de Espera (Devolvidos) com sucesso.");
+            if(Yii::$app->user->identity->tipo == '4')
+                return $this->redirect(['paciente/index', 'status' => 'DV']);
+            else
+                return $this->redirect(['paciente/meus-pacientes', 'status' => 'EC']);
         }
         else{
             return $this->render('justificativa', [

@@ -15,16 +15,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Criar Usuário', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Adicionar Usuário', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            
-            'cpf',
+        
             'nome',
-            'email',
+            'email:Email',
             ['class' => 'yii\grid\ActionColumn',
               'template'=>'{view} {update}',
             ]
